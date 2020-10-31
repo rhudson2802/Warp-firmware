@@ -157,10 +157,10 @@ devSSD1331init(void)
 	 */
 	//...
 	writeCommand(kSSD1331CommandDRAWRECT);	//Enter draw rectangle mode
-	writeCommand(0x00);			//Enter start column
-	writeCommand(0x00);			//Enter start row
-	writeCommand(0x5F);			//Enter end column
-	writeCommand(0x3F);			//Enter end row
+	writeCommand(0x02);			//Enter start column
+	writeCommand(0x02);			//Enter start row
+	writeCommand(0x5D);			//Enter end column
+	writeCommand(0x3D);			//Enter end row
 	writeCommand(0x28d);				//Set outline to green
 	writeCommand(0x0d);
 	writeCommand(0x0d);
