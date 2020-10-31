@@ -156,7 +156,7 @@ devSSD1331init(void)
 	 *	Any post-initialization drawing commands go here.
 	 */
 	//...
-	writeCommand(kSSD1331CommandDRAWRECT);	//Enter draw rectangle mode
+/*	writeCommand(kSSD1331CommandDRAWRECT);	//Enter draw rectangle mode
 	writeCommand(0x00);			//Enter start column
 	writeCommand(0x00);			//Enter start row
 	writeCommand(0x5F);			//Enter end column
@@ -168,6 +168,6 @@ devSSD1331init(void)
 	writeCommand(0xFF);
 	writeCommand(0x00);
 
-
+*/
 	return 0;
 }
