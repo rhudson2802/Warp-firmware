@@ -21,7 +21,7 @@ enum
 	kSSD1331PinSCK		= GPIO_MAKE_PIN(HW_GPIOA, 9),
 	kSSD1331PinCSn		= GPIO_MAKE_PIN(HW_GPIOB, 13),
 	kSSD1331PinDC		= GPIO_MAKE_PIN(HW_GPIOA, 12),
-	kSSD1331PinRST		= GPIO_MAKE_PIN(HW_GPIOA, 2),
+	kSSD1331PinRST		= GPIO_MAKE_PIN(HW_GPIOB, 0),
 };
 
 static int
@@ -157,10 +157,10 @@ devSSD1331init(void)
 	 */
 	//...
 	writeCommand(kSSD1331CommandDRAWRECT);	//Enter draw rectangle mode
-	writeCommand(0x02);			//Enter start column
-	writeCommand(0x02);			//Enter start row
-	writeCommand(0x5D);			//Enter end column
-	writeCommand(0x3D);			//Enter end row
+	writeCommand(0x00);			//Enter start column
+	writeCommand(0x00);			//Enter start row
+	writeCommand(0x5F);			//Enter end column
+	writeCommand(0x3F);			//Enter end row
 	writeCommand(0x28d);				//Set outline to green
 	writeCommand(0x0d);
 	writeCommand(0x0d);
