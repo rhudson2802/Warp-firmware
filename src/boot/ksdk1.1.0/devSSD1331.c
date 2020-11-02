@@ -128,11 +128,11 @@ devSSD1331init(void)
 	writeCommand(kSSD1331CommandMASTERCURRENT);	// 0x87
 	writeCommand(0x06);
 	writeCommand(kSSD1331CommandCONTRASTA);		// 0x81
-	writeCommand(0xFF);
+	writeCommand(0x0F);
 	writeCommand(kSSD1331CommandCONTRASTB);		// 0x82
-	writeCommand(0xFF);
+	writeCommand(0x0F);
 	writeCommand(kSSD1331CommandCONTRASTC);		// 0x83
-	writeCommand(0xFF);
+	writeCommand(0x0F);
 	writeCommand(kSSD1331CommandDISPLAYON);		// Turn on oled panel
 
 	/*
