@@ -161,12 +161,12 @@ devSSD1331init(void)
 	writeCommand(0x00);			//Enter start row
 	writeCommand(0x5F);			//Enter end column
 	writeCommand(0x3F);			//Enter end row
-	writeCommand(0xFF);			//Set outline to green (colour A red)
+	writeCommand(0x00);			//Set outline to green (colour A red)
 	writeCommand(0xFF);			// Colour B (green)
-	writeCommand(0xFF);			// Colour C (blue)
-	writeCommand(0xFF);			//Set fill to green (colour A red)
+	writeCommand(0x00);			// Colour C (blue)
+	writeCommand(0x00);			//Set fill to green (colour A red)
 	writeCommand(0xFF);			// Colour B (green)
-	writeCommand(0xFF);			// Colour C (blue)
+	writeCommand(0x00);			// Colour C (blue)
 
 
 	return 0;
