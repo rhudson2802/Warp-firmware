@@ -1366,6 +1366,9 @@ main(void)
 	uint8_t		i2c_buffer[2];
 
 	SEGGER_RTT_WriteString(0, "Before I2C");
+	OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
+
+	enableI2Cpins(menuI2cPullupValue);
 
 	status = I2C_DRV_MasterReceiveDataBlocking(0,
 							&slave,
@@ -1376,14 +1379,19 @@ main(void)
 							gWarpI2cTimeoutMilliseconds);
 
 	SEGGER_RTT_WriteString(0, "Finish I2C");
+	OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
+
 	if (status != kStatus_I2C_Success){
 		SEGGER_RTT_WriteString(0, "Failed to read INA219\n");
+		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 	} else {
 		SEGGER_RTT_WriteString(0, "We're here\n");
+		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 		SEGGER_RTT_printf(0, "Register value: %d %d\n", i2c_buffer[0], i2c_buffer[1]);
 	}
 	OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 
+	disableI2Cpins();
 
 	SEGGER_RTT_WriteString(0, "Hello world\n");
 	//SEGGER_RTT_printf(0, "The number %d", 1);
