@@ -1365,6 +1365,8 @@ main(void)
 
 	uint8_t		i2c_buffer[2];
 
+	SEGGER_RTT_WriteString(0, "Before I2C");
+
 	status = I2C_DRV_MasterReceiveDataBlocking(0,
 							&slave,
 							0x00 /*Configuration register address*/,
