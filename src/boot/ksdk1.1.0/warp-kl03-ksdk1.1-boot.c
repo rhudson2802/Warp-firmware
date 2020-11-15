@@ -1373,7 +1373,7 @@ main(void)
 							2,
 							gWarpI2cTimeoutMilliseconds);
 
-	SEGGER_RTT_WriteString("Finish I2C");
+	SEGGER_RTT_WriteString(0, "Finish I2C");
 	if (status != kStatus_I2C_Success){
 		SEGGER_RTT_WriteString(0, "Failed to read INA219\n");
 	} else {
