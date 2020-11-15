@@ -1367,7 +1367,7 @@ main(void)
 
 	status = I2C_DRV_MasterReceiveDataBlocking(0,
 							&slave,
-							0x00 /*Configuration register address* /,
+							0x00 / *Configuration register address* /,
 							1,
 							(uint8_t *)i2c_buffer,
 							2,
@@ -1382,7 +1382,7 @@ main(void)
 */
 
 	SEGGER_RTT_WriteString(0, "Hello world");
-	SEGGER_RTT_printf(0, "The number %d", 1);
+	//SEGGER_RTT_printf(0, "The number %d", 1);
 
 	while (1)
 	{
