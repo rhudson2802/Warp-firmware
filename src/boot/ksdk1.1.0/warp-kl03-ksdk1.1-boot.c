@@ -1413,7 +1413,7 @@ main(void)
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 	}
 
-while(1){
+
 
 	status = I2C_DRV_MasterReceiveDataBlocking(0,
 							&slave,
@@ -1432,7 +1432,7 @@ while(1){
 	}
 
 	OSA_TimeDelay(1000);
-}
+
 
 	disableI2Cpins();
 
