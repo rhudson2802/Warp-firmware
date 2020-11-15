@@ -1391,9 +1391,10 @@ main(void)
 	}
 
 
+
 	status = I2C_DRV_MasterReceiveDataBlocking(0,
 							&slave,
-							(uint8_t *) current_register,
+							(uint8_t *) calibration_register,
 							1,
 							(uint8_t *)i2c_buffer,
 							2,
