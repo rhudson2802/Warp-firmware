@@ -1370,6 +1370,23 @@ main(void)
 
 	enableI2Cpins(menuI2cPullupValue);
 
+	status = I2C_DRV_MasterSendDataBlocking(0,
+							&slave,
+							0x05 /*Calibration register address*/,
+							1,
+							0xA000 /*Data to store in calibration*/,
+							2,
+							gWarpI2cTimeoutMilliseconds);
+
+	if (status != kStatus_I2C_Success){
+		SEGGER_RTT_WriteString(0, "Write to calibration register failed\n");
+		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
+	} else{
+		SEGGER_RTT_WriteString(0, "Calibration succeeded\n");
+		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
+	}
+
+
 	status = I2C_DRV_MasterReceiveDataBlocking(0,
 							&slave,
 							0x04 /*Current register address*/,
