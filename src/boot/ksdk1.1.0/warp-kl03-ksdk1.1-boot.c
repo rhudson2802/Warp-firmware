@@ -1356,9 +1356,9 @@ main(void)
 #endif
 
 	devSSD1331init();
-/*
+
 	i2c_status_t	status;
-	i2c_device_t	slave = {
+/*	i2c_device_t	slave = {
 				.address = 0x40,
 				.baudRate_kbps = gWarpI2cBaudRateKbps
 				};
@@ -1372,14 +1372,14 @@ main(void)
 							(uint8_t *)i2c_buffer,
 							2,
 							gWarpI2cTimeoutMilliseconds);
-
+*/
 	if (status != kStatus_I2C_Success){
 		SEGGER_RTT_WriteString(0, "Failed to read INA219");
 	} else {
-		SEGGER_RTT_printf(0, "Register value: %d%d", i2c_buffer[0], i2c_buffer[1]);
+		SEGGER_RTT_printf(0, "Register value: %d%d", 1, 2);/*i2c_buffer[0], i2c_buffer[1]);*/
 	}
 	OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-*/
+
 
 	SEGGER_RTT_WriteString(0, "Hello world");
 	//SEGGER_RTT_printf(0, "The number %d", 1);
