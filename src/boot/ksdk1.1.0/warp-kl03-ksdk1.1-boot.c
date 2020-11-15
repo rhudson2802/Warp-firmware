@@ -1364,6 +1364,10 @@ main(void)
 				};
 
 	uint8_t		i2c_buffer[2];
+	uint8_t		calibration_register[1] = {0x05};
+	uint8_t		current_register[1] = {0x04};
+
+	uint8_t		calibration_value[2] = {0x01, 0x9A};
 
 	SEGGER_RTT_WriteString(0, "Before I2C\n");
 	OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
@@ -1372,9 +1376,9 @@ main(void)
 
 	status = I2C_DRV_MasterSendDataBlocking(0,
 							&slave,
-							0x05 /*Calibration register address*/,
+							(uint8_t *) calibration_register,
 							1,
-							0xA000 /*Data to store in calibration*/,
+							(uint8_t *) calibration_value,
 							2,
 							gWarpI2cTimeoutMilliseconds);
 
@@ -1389,7 +1393,7 @@ main(void)
 
 	status = I2C_DRV_MasterReceiveDataBlocking(0,
 							&slave,
-							0x04 /*Current register address*/,
+							(uint8_t *) current_register,
 							1,
 							(uint8_t *)i2c_buffer,
 							2,
