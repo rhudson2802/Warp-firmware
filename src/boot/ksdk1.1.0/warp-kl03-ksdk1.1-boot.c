@@ -1365,7 +1365,7 @@ main(void)
 
 	uint8_t		i2c_buffer[2];
 
-	SEGGER_RTT_WriteString(0, "Before I2C");
+	SEGGER_RTT_WriteString(0, "Before I2C\n");
 	OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 
 	enableI2Cpins(menuI2cPullupValue);
@@ -1375,10 +1375,10 @@ main(void)
 							0x00 /*Configuration register address*/,
 							1,
 							(uint8_t *)i2c_buffer,
-							1,
+							2,
 							gWarpI2cTimeoutMilliseconds);
 
-	SEGGER_RTT_WriteString(0, "Finish I2C");
+	SEGGER_RTT_WriteString(0, "Finish I2C\n");
 	OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 
 	if (status != kStatus_I2C_Success){
@@ -1387,7 +1387,7 @@ main(void)
 	} else {
 		SEGGER_RTT_WriteString(0, "We're here\n");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-		SEGGER_RTT_printf(0, "Register value: %d %d\n", i2c_buffer[0], i2c_buffer[1]);
+		SEGGER_RTT_printf(0, "Register value: 0x%02x%02x\n", i2c_buffer[0], i2c_buffer[1]);
 	}
 	OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 
