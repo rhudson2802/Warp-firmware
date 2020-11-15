@@ -1374,14 +1374,15 @@ main(void)
 							gWarpI2cTimeoutMilliseconds);
 
 	if (status != kStatus_I2C_Success){
-		SEGGER_RTT_WriteString(0, "Failed to read INA219");
+		SEGGER_RTT_WriteString(0, "Failed to read INA219\n");
 	} else {
-		SEGGER_RTT_printf(0, "Register value: 0x%02x\n", i2c_buffer[0]);
+		SEGGER_RTT_WriteString(0, "We're here\n");
+		SEGGER_RTT_printf(0, "Register value: 0x%p\n", (void *)i2c_buffer[0]);
 	}
 	OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 
 
-	SEGGER_RTT_WriteString(0, "Hello world");
+	SEGGER_RTT_WriteString(0, "Hello world\n");
 	//SEGGER_RTT_printf(0, "The number %d", 1);
 
 	while (1)
