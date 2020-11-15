@@ -1409,9 +1409,30 @@ main(void)
 	} else {
 		SEGGER_RTT_WriteString(0, "We're here\n");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-		SEGGER_RTT_printf(0, "Register value: 0x%02x%02x\n", i2c_buffer[0], i2c_buffer[1]);
+		SEGGER_RTT_printf(0, "Calibration Register value: 0x%02x%02x\n", i2c_buffer[0], i2c_buffer[1]);
+		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 	}
-	OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
+
+while(1){
+
+	status = I2C_DRV_MasterReceiveDataBlocking(0,
+							&slave,
+							(uint8_t *) current_register,
+							1,
+							(uint8_t *) i2c_buffer,
+							2,
+							gWarpI2cTimeoutMilliseconds);
+
+	if (status != kStatus_I2C_Success){
+		SEGGER_RTT_WriteString(0, "Failed to read current register");
+		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
+	} else{
+		SEGGER_RTT_printf(0, "Current register: 0x%02x%02x", i2c_buffer[0], i2c_buffer[1]);
+		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
+	}
+
+	OSA_TimeDelay(1000);
+}
 
 	disableI2Cpins();
 
