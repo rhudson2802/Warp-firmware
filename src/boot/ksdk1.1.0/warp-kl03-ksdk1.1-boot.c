@@ -1356,7 +1356,7 @@ main(void)
 #endif
 
 	devSSD1331init();
-
+/*
 	i2c_status_t	status;
 	i2c_device_t	slave = {
 				.address = 0x40,
@@ -1367,7 +1367,7 @@ main(void)
 
 	status = I2C_DRV_MasterReceiveDataBlocking(0,
 							&slave,
-							0x00 /*Configuration register address*/,
+							0x00 /*Configuration register address* /,
 							1,
 							(uint8_t *)i2c_buffer,
 							2,
@@ -1379,6 +1379,10 @@ main(void)
 		SEGGER_RTT_printf(0, "Register value: %d%d", i2c_buffer[0], i2c_buffer[1]);
 	}
 	OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
+*/
+
+	SEGGER_RTT_WriteString(0, "Hello world");
+	SEGGER_RTT_printf(0, "The number %d", 1);
 
 	while (1)
 	{
