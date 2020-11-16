@@ -72,6 +72,7 @@
 #	include "devCCS811.h"
 #	include "devAMG8834.h"
 #	include "devSSD1331.h"
+#	include "devINA219.h"
 //#	include "devMAX11300.h"
 //#include "devTCS34725.h"
 //#include "devSI4705.h"
@@ -1424,10 +1425,10 @@ main(void)
 							gWarpI2cTimeoutMilliseconds);
 
 	if (status != kStatus_I2C_Success){
-		SEGGER_RTT_WriteString(0, "Failed to read current register");
+		SEGGER_RTT_WriteString(0, "Failed to read current register\n");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 	} else{
-		SEGGER_RTT_printf(0, "Current register: 0x%02x%02x", i2c_buffer[0], i2c_buffer[1]);
+		SEGGER_RTT_printf(0, "Current register: 0x%02x%02x\n", i2c_buffer[0], i2c_buffer[1]);
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 	}
 
@@ -1435,6 +1436,19 @@ main(void)
 
 
 	disableI2Cpins();
+	
+	
+	i2c_device_t	slave = {
+				.address = 0x40,
+				.baudRate_kbps = gWarpI2cBaudRateKbps
+				};
+
+	uint8_t		i2c_buffer[2];
+	
+	setINA219Calibration(slave, 0x3470, menuI2cPullupValue);
+	readRegisterINA219(slave, 0x05, i2c_buffer, menuI2cPullupValue);
+	readRegisterINA219(slave, 0x04, i2c_buffer, menuI2cPullupValue);
+	
 
 	SEGGER_RTT_WriteString(0, "Hello world\n");
 	//SEGGER_RTT_printf(0, "The number %d", 1);
