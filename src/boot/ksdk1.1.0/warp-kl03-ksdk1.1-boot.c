@@ -1365,7 +1365,7 @@ main(void)
 				};
 	uint8_t		i2c_buffer[2];
 
-	uint8_t		ina219_calibration_setting = 0x3470
+	uint8_t		ina219_calibration_setting = 0x3470;
 
 	setINA219Calibration(ina219, ina219_calibration_setting, menuI2cPullupValue);
 	readRegisterINA219(ina219, 0x05, i2c_buffer, menuI2cPullupValue);
