@@ -123,7 +123,7 @@ WarpStatus readCurrentINA219(i2c_device_t slave, uint8_t * i2c_buffer, uint16_t 
 WarpStatus readRegisterINA219(i2c_device_t slave, uint8_t device_register, uint8_t * i2c_buffer, uint16_t menuI2cPullupValue){
 	
 	i2c_status_t	status;
-	uint8_t 		address_byte[1] = device_register;
+	uint8_t 		address_byte[1] = {device_register};
 	
 	enableI2Cpins(menuI2cPullupValue);
 

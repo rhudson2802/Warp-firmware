@@ -1437,14 +1437,14 @@ main(void)
 
 	disableI2Cpins();
 	
-	
+/*	
 	i2c_device_t	slave = {
 				.address = 0x40,
 				.baudRate_kbps = gWarpI2cBaudRateKbps
 				};
 
 	uint8_t		i2c_buffer[2];
-	
+*/	
 	setINA219Calibration(slave, 0x3470, menuI2cPullupValue);
 	readRegisterINA219(slave, 0x05, i2c_buffer, menuI2cPullupValue);
 	readRegisterINA219(slave, 0x04, i2c_buffer, menuI2cPullupValue);
