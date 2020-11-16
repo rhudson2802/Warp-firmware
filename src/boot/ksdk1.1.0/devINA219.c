@@ -82,7 +82,7 @@ WarpStatus setINA219Calibration(i2c_device_t slave, uint16_t calibration_value, 
 										
 	disableI2Cpins();
 
-	return status
+	return status;
 }
 
 
@@ -103,7 +103,7 @@ WarpStatus readCurrentINA219(i2c_device_t slave, uint8_t * i2c_buffer, uint16_t 
 	
 	disableI2Cpins();
 
-	return status
+	return status;
 }
 
 
@@ -125,14 +125,16 @@ WarpStatus readRegisterINA219(i2c_device_t slave, uint8_t device_register, uint8
 	
 	disableI2Cpins();
 	
-	return status
+	return status;
 }
 
 
 void printRegisterINA219(i2c_device_t slave, uint8_t device_register, uint16_t menuI2cPullupValue){
 	uint8_t i2c_buffer[2];
 
-	status = readRegisterINA219(slave, device_register, i2c_buffer, menuI2cPullupValue)
+	WarpStatus status;
+
+	status = readRegisterINA219(slave, device_register, i2c_buffer, menuI2cPullupValue);
 	
 	if (status != kStatus_I2C_Success){
 		SEGGER_RTT_WriteString(0, "Failed to read current register\n");

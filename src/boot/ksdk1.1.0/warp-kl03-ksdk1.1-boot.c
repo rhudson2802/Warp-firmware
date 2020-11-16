@@ -1369,11 +1369,11 @@ main(void)
 
 	ina219_status = setINA219Calibration(ina219, ina219_calibration_setting, menuI2cPullupValue);
 	
-	if (status != kStatus_I2C_Success){
+	if (ina219_status != kStatus_I2C_Success){
 		SEGGER_RTT_WriteString(0, "Failed to calibrate INA219\n");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 	} else{
-		SEGGER_RTT_printf(0, "Successfully calibrated INA219\n", device_register, i2c_buffer[0], i2c_buffer[1]);
+		SEGGER_RTT_printf(0, "Successfully calibrated INA219\n", i2c_buffer[0], i2c_buffer[1]);
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 		
 		printRegisterINA219(ina219, 0x05, menuI2cPullupValue);
