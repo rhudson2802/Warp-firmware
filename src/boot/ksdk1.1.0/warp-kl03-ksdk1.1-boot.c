@@ -1358,7 +1358,7 @@ main(void)
 
 	devSSD1331init();
 	
-	WarpStatus		ina219_status;
+	i2c_status_t	ina219_status;
 	i2c_device_t	ina219 = {
 								.address = 0x40,
 								.baudRate_kbps = gWarpI2cBaudRateKbps

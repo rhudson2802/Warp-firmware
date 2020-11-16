@@ -132,7 +132,7 @@ WarpStatus readRegisterINA219(i2c_device_t slave, uint8_t device_register, uint8
 void printRegisterINA219(i2c_device_t slave, uint8_t device_register, uint16_t menuI2cPullupValue){
 	uint8_t i2c_buffer[2];
 
-	WarpStatus status;
+	i2c_status_t status;
 
 	status = readRegisterINA219(slave, device_register, i2c_buffer, menuI2cPullupValue);
 	
