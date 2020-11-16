@@ -1382,7 +1382,7 @@ main(void)
 
 	
 	for (int i=0; i<10; i++){
-		readRegisterINA219(ina219, 0x04, i2c_buffer, menuI2cPullupValue);
+		printRegisterINA219(ina219, 0x04, menuI2cPullupValue);
 		OSA_TimeDelay(1);
 	}
 	
