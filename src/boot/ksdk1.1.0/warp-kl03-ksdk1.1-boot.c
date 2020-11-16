@@ -1367,7 +1367,7 @@ main(void)
 	uint8_t		calibration_register[1] = {0x05};
 	uint8_t		current_register[1] = {0x04};
 
-	uint8_t		calibration_value[2] = {0x01, 0x9A};
+	uint8_t		calibration_value[2] = {0x34, 0x6D};
 
 	SEGGER_RTT_WriteString(0, "Before I2C\n");
 	OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
