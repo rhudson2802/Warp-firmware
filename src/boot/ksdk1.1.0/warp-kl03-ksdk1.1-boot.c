@@ -1368,11 +1368,15 @@ main(void)
 	uint8_t		ina219_calibration_setting = 0x3470;
 
 	setINA219Calibration(ina219, ina219_calibration_setting, menuI2cPullupValue);
+	OSA_TimeDelay(1);
 	readRegisterINA219(ina219, 0x05, i2c_buffer, menuI2cPullupValue);
+	OSA_TimeDelay(1);
 	readRegisterINA219(ina219, 0x04, i2c_buffer, menuI2cPullupValue);
-	
+	OSA_TimeDelay(1);
+
 	for (int i=0; i<10; i++){
 		readRegisterINA219(ina219, 0x04, i2c_buffer, menuI2cPullupValue);
+		OSA_TimeDelay(1);
 	}
 	
 
