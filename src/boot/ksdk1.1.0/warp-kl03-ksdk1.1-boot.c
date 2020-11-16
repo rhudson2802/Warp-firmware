@@ -1357,97 +1357,23 @@ main(void)
 #endif
 
 	devSSD1331init();
-
-	i2c_status_t	status;
-	i2c_device_t	slave = {
-				.address = 0x40,
-				.baudRate_kbps = gWarpI2cBaudRateKbps
-				};
-
-	uint8_t		i2c_buffer[2];
-	uint8_t		calibration_register[1] = {0x05};
-	uint8_t		current_register[1] = {0x04};
-
-	uint8_t		calibration_value[2] = {0x34, 0x6D};
-
-	SEGGER_RTT_WriteString(0, "Before I2C\n");
-	OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-
-	enableI2Cpins(menuI2cPullupValue);
-
-	status = I2C_DRV_MasterSendDataBlocking(0,
-							&slave,
-							(uint8_t *) calibration_register,
-							1,
-							(uint8_t *) calibration_value,
-							2,
-							gWarpI2cTimeoutMilliseconds);
-
-	if (status != kStatus_I2C_Success){
-		SEGGER_RTT_WriteString(0, "Write to calibration register failed\n");
-		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-	} else{
-		SEGGER_RTT_WriteString(0, "Calibration succeeded\n");
-		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-	}
-
-
-
-	status = I2C_DRV_MasterReceiveDataBlocking(0,
-							&slave,
-							(uint8_t *) calibration_register,
-							1,
-							(uint8_t *)i2c_buffer,
-							2,
-							gWarpI2cTimeoutMilliseconds);
-
-	SEGGER_RTT_WriteString(0, "Finish I2C\n");
-	OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-
-	if (status != kStatus_I2C_Success){
-		SEGGER_RTT_WriteString(0, "Failed to read INA219\n");
-		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-	} else {
-		SEGGER_RTT_WriteString(0, "We're here\n");
-		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-		SEGGER_RTT_printf(0, "Calibration Register value: 0x%02x%02x\n", i2c_buffer[0], i2c_buffer[1]);
-		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-	}
-
-
-
-	status = I2C_DRV_MasterReceiveDataBlocking(0,
-							&slave,
-							(uint8_t *) current_register,
-							1,
-							(uint8_t *) i2c_buffer,
-							2,
-							gWarpI2cTimeoutMilliseconds);
-
-	if (status != kStatus_I2C_Success){
-		SEGGER_RTT_WriteString(0, "Failed to read current register\n");
-		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-	} else{
-		SEGGER_RTT_printf(0, "Current register: 0x%02x%02x\n", i2c_buffer[0], i2c_buffer[1]);
-		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-	}
-
-	OSA_TimeDelay(1000);
-
-
-	disableI2Cpins();
 	
-/*	
-	i2c_device_t	slave = {
+	
+	i2c_device_t	ina219 = {
 				.address = 0x40,
 				.baudRate_kbps = gWarpI2cBaudRateKbps
 				};
-
 	uint8_t		i2c_buffer[2];
-*/	
-	setINA219Calibration(slave, 0x3470, menuI2cPullupValue);
-	readRegisterINA219(slave, 0x05, i2c_buffer, menuI2cPullupValue);
-	readRegisterINA219(slave, 0x04, i2c_buffer, menuI2cPullupValue);
+
+	uint8_t		ina219_calibration_setting = 0x3470
+
+	setINA219Calibration(ina219, ina219_calibration_setting, menuI2cPullupValue);
+	readRegisterINA219(ina219, 0x05, i2c_buffer, menuI2cPullupValue);
+	readRegisterINA219(ina219, 0x04, i2c_buffer, menuI2cPullupValue);
+	
+	for (int i=0; i<10; i++){
+		readRegisterINA219(ina219, 0x04, i2c_buffer, menuI2cPullupValue);
+	}
 	
 
 	SEGGER_RTT_WriteString(0, "Hello world\n");
