@@ -1365,7 +1365,7 @@ main(void)
 							};
 	uint8_t			i2c_buffer[2];
 
-	uint8_t		ina219_calibration_setting = 0x3470;
+	uint16_t		ina219_calibration_setting = 0x3470;
 
 	ina219_status = setINA219Calibration(ina219, ina219_calibration_setting, menuI2cPullupValue);
 	
@@ -1380,11 +1380,11 @@ main(void)
 		printRegisterINA219(ina219, 0x04, menuI2cPullupValue);
 	}
 
-	/*
+	
 	for (int i=0; i<10; i++){
 		readRegisterINA219(ina219, 0x04, i2c_buffer, menuI2cPullupValue);
 		OSA_TimeDelay(1);
-	}*/
+	}
 	
 
 	SEGGER_RTT_WriteString(0, "Hello world\n");
