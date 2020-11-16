@@ -82,13 +82,7 @@ WarpStatus setINA219Calibration(i2c_device_t slave, uint16_t calibration_value, 
 										
 	disableI2Cpins();
 
-	if (status != kStatus_I2C_Success){
-		SEGGER_RTT_WriteString(0, "Write to calibration register failed\n");
-		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-	} else{
-		SEGGER_RTT_WriteString(0, "Calibration succeeded\n");
-		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-	}
+	return status
 }
 
 
@@ -109,13 +103,7 @@ WarpStatus readCurrentINA219(i2c_device_t slave, uint8_t * i2c_buffer, uint16_t 
 	
 	disableI2Cpins();
 
-	if (status != kStatus_I2C_Success){
-		SEGGER_RTT_WriteString(0, "Failed to read current register\n");
-		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-	} else{
-		SEGGER_RTT_printf(0, "Current register: 0x%02x%02x\n", i2c_buffer[0], i2c_buffer[1]);
-		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-	}
+	return status
 }
 
 
@@ -136,7 +124,16 @@ WarpStatus readRegisterINA219(i2c_device_t slave, uint8_t device_register, uint8
 											gWarpI2cTimeoutMilliseconds);
 	
 	disableI2Cpins();
+	
+	return status
+}
 
+
+void printRegisterINA219(i2c_device_t slave, uint8_t device_register, uint16_t menuI2cPullupValue){
+	uint8_t i2c_buffer[2];
+
+	status = readRegisterINA219(slave, device_register, i2c_buffer, menuI2cPullupValue)
+	
 	if (status != kStatus_I2C_Success){
 		SEGGER_RTT_WriteString(0, "Failed to read current register\n");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
@@ -144,5 +141,4 @@ WarpStatus readRegisterINA219(i2c_device_t slave, uint8_t device_register, uint8
 		SEGGER_RTT_printf(0, "Register 0x%02x Value: 0x%02x%02x\n", device_register, i2c_buffer[0], i2c_buffer[1]);
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 	}
-	
 }

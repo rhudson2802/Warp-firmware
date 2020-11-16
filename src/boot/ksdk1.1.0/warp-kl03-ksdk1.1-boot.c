@@ -1358,26 +1358,33 @@ main(void)
 
 	devSSD1331init();
 	
-	
+	WarpStatus		ina219_status;
 	i2c_device_t	ina219 = {
-				.address = 0x40,
-				.baudRate_kbps = gWarpI2cBaudRateKbps
-				};
-	uint8_t		i2c_buffer[2];
+								.address = 0x40,
+								.baudRate_kbps = gWarpI2cBaudRateKbps
+							};
+	uint8_t			i2c_buffer[2];
 
 	uint8_t		ina219_calibration_setting = 0x3470;
 
-	setINA219Calibration(ina219, ina219_calibration_setting, menuI2cPullupValue);
-	OSA_TimeDelay(1);
-	readRegisterINA219(ina219, 0x05, i2c_buffer, menuI2cPullupValue);
-	OSA_TimeDelay(1);
-	readRegisterINA219(ina219, 0x04, i2c_buffer, menuI2cPullupValue);
-	OSA_TimeDelay(1);
+	ina219_status = setINA219Calibration(ina219, ina219_calibration_setting, menuI2cPullupValue);
+	
+	if (status != kStatus_I2C_Success){
+		SEGGER_RTT_WriteString(0, "Failed to calibrate INA219\n");
+		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
+	} else{
+		SEGGER_RTT_printf(0, "Successfully calibrated INA219\n", device_register, i2c_buffer[0], i2c_buffer[1]);
+		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
+		
+		printRegisterINA219(ina219, 0x05, menuI2cPullupValue);
+		printRegisterINA219(ina219, 0x04, menuI2cPullupValue);
+	}
 
+	/*
 	for (int i=0; i<10; i++){
 		readRegisterINA219(ina219, 0x04, i2c_buffer, menuI2cPullupValue);
 		OSA_TimeDelay(1);
-	}
+	}*/
 	
 
 	SEGGER_RTT_WriteString(0, "Hello world\n");
