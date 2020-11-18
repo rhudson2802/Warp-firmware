@@ -1409,8 +1409,9 @@ main(void)
 	uint32_t	current_value;
 
 	for (int i=0; i<num_readings; i++){
-		current_value = readCurrentINA219(ina219, menuI2cPullupValue);
-		SEGGER_RTT_printf(0, "Current: %lu uA\n", current_value);
+		//current_value = readCurrentINA219(ina219, menuI2cPullupValue);
+		//SEGGER_RTT_printf(0, "Current: %lu uA\n", current_value);
+		printRegisterINA219(ina219, 0x04, menuI2cPullupValue);
 	}
 
 	while (1)
