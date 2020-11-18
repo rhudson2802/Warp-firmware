@@ -75,7 +75,7 @@ i2c_status_t initINA219(i2c_device_t slave, uint16_t menuI2cPullupValue){
 											
 		disableI2Cpins();
 		
-		return i2c_status_t
+		return status;
 }
 
 

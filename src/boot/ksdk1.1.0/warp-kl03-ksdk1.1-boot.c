@@ -1366,7 +1366,7 @@ main(void)
 	uint8_t			i2c_buffer[2];
 	uint16_t		ina219_calibration_setting = 0;
 
-	ina219_status = initINA219(slave, menuI2cPullupValue);
+	ina219_status = initINA219(ina219, menuI2cPullupValue);
 	
 	if (ina219_status != kStatus_I2C_Success){
 		SEGGER_RTT_WriteString(0, "Failed to configure INA219\n");
