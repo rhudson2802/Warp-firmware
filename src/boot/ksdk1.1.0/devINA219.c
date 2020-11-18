@@ -114,13 +114,13 @@ uint32_t readCurrentINA219(i2c_device_t slave, uint16_t menuI2cPullupValue){
 	uint16_t		calibration_register = 0;
 	uint32_t		current_uA;
 	
-	status = readRegisterINA219(slave, {0x04}, i2c_buffer, menuI2cPullupValue);
+	status = readRegisterINA219(slave, 0x04, i2c_buffer, menuI2cPullupValue);
 
 	if (status == kStatus_I2C_Success){
 		current_register = i2c_buffer[1];
 		current_register |= (i2c_buffer[0] << 8);
 		
-		status = readRegisterINA219(slave, {0x05}, i2c_buffer, menuI2cPullupValue);
+		status = readRegisterINA219(slave, 0x05, i2c_buffer, menuI2cPullupValue);
 		
 		if (status == kStatus_I2C_Success){
 			calibration_register = i2c_buffer[1];
