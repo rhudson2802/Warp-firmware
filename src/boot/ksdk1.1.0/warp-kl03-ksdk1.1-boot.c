@@ -1405,11 +1405,11 @@ main(void)
 	SEGGER_RTT_printf(0, "\n%u readings required\n", num_readings);
 	OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 
-	/*
+
 	for (int i=0; i<num_readings; i++){
 		SEGGER_RTT_printf(0, "Current: %lu uA", readCurrentINA219(ina219, menuI2cPullupValue));
 	}
-*/
+
 	while (1)
 	{
 		/*
