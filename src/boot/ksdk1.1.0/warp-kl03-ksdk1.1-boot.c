@@ -1406,7 +1406,7 @@ main(void)
 	OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 
 
-	for (int i=0; i<num_readings; i++){
+	for (int i=0; i<1000; i++){
 		SEGGER_RTT_printf(0, "Current: %lu uA", readCurrentINA219(ina219, menuI2cPullupValue));
 	}
 
