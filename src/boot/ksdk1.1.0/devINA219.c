@@ -148,7 +148,8 @@ void printRegisterINA219(i2c_device_t slave, uint8_t device_register, uint16_t m
 
 uint32_t convert_current_uA(uint16_t current_register, uint16_t calibration_register){
 	uint32_t	current_LSB = 0.04096*1000000/(calibration_register*0.1);	/*Gives current LSB in uA*/
-	return current_LSB * current_register;
+	uint32_t	result = current_LSB * current_register;
+	return result;
 }
 
 
@@ -158,6 +159,8 @@ uint32_t readCurrentINA219(i2c_device_t slave, uint16_t menuI2cPullupValue){
 	uint8_t			i2c_buffer[2];
 	uint16_t		current_register = 0;
 	uint16_t		calibration_register = 0;
+
+	uint32_t		current;
 
 	status = readRegisterINA219(slave, 0x04, i2c_buffer, menuI2cPullupValue);
 
@@ -171,7 +174,8 @@ uint32_t readCurrentINA219(i2c_device_t slave, uint16_t menuI2cPullupValue){
 			calibration_register = i2c_buffer[1];
 			calibration_register |= (i2c_buffer[0] << 8);
 		
-			return convert_current_uA(current_register, calibration_register);
+			current = convert_current_uA(current_register, calibration_register);
+			return current;
 		}
 	}
 	return 0;
