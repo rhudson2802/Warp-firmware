@@ -1366,6 +1366,18 @@ main(void)
 	uint8_t			i2c_buffer[2];
 	uint16_t		ina219_calibration_setting = 0;
 
+	ina219_status = initINA219(slave, menuI2cPullupValue);
+	
+	if (ina219_status != kStatus_I2C_Success){
+		SEGGER_RTT_WriteString(0, "Failed to configure INA219\n");
+		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
+	} else{
+		SEGGER_RTT_WriteString(0, "Successfully configured INA219\n");
+		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
+		
+		printRegisterINA219(ina219, 0x00, menuI2cPullupValue);
+	}
+
 
 	SEGGER_RTT_WriteString(0, "Enter INA219 calibration setting in hex (e.g. 3470): ");
 	ina219_calibration_setting = readHexByte() << 8;
@@ -1379,7 +1391,7 @@ main(void)
 		SEGGER_RTT_WriteString(0, "Failed to calibrate INA219\n");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 	} else{
-		SEGGER_RTT_printf(0, "Successfully calibrated INA219\n", i2c_buffer[0], i2c_buffer[1]);
+		SEGGER_RTT_WriteString(0, "Successfully calibrated INA219\n");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 		
 		printRegisterINA219(ina219, 0x05, menuI2cPullupValue);

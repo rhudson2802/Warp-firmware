@@ -58,8 +58,28 @@ extern volatile uint32_t		gWarpMenuPrintDelayMilliseconds;
 
 
 
+i2c_status_t initINA219(i2c_device_t slave, uint16_t menuI2cPullupValue){
+		i2c_status_t	status;
+		uint8_t			configuration_register[1] = {0x00};
+		uint8_t			configuration_value[2] = {0x01, 0x9F};
+		
+		enableI2Cpins(menuI2cPullupValue);
 
-WarpStatus setINA219Calibration(i2c_device_t slave, uint16_t calibration_value, uint16_t menuI2cPullupValue){
+		status = I2C_DRV_MasterSendDataBlocking(0,
+											&slave,
+											configuration_register,
+											1,
+											configuration_value,
+											2,
+											gWarpI2cTimeoutMilliseconds);
+											
+		disableI2Cpins();
+		
+		return i2c_status_t
+}
+
+
+i2c_status_t setINA219Calibration(i2c_device_t slave, uint16_t calibration_value, uint16_t menuI2cPullupValue){
 	
 	i2c_status_t	status;
 	uint8_t			calibration_register[1] = {0x05};
@@ -86,7 +106,7 @@ WarpStatus setINA219Calibration(i2c_device_t slave, uint16_t calibration_value, 
 }
 
 
-WarpStatus readCurrentINA219(i2c_device_t slave, uint8_t * i2c_buffer, uint16_t menuI2cPullupValue){
+i2c_status_t readCurrentINA219(i2c_device_t slave, uint8_t * i2c_buffer, uint16_t menuI2cPullupValue){
 
 	i2c_status_t	status;
 	uint8_t 		current_register[1] = {0x04}; 
@@ -108,7 +128,7 @@ WarpStatus readCurrentINA219(i2c_device_t slave, uint8_t * i2c_buffer, uint16_t 
 
 
 
-WarpStatus readRegisterINA219(i2c_device_t slave, uint8_t device_register, uint8_t * i2c_buffer, uint16_t menuI2cPullupValue){
+i2c_status_t readRegisterINA219(i2c_device_t slave, uint8_t device_register, uint8_t * i2c_buffer, uint16_t menuI2cPullupValue){
 	
 	i2c_status_t	status;
 	uint8_t 		address_byte[1] = {device_register};
