@@ -1407,7 +1407,7 @@ main(void)
 
 	
 	for (int i=0; i<num_readings; i++){
-		printRegisterINA219(ina219, 0x04, menuI2cPullupValue);
+		SEGGER_RTT_printf(0, "Current: %lu uA", readCurrentINA219(ina219, menuI2cPullupValue);
 	}
 
 	while (1)
