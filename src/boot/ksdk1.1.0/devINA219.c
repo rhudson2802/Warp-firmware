@@ -106,33 +106,6 @@ i2c_status_t setINA219Calibration(i2c_device_t slave, uint16_t calibration_value
 }
 
 
-uint32_t readCurrentINA219(i2c_device_t slave, uint16_t menuI2cPullupValue){
-
-	i2c_status_t	status;
-	uint8_t			i2c_buffer[2];
-	uint16_t		current_register = 0;
-	uint16_t		calibration_register = 0;
-	uint32_t		current_uA;
-	
-	status = readRegisterINA219(slave, 0x04, i2c_buffer, menuI2cPullupValue);
-
-	if (status == kStatus_I2C_Success){
-		current_register = i2c_buffer[1];
-		current_register |= (i2c_buffer[0] << 8);
-		
-		status = readRegisterINA219(slave, 0x05, i2c_buffer, menuI2cPullupValue);
-		
-		if (status == kStatus_I2C_Success){
-			calibration_register = i2c_buffer[1];
-			calibration_register |= (i2c_buffer[0] << 8);
-		
-			return convert_current_uA(current_register, calibration_register);
-		}
-	}
-	return -1;
-}
-
-
 
 i2c_status_t readRegisterINA219(i2c_device_t slave, uint8_t device_register, uint8_t * i2c_buffer, uint16_t menuI2cPullupValue){
 	
@@ -176,4 +149,31 @@ void printRegisterINA219(i2c_device_t slave, uint8_t device_register, uint16_t m
 uint32_t convert_current_uA(uint16_t current_register, uint16_t calibration_register){
 	uint16_t	current_LSB = 0.04096*1000000/(calibration_register*0.1);	/*Gives current LSB in uA*/
 	return current_LSB * current_register;
+}
+
+
+uint32_t readCurrentINA219(i2c_device_t slave, uint16_t menuI2cPullupValue){
+
+	i2c_status_t	status;
+	uint8_t			i2c_buffer[2];
+	uint16_t		current_register = 0;
+	uint16_t		calibration_register = 0;
+	uint32_t		current_uA;
+	
+	status = readRegisterINA219(slave, 0x04, i2c_buffer, menuI2cPullupValue);
+
+	if (status == kStatus_I2C_Success){
+		current_register = i2c_buffer[1];
+		current_register |= (i2c_buffer[0] << 8);
+		
+		status = readRegisterINA219(slave, 0x05, i2c_buffer, menuI2cPullupValue);
+		
+		if (status == kStatus_I2C_Success){
+			calibration_register = i2c_buffer[1];
+			calibration_register |= (i2c_buffer[0] << 8);
+		
+			return convert_current_uA(current_register, calibration_register);
+		}
+	}
+	return -1;
 }
