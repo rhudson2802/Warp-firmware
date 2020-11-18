@@ -1364,8 +1364,14 @@ main(void)
 								.baudRate_kbps = gWarpI2cBaudRateKbps
 							};
 	uint8_t			i2c_buffer[2];
+	uint16_t		ina219_calibration_setting = 0;
 
-	uint16_t		ina219_calibration_setting = 0x3470;
+
+	SEGGER_RTT_WriteString(0, "Enter INA219 calibration setting in hex (e.g. 3470): ");
+	ina219_calibration_setting = readHexByte() << 8;
+	ina219_calibration_setting = readHexByte();
+	SEGGER_RTT_WriteString(0, "\nEntered 0x%04x\n");
+	OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 
 	ina219_status = setINA219Calibration(ina219, ina219_calibration_setting, menuI2cPullupValue);
 	
