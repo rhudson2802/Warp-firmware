@@ -147,7 +147,7 @@ void printRegisterINA219(i2c_device_t slave, uint8_t device_register, uint16_t m
 
 
 uint32_t convert_current_uA(uint16_t current_register, uint16_t calibration_register){
-	uint16_t	current_LSB = 0.04096*1000000/(calibration_register*0.1);	/*Gives current LSB in uA*/
+	uint32_t	current_LSB = 0.04096*1000000/(calibration_register*0.1);	/*Gives current LSB in uA*/
 	return current_LSB * current_register;
 }
 
