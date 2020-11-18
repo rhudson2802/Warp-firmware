@@ -59,7 +59,7 @@ extern volatile uint32_t		gWarpMenuPrintDelayMilliseconds;
 
 
 i2c_status_t initINA219(i2c_device_t slave, uint16_t menuI2cPullupValue){
-		i2c_status_t	status;
+		i2c_status_t		status;
 		uint8_t			configuration_register[1] = {0x00};
 		uint8_t			configuration_value[2] = {0x01, 0x9F};
 		
@@ -81,7 +81,7 @@ i2c_status_t initINA219(i2c_device_t slave, uint16_t menuI2cPullupValue){
 
 i2c_status_t setINA219Calibration(i2c_device_t slave, uint16_t calibration_value, uint16_t menuI2cPullupValue){
 	
-	i2c_status_t	status;
+	i2c_status_t		status;
 	uint8_t			calibration_register[1] = {0x05};
 	
 	uint8_t			payload[2];
@@ -110,7 +110,7 @@ i2c_status_t setINA219Calibration(i2c_device_t slave, uint16_t calibration_value
 i2c_status_t readRegisterINA219(i2c_device_t slave, uint8_t device_register, uint8_t * i2c_buffer, uint16_t menuI2cPullupValue){
 	
 	i2c_status_t	status;
-	uint8_t 		address_byte[1] = {device_register};
+	uint8_t 	address_byte[1] = {device_register};
 	
 	enableI2Cpins(menuI2cPullupValue);
 
@@ -154,12 +154,11 @@ uint32_t convert_current_uA(uint16_t current_register, uint16_t calibration_regi
 
 uint32_t readCurrentINA219(i2c_device_t slave, uint16_t menuI2cPullupValue){
 
-	i2c_status_t	status;
+	i2c_status_t		status;
 	uint8_t			i2c_buffer[2];
 	uint16_t		current_register = 0;
 	uint16_t		calibration_register = 0;
-	uint32_t		current_uA;
-	
+
 	status = readRegisterINA219(slave, 0x04, i2c_buffer, menuI2cPullupValue);
 
 	if (status == kStatus_I2C_Success){
