@@ -1398,18 +1398,17 @@ main(void)
 		printRegisterINA219(ina219, 0x04, menuI2cPullupValue);
 	}
 
-	/*
+	
 	uint16_t	num_readings;
 	SEGGER_RTT_WriteString(0, "Enter number of current measurements required (e.g. 1000): ");
 	num_readings = read4digits();
 	SEGGER_RTT_printf(0, "\n%u readings required\n", num_readings);
 	OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 
-	*/
 
 	uint32_t	current_value;
 
-	for (int i=0; i<1000; i++){
+	for (int i=0; i<num_readings; i++){
 		current_value = 0; //readCurrentINA219(ina219, menuI2cPullupValue);
 		SEGGER_RTT_printf(0, "Current: %lu uA", current_value);
 	}
