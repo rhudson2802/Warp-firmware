@@ -1410,7 +1410,7 @@ main(void)
 	uint32_t	current_value;
 
 	for (int i=0; i<1000; i++){
-		current_value = 0 //readCurrentINA219(ina219, menuI2cPullupValue);
+		current_value = 0; //readCurrentINA219(ina219, menuI2cPullupValue);
 		SEGGER_RTT_printf(0, "Current: %lu uA", current_value);
 	}
 
