@@ -1369,8 +1369,8 @@ main(void)
 
 	SEGGER_RTT_WriteString(0, "Enter INA219 calibration setting in hex (e.g. 3470): ");
 	ina219_calibration_setting = readHexByte() << 8;
-	ina219_calibration_setting = readHexByte();
-	SEGGER_RTT_WriteString(0, "\nEntered 0x%04x\n");
+	ina219_calibration_setting |= readHexByte();
+	SEGGER_RTT_WriteString(0, "\nEntered 0x%04x\n", ina219_calibration_setting);
 	OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 
 	ina219_status = setINA219Calibration(ina219, ina219_calibration_setting, menuI2cPullupValue);
