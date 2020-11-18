@@ -1379,7 +1379,7 @@ main(void)
 	}
 
 
-	SEGGER_RTT_WriteString(0, "Enter INA219 calibration setting in hex (e.g. 3470): ");
+	SEGGER_RTT_WriteString(0, "Enter INA219 calibration setting in hex (e.g. 5E1E): ");
 	ina219_calibration_setting = readHexByte() << 8;
 	ina219_calibration_setting |= readHexByte();
 	SEGGER_RTT_printf(0, "\nEntered 0x%04x\n", ina219_calibration_setting);
@@ -1398,15 +1398,17 @@ main(void)
 		printRegisterINA219(ina219, 0x04, menuI2cPullupValue);
 	}
 
-	
-	for (int i=0; i<10; i++){
-		printRegisterINA219(ina219, 0x04, menuI2cPullupValue);
-		OSA_TimeDelay(1);
-	}
-	
 
-	SEGGER_RTT_WriteString(0, "Hello world\n");
-	//SEGGER_RTT_printf(0, "The number %d", 1);
+	uint16_t	num_readings;
+	SEGGER_RTT_WriteString(0, "Enter number of current measurements required (e.g. 1000): ");
+	num_readings = read4digits();
+	SEGGER_RTT_printf(0, "\n%u readings required\n", num_readings);
+	OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
+
+	
+	for (int i=0; i<num_readings; i++){
+		printRegisterINA219(ina219, 0x04, menuI2cPullupValue);
+	}
 
 	while (1)
 	{
