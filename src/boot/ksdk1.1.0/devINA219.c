@@ -171,7 +171,7 @@ uint32_t readCurrentINA219(i2c_device_t slave, uint16_t menuI2cPullupValue){
 			calibration_register = i2c_buffer[1];
 			calibration_register |= (i2c_buffer[0] << 8);
 		
-			return convert_current_uA(current_register, calibration_register);
+return 1;//			return convert_current_uA(current_register, calibration_register);
 		}
 	}
 	return 0;
