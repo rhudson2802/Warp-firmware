@@ -31,1021 +31,1015 @@ Booting Warp, in 3... 2... 1...
 
 Successfully configured INA219
 Register 0x00 Value: 0x019F
-Enter INA219 calibration setting in hex (e.g. 5E1E): 
-
-
-
-Booting Warp, in 3... 2... 1...
-
-Successfully configured INA219
-Register 0x00 Value: 0x019F
-Enter INA219 calibration setting in hex (e.g. 5E1E): 1000
+Enter INA219 current LSB setting in uA (e.g. 0100 for 100uA): 0100
+Entered 100
+Enter INA219 calibration register setting in hex (e.g. 0FFF): 1000
 Entered 0x1000
 Successfully calibrated INA219
 Register 0x05 Value: 0x1000
-Register 0x04 Value: 0x0283
+Register 0x04 Value: 0x0286
 Enter number of current measurements required (e.g. 1000): 1000
 1000 readings required
-Register 0x04 Value: 0x0273
-Register 0x04 Value: 0x0281
-Register 0x04 Value: 0x027A
-Register 0x04 Value: 0x0291
-Register 0x04 Value: 0x026E
-Register 0x04 Value: 0x027F
-Register 0x04 Value: 0x028B
-Register 0x04 Value: 0x0294
-Register 0x04 Value: 0x026F
-Register 0x04 Value: 0x0289
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x0288
-Register 0x04 Value: 0x025C
-Register 0x04 Value: 0x0275
-Register 0x04 Value: 0x028E
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x0261
-Register 0x04 Value: 0x0286
-Register 0x04 Value: 0x0286
-Register 0x04 Value: 0x028F
-Register 0x04 Value: 0x0264
-Register 0x04 Value: 0x0277
-Register 0x04 Value: 0x0276
-Register 0x04 Value: 0x028F
-Register 0x04 Value: 0x0260
-Register 0x04 Value: 0x0267
-Register 0x04 Value: 0x028D
-Register 0x04 Value: 0x0284
-Register 0x04 Value: 0x0262
-Register 0x04 Value: 0x0274
-Register 0x04 Value: 0x0279
-Register 0x04 Value: 0x0294
-Register 0x04 Value: 0x0288
-Register 0x04 Value: 0x026F
-Register 0x04 Value: 0x027C
-Register 0x04 Value: 0x028F
-Register 0x04 Value: 0x0275
-Register 0x04 Value: 0x0269
-Register 0x04 Value: 0x0282
-Register 0x04 Value: 0x0284
-Register 0x04 Value: 0x027A
-Register 0x04 Value: 0x0271
-Register 0x04 Value: 0x027A
-Register 0x04 Value: 0x028C
-Register 0x04 Value: 0x026B
-Register 0x04 Value: 0x026A
-Register 0x04 Value: 0x028B
-Register 0x04 Value: 0x027C
-Register 0x04 Value: 0x0271
-Register 0x04 Value: 0x026E
-Register 0x04 Value: 0x027B
-Register 0x04 Value: 0x0293
-Register 0x04 Value: 0x026F
-Register 0x04 Value: 0x0271
-Register 0x04 Value: 0x0285
-Register 0x04 Value: 0x0286
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x026E
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x027E
-Register 0x04 Value: 0x029B
-Register 0x04 Value: 0x026D
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x0290
-Register 0x04 Value: 0x0293
-Register 0x04 Value: 0x0263
-Register 0x04 Value: 0x028D
-Register 0x04 Value: 0x0298
-Register 0x04 Value: 0x0295
-Register 0x04 Value: 0x025D
-Register 0x04 Value: 0x027E
-Register 0x04 Value: 0x0286
-Register 0x04 Value: 0x028D
-Register 0x04 Value: 0x025D
-Register 0x04 Value: 0x0288
-Register 0x04 Value: 0x0279
-Register 0x04 Value: 0x028A
-Register 0x04 Value: 0x0264
-Register 0x04 Value: 0x0272
-Register 0x04 Value: 0x0278
-Register 0x04 Value: 0x0282
-Register 0x04 Value: 0x025E
-Register 0x04 Value: 0x0279
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x025F
-Register 0x04 Value: 0x026D
-Register 0x04 Value: 0x028D
-Register 0x04 Value: 0x0288
-Register 0x04 Value: 0x0272
-Register 0x04 Value: 0x026C
-Register 0x04 Value: 0x027C
-Register 0x04 Value: 0x028E
-Register 0x04 Value: 0x027B
-Register 0x04 Value: 0x026E
-Register 0x04 Value: 0x027A
-Register 0x04 Value: 0x0295
-Register 0x04 Value: 0x0278
-Register 0x04 Value: 0x026D
-Register 0x04 Value: 0x0281
-Register 0x04 Value: 0x028A
-Register 0x04 Value: 0x0282
-Register 0x04 Value: 0x0268
-Register 0x04 Value: 0x028A
-Register 0x04 Value: 0x0286
-Register 0x04 Value: 0x026A
-Register 0x04 Value: 0x026B
-Register 0x04 Value: 0x027C
-Register 0x04 Value: 0x028D
-Register 0x04 Value: 0x0292
-Register 0x04 Value: 0x0276
-Register 0x04 Value: 0x028A
-Register 0x04 Value: 0x028C
-Register 0x04 Value: 0x0291
-Register 0x04 Value: 0x026F
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x026E
-Register 0x04 Value: 0x027F
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x0296
-Register 0x04 Value: 0x025D
-Register 0x04 Value: 0x027C
-Register 0x04 Value: 0x0280
-Register 0x04 Value: 0x0286
-Register 0x04 Value: 0x0260
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x0290
-Register 0x04 Value: 0x028B
-Register 0x04 Value: 0x025D
-Register 0x04 Value: 0x026A
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x0290
-Register 0x04 Value: 0x025D
-Register 0x04 Value: 0x0273
-Register 0x04 Value: 0x0277
-Register 0x04 Value: 0x028B
-Register 0x04 Value: 0x0260
-Register 0x04 Value: 0x0277
-Register 0x04 Value: 0x0286
-Register 0x04 Value: 0x028A
-Register 0x04 Value: 0x0265
-Register 0x04 Value: 0x026D
-Register 0x04 Value: 0x0276
-Register 0x04 Value: 0x027C
-Register 0x04 Value: 0x0273
-Register 0x04 Value: 0x0273
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x0298
-Register 0x04 Value: 0x0272
-Register 0x04 Value: 0x026E
-Register 0x04 Value: 0x028F
-Register 0x04 Value: 0x028E
-Register 0x04 Value: 0x0277
-Register 0x04 Value: 0x026C
-Register 0x04 Value: 0x027A
-Register 0x04 Value: 0x0292
-Register 0x04 Value: 0x0273
-Register 0x04 Value: 0x0268
-Register 0x04 Value: 0x028A
-Register 0x04 Value: 0x027F
-Register 0x04 Value: 0x0274
-Register 0x04 Value: 0x026E
-Register 0x04 Value: 0x0281
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x027E
-Register 0x04 Value: 0x0266
-Register 0x04 Value: 0x0281
-Register 0x04 Value: 0x0292
-Register 0x04 Value: 0x0285
-Register 0x04 Value: 0x026A
-Register 0x04 Value: 0x0276
-Register 0x04 Value: 0x0284
-Register 0x04 Value: 0x0292
-Register 0x04 Value: 0x025C
-Register 0x04 Value: 0x0281
-Register 0x04 Value: 0x027E
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x0258
-Register 0x04 Value: 0x0284
-Register 0x04 Value: 0x0284
-Register 0x04 Value: 0x028D
-Register 0x04 Value: 0x0261
-Register 0x04 Value: 0x0270
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x028C
-Register 0x04 Value: 0x0260
-Register 0x04 Value: 0x0274
-Register 0x04 Value: 0x0286
-Register 0x04 Value: 0x028A
-Register 0x04 Value: 0x0263
-Register 0x04 Value: 0x026A
-Register 0x04 Value: 0x0284
-Register 0x04 Value: 0x027C
-Register 0x04 Value: 0x0261
-Register 0x04 Value: 0x0273
-Register 0x04 Value: 0x0281
-Register 0x04 Value: 0x027F
-Register 0x04 Value: 0x0286
-Register 0x04 Value: 0x026D
-Register 0x04 Value: 0x0273
-Register 0x04 Value: 0x0289
-Register 0x04 Value: 0x0280
-Register 0x04 Value: 0x026E
-Register 0x04 Value: 0x0280
-Register 0x04 Value: 0x0294
-Register 0x04 Value: 0x0288
-Register 0x04 Value: 0x026B
-Register 0x04 Value: 0x0280
-Register 0x04 Value: 0x0284
-Register 0x04 Value: 0x0278
-Register 0x04 Value: 0x0268
-Register 0x04 Value: 0x028F
-Register 0x04 Value: 0x027C
-Register 0x04 Value: 0x026B
-Register 0x04 Value: 0x0269
-Register 0x04 Value: 0x0284
-Register 0x04 Value: 0x0282
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x0270
-Register 0x04 Value: 0x0279
-Register 0x04 Value: 0x028E
-Register 0x04 Value: 0x0288
-Register 0x04 Value: 0x0269
-Register 0x04 Value: 0x0278
-Register 0x04 Value: 0x0280
-Register 0x04 Value: 0x0297
-Register 0x04 Value: 0x025F
-Register 0x04 Value: 0x027B
-Register 0x04 Value: 0x027B
-Register 0x04 Value: 0x028D
-Register 0x04 Value: 0x025A
-Register 0x04 Value: 0x0274
-Register 0x04 Value: 0x0291
-Register 0x04 Value: 0x0295
-Register 0x04 Value: 0x025C
-Register 0x04 Value: 0x0269
-Register 0x04 Value: 0x027F
-Register 0x04 Value: 0x028A
-Register 0x04 Value: 0x025D
-Register 0x04 Value: 0x0272
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x025D
-Register 0x04 Value: 0x026C
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x028D
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x027F
-Register 0x04 Value: 0x0277
-Register 0x04 Value: 0x0288
-Register 0x04 Value: 0x0290
-Register 0x04 Value: 0x0271
-Register 0x04 Value: 0x027F
-Register 0x04 Value: 0x0296
-Register 0x04 Value: 0x027C
-Register 0x04 Value: 0x0278
-Register 0x04 Value: 0x0278
-Register 0x04 Value: 0x029A
-Register 0x04 Value: 0x0284
-Register 0x04 Value: 0x026D
-Register 0x04 Value: 0x027B
-Register 0x04 Value: 0x0292
-Register 0x04 Value: 0x028D
-Register 0x04 Value: 0x0271
-Register 0x04 Value: 0x028B
-Register 0x04 Value: 0x028B
-Register 0x04 Value: 0x0272
-Register 0x04 Value: 0x0268
-Register 0x04 Value: 0x0282
-Register 0x04 Value: 0x027B
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x026C
-Register 0x04 Value: 0x0282
-Register 0x04 Value: 0x028F
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x026E
-Register 0x04 Value: 0x0277
-Register 0x04 Value: 0x027C
-Register 0x04 Value: 0x028A
-Register 0x04 Value: 0x025B
-Register 0x04 Value: 0x027A
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x0299
-Register 0x04 Value: 0x025B
-Register 0x04 Value: 0x0284
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x0288
-Register 0x04 Value: 0x025C
-Register 0x04 Value: 0x0282
-Register 0x04 Value: 0x027B
-Register 0x04 Value: 0x0295
-Register 0x04 Value: 0x025D
-Register 0x04 Value: 0x0267
-Register 0x04 Value: 0x0280
-Register 0x04 Value: 0x028C
-Register 0x04 Value: 0x025F
-Register 0x04 Value: 0x0275
-Register 0x04 Value: 0x0278
-Register 0x04 Value: 0x0297
-Register 0x04 Value: 0x025F
-Register 0x04 Value: 0x026F
-Register 0x04 Value: 0x0274
-Register 0x04 Value: 0x028A
-Register 0x04 Value: 0x0285
-Register 0x04 Value: 0x0276
-Register 0x04 Value: 0x0275
-Register 0x04 Value: 0x027E
-Register 0x04 Value: 0x028F
-Register 0x04 Value: 0x0273
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x0266
-Register 0x04 Value: 0x0275
-Register 0x04 Value: 0x0281
-Register 0x04 Value: 0x027F
-Register 0x04 Value: 0x0268
-Register 0x04 Value: 0x0286
-Register 0x04 Value: 0x027A
-Register 0x04 Value: 0x026D
-Register 0x04 Value: 0x026D
-Register 0x04 Value: 0x0278
-Register 0x04 Value: 0x0284
-Register 0x04 Value: 0x028D
-Register 0x04 Value: 0x0272
-Register 0x04 Value: 0x0276
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x0299
-Register 0x04 Value: 0x026A
-Register 0x04 Value: 0x027C
-Register 0x04 Value: 0x0284
-Register 0x04 Value: 0x029B
-Register 0x04 Value: 0x025B
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x0284
-Register 0x04 Value: 0x028B
-Register 0x04 Value: 0x025C
-Register 0x04 Value: 0x0289
-Register 0x04 Value: 0x0282
-Register 0x04 Value: 0x0285
-Register 0x04 Value: 0x025F
-Register 0x04 Value: 0x027B
-Register 0x04 Value: 0x0286
-Register 0x04 Value: 0x0289
-Register 0x04 Value: 0x025F
-Register 0x04 Value: 0x027B
-Register 0x04 Value: 0x0280
-Register 0x04 Value: 0x028A
-Register 0x04 Value: 0x0261
-Register 0x04 Value: 0x0271
-Register 0x04 Value: 0x0279
-Register 0x04 Value: 0x0297
-Register 0x04 Value: 0x0260
-Register 0x04 Value: 0x026D
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x0291
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x0278
-Register 0x04 Value: 0x0273
-Register 0x04 Value: 0x0280
-Register 0x04 Value: 0x028A
-Register 0x04 Value: 0x027A
-Register 0x04 Value: 0x027B
-Register 0x04 Value: 0x0298
-Register 0x04 Value: 0x028C
-Register 0x04 Value: 0x026A
-Register 0x04 Value: 0x0280
-Register 0x04 Value: 0x028B
-Register 0x04 Value: 0x0285
-Register 0x04 Value: 0x0269
-Register 0x04 Value: 0x0294
-Register 0x04 Value: 0x0279
-Register 0x04 Value: 0x027A
-Register 0x04 Value: 0x026B
-Register 0x04 Value: 0x028D
-Register 0x04 Value: 0x0293
-Register 0x04 Value: 0x027F
-Register 0x04 Value: 0x026D
-Register 0x04 Value: 0x026F
-Register 0x04 Value: 0x0284
-Register 0x04 Value: 0x028F
-Register 0x04 Value: 0x026C
-Register 0x04 Value: 0x028D
-Register 0x04 Value: 0x0281
-Register 0x04 Value: 0x0289
-Register 0x04 Value: 0x0270
-Register 0x04 Value: 0x027C
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x028A
-Register 0x04 Value: 0x025E
-Register 0x04 Value: 0x027A
-Register 0x04 Value: 0x0285
-Register 0x04 Value: 0x027F
-Register 0x04 Value: 0x025E
-Register 0x04 Value: 0x028A
-Register 0x04 Value: 0x0286
-Register 0x04 Value: 0x028C
-Register 0x04 Value: 0x025F
-Register 0x04 Value: 0x0275
-Register 0x04 Value: 0x0276
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x025E
-Register 0x04 Value: 0x026B
-Register 0x04 Value: 0x028E
-Register 0x04 Value: 0x0292
-Register 0x04 Value: 0x0260
-Register 0x04 Value: 0x026B
-Register 0x04 Value: 0x028B
-Register 0x04 Value: 0x0286
-Register 0x04 Value: 0x027F
-Register 0x04 Value: 0x0270
-Register 0x04 Value: 0x0276
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x0275
-Register 0x04 Value: 0x0271
-Register 0x04 Value: 0x0280
-Register 0x04 Value: 0x028A
-Register 0x04 Value: 0x028B
-Register 0x04 Value: 0x026B
-Register 0x04 Value: 0x028D
-Register 0x04 Value: 0x028E
-Register 0x04 Value: 0x027E
-Register 0x04 Value: 0x0271
-Register 0x04 Value: 0x0279
-Register 0x04 Value: 0x0289
-Register 0x04 Value: 0x0273
-Register 0x04 Value: 0x0268
-Register 0x04 Value: 0x0294
-Register 0x04 Value: 0x028B
-Register 0x04 Value: 0x027C
-Register 0x04 Value: 0x026A
-Register 0x04 Value: 0x0276
-Register 0x04 Value: 0x0284
-Register 0x04 Value: 0x0284
-Register 0x04 Value: 0x0275
-Register 0x04 Value: 0x0280
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x0288
-Register 0x04 Value: 0x0270
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x0278
-Register 0x04 Value: 0x028C
-Register 0x04 Value: 0x025E
-Register 0x04 Value: 0x027A
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x027E
-Register 0x04 Value: 0x0260
-Register 0x04 Value: 0x0280
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x028C
-Register 0x04 Value: 0x025F
-Register 0x04 Value: 0x0272
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x027E
-Register 0x04 Value: 0x0260
-Register 0x04 Value: 0x0270
-Register 0x04 Value: 0x0292
-Register 0x04 Value: 0x0289
-Register 0x04 Value: 0x0261
-Register 0x04 Value: 0x026A
-Register 0x04 Value: 0x0286
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x027B
-Register 0x04 Value: 0x026A
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x0270
-Register 0x04 Value: 0x0270
-Register 0x04 Value: 0x027E
-Register 0x04 Value: 0x0280
-Register 0x04 Value: 0x0272
-Register 0x04 Value: 0x0275
-Register 0x04 Value: 0x0284
-Register 0x04 Value: 0x028E
-Register 0x04 Value: 0x026A
-Register 0x04 Value: 0x0269
-Register 0x04 Value: 0x0289
-Register 0x04 Value: 0x0284
-Register 0x04 Value: 0x0267
-Register 0x04 Value: 0x0277
-Register 0x04 Value: 0x0282
-Register 0x04 Value: 0x0293
-Register 0x04 Value: 0x0289
-Register 0x04 Value: 0x026D
-Register 0x04 Value: 0x0280
-Register 0x04 Value: 0x0294
-Register 0x04 Value: 0x0285
-Register 0x04 Value: 0x026A
-Register 0x04 Value: 0x027C
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x027F
-Register 0x04 Value: 0x026D
-Register 0x04 Value: 0x0274
-Register 0x04 Value: 0x0295
-Register 0x04 Value: 0x0289
-Register 0x04 Value: 0x0263
-Register 0x04 Value: 0x0286
-Register 0x04 Value: 0x0297
-Register 0x04 Value: 0x0294
-Register 0x04 Value: 0x0263
-Register 0x04 Value: 0x0286
-Register 0x04 Value: 0x027A
-Register 0x04 Value: 0x029B
-Register 0x04 Value: 0x0267
-Register 0x04 Value: 0x0273
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x0291
-Register 0x04 Value: 0x0266
-Register 0x04 Value: 0x026C
-Register 0x04 Value: 0x028B
-Register 0x04 Value: 0x0291
-Register 0x04 Value: 0x026A
-Register 0x04 Value: 0x0271
-Register 0x04 Value: 0x028F
-Register 0x04 Value: 0x0285
-Register 0x04 Value: 0x0272
-Register 0x04 Value: 0x0276
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x0299
-Register 0x04 Value: 0x0264
-Register 0x04 Value: 0x027B
-Register 0x04 Value: 0x0285
-Register 0x04 Value: 0x0298
-Register 0x04 Value: 0x0274
-Register 0x04 Value: 0x0272
-Register 0x04 Value: 0x0284
-Register 0x04 Value: 0x0289
-Register 0x04 Value: 0x0266
-Register 0x04 Value: 0x027B
-Register 0x04 Value: 0x028A
-Register 0x04 Value: 0x0280
-Register 0x04 Value: 0x0260
-Register 0x04 Value: 0x0271
-Register 0x04 Value: 0x027C
-Register 0x04 Value: 0x0299
-Register 0x04 Value: 0x0295
-Register 0x04 Value: 0x026E
-Register 0x04 Value: 0x0281
-Register 0x04 Value: 0x029B
-Register 0x04 Value: 0x0281
-Register 0x04 Value: 0x026B
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x0293
-Register 0x04 Value: 0x0296
-Register 0x04 Value: 0x0262
-Register 0x04 Value: 0x0275
-Register 0x04 Value: 0x0289
-Register 0x04 Value: 0x028B
-Register 0x04 Value: 0x0264
-Register 0x04 Value: 0x0272
-Register 0x04 Value: 0x0289
-Register 0x04 Value: 0x0289
-Register 0x04 Value: 0x0265
-Register 0x04 Value: 0x0275
-Register 0x04 Value: 0x028F
-Register 0x04 Value: 0x027E
-Register 0x04 Value: 0x0264
-Register 0x04 Value: 0x0275
-Register 0x04 Value: 0x0282
-Register 0x04 Value: 0x0285
-Register 0x04 Value: 0x026A
-Register 0x04 Value: 0x0271
-Register 0x04 Value: 0x028D
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x026D
-Register 0x04 Value: 0x027C
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x0294
-Register 0x04 Value: 0x0265
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x0282
-Register 0x04 Value: 0x027C
-Register 0x04 Value: 0x0266
-Register 0x04 Value: 0x0281
-Register 0x04 Value: 0x0285
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x025B
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x0288
-Register 0x04 Value: 0x025D
-Register 0x04 Value: 0x0276
-Register 0x04 Value: 0x0285
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x025D
-Register 0x04 Value: 0x027B
-Register 0x04 Value: 0x0271
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x028A
-Register 0x04 Value: 0x026A
-Register 0x04 Value: 0x0279
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x0288
-Register 0x04 Value: 0x0269
-Register 0x04 Value: 0x027A
-Register 0x04 Value: 0x027E
-Register 0x04 Value: 0x028F
-Register 0x04 Value: 0x0267
-Register 0x04 Value: 0x0278
-Register 0x04 Value: 0x0293
-Register 0x04 Value: 0x0281
-Register 0x04 Value: 0x0269
-Register 0x04 Value: 0x027B
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x0285
-Register 0x04 Value: 0x026D
-Register 0x04 Value: 0x0281
-Register 0x04 Value: 0x0289
-Register 0x04 Value: 0x0296
-Register 0x04 Value: 0x026C
-Register 0x04 Value: 0x0276
-Register 0x04 Value: 0x0288
-Register 0x04 Value: 0x028F
-Register 0x04 Value: 0x0272
-Register 0x04 Value: 0x0275
-Register 0x04 Value: 0x028B
-Register 0x04 Value: 0x028F
-Register 0x04 Value: 0x025C
-Register 0x04 Value: 0x0279
-Register 0x04 Value: 0x0276
-Register 0x04 Value: 0x028C
-Register 0x04 Value: 0x025B
-Register 0x04 Value: 0x0270
-Register 0x04 Value: 0x0295
-Register 0x04 Value: 0x0292
-Register 0x04 Value: 0x025B
-Register 0x04 Value: 0x026E
-Register 0x04 Value: 0x0276
-Register 0x04 Value: 0x0285
-Register 0x04 Value: 0x025F
-Register 0x04 Value: 0x026C
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x027C
-Register 0x04 Value: 0x025E
-Register 0x04 Value: 0x026D
-Register 0x04 Value: 0x028C
-Register 0x04 Value: 0x0282
-Register 0x04 Value: 0x0291
-Register 0x04 Value: 0x026E
-Register 0x04 Value: 0x0277
-Register 0x04 Value: 0x027F
-Register 0x04 Value: 0x0281
-Register 0x04 Value: 0x0277
-Register 0x04 Value: 0x027B
-Register 0x04 Value: 0x0286
-Register 0x04 Value: 0x027C
-Register 0x04 Value: 0x0269
-Register 0x04 Value: 0x027C
-Register 0x04 Value: 0x0292
-Register 0x04 Value: 0x027E
-Register 0x04 Value: 0x026A
-Register 0x04 Value: 0x027C
-Register 0x04 Value: 0x0293
-Register 0x04 Value: 0x0285
-Register 0x04 Value: 0x026C
-Register 0x04 Value: 0x0279
-Register 0x04 Value: 0x027A
-Register 0x04 Value: 0x029C
-Register 0x04 Value: 0x026E
-Register 0x04 Value: 0x0276
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x0281
-Register 0x04 Value: 0x026E
-Register 0x04 Value: 0x0278
-Register 0x04 Value: 0x0280
-Register 0x04 Value: 0x027E
-Register 0x04 Value: 0x0270
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x0282
-Register 0x04 Value: 0x025C
-Register 0x04 Value: 0x0276
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x028C
-Register 0x04 Value: 0x0261
-Register 0x04 Value: 0x027B
-Register 0x04 Value: 0x0282
-Register 0x04 Value: 0x0286
-Register 0x04 Value: 0x025F
-Register 0x04 Value: 0x0277
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x0282
-Register 0x04 Value: 0x0264
-Register 0x04 Value: 0x027F
-Register 0x04 Value: 0x0281
-Register 0x04 Value: 0x0284
-Register 0x04 Value: 0x0261
-Register 0x04 Value: 0x027E
-Register 0x04 Value: 0x0286
-Register 0x04 Value: 0x0295
-Register 0x04 Value: 0x0270
-Register 0x04 Value: 0x027B
-Register 0x04 Value: 0x0285
-Register 0x04 Value: 0x0292
-Register 0x04 Value: 0x0272
-Register 0x04 Value: 0x0270
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x029A
-Register 0x04 Value: 0x0268
-Register 0x04 Value: 0x026E
-Register 0x04 Value: 0x0280
-Register 0x04 Value: 0x0285
-Register 0x04 Value: 0x0263
-Register 0x04 Value: 0x026B
-Register 0x04 Value: 0x0284
-Register 0x04 Value: 0x0288
-Register 0x04 Value: 0x0261
-Register 0x04 Value: 0x0263
-Register 0x04 Value: 0x0289
-Register 0x04 Value: 0x0290
-Register 0x04 Value: 0x0282
-Register 0x04 Value: 0x0267
-Register 0x04 Value: 0x027C
-Register 0x04 Value: 0x0296
-Register 0x04 Value: 0x029A
-Register 0x04 Value: 0x026D
-Register 0x04 Value: 0x027A
-Register 0x04 Value: 0x0290
-Register 0x04 Value: 0x029C
-Register 0x04 Value: 0x0262
-Register 0x04 Value: 0x027F
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x027C
-Register 0x04 Value: 0x025E
-Register 0x04 Value: 0x027E
-Register 0x04 Value: 0x0292
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x0269
-Register 0x04 Value: 0x0275
-Register 0x04 Value: 0x0289
-Register 0x04 Value: 0x028E
-Register 0x04 Value: 0x026A
-Register 0x04 Value: 0x0278
-Register 0x04 Value: 0x0289
-Register 0x04 Value: 0x0290
-Register 0x04 Value: 0x026A
-Register 0x04 Value: 0x0275
-Register 0x04 Value: 0x0292
-Register 0x04 Value: 0x0286
-Register 0x04 Value: 0x025E
-Register 0x04 Value: 0x0277
-Register 0x04 Value: 0x028B
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x0260
-Register 0x04 Value: 0x0280
-Register 0x04 Value: 0x0284
-Register 0x04 Value: 0x028B
-Register 0x04 Value: 0x025B
-Register 0x04 Value: 0x0277
-Register 0x04 Value: 0x0277
-Register 0x04 Value: 0x0288
-Register 0x04 Value: 0x0259
-Register 0x04 Value: 0x026C
-Register 0x04 Value: 0x0285
-Register 0x04 Value: 0x0289
-Register 0x04 Value: 0x025D
-Register 0x04 Value: 0x026B
-Register 0x04 Value: 0x0291
-Register 0x04 Value: 0x028B
-Register 0x04 Value: 0x028D
-Register 0x04 Value: 0x0271
-Register 0x04 Value: 0x0277
-Register 0x04 Value: 0x0289
-Register 0x04 Value: 0x0282
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x0280
-Register 0x04 Value: 0x027E
-Register 0x04 Value: 0x0297
-Register 0x04 Value: 0x0269
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x028A
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x026D
-Register 0x04 Value: 0x0281
-Register 0x04 Value: 0x0290
-Register 0x04 Value: 0x0296
-Register 0x04 Value: 0x026F
-Register 0x04 Value: 0x028C
-Register 0x04 Value: 0x0279
-Register 0x04 Value: 0x029B
-Register 0x04 Value: 0x026C
-Register 0x04 Value: 0x0279
-Register 0x04 Value: 0x0289
-Register 0x04 Value: 0x0294
-Register 0x04 Value: 0x0268
-Register 0x04 Value: 0x028A
-Register 0x04 Value: 0x0288
-Register 0x04 Value: 0x0291
-Register 0x04 Value: 0x0272
-Register 0x04 Value: 0x027F
-Register 0x04 Value: 0x027E
-Register 0x04 Value: 0x0286
-Register 0x04 Value: 0x025F
-Register 0x04 Value: 0x0275
-Register 0x04 Value: 0x028E
-Register 0x04 Value: 0x0282
-Register 0x04 Value: 0x025F
-Register 0x04 Value: 0x0279
-Register 0x04 Value: 0x0285
-Register 0x04 Value: 0x0291
-Register 0x04 Value: 0x025E
-Register 0x04 Value: 0x026E
-Register 0x04 Value: 0x027E
-Register 0x04 Value: 0x0289
-Register 0x04 Value: 0x0262
-Register 0x04 Value: 0x026D
-Register 0x04 Value: 0x0294
-Register 0x04 Value: 0x0286
-Register 0x04 Value: 0x0268
-Register 0x04 Value: 0x0273
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x029B
-Register 0x04 Value: 0x0272
-Register 0x04 Value: 0x0272
-Register 0x04 Value: 0x027E
-Register 0x04 Value: 0x0295
-Register 0x04 Value: 0x0275
-Register 0x04 Value: 0x0273
-Register 0x04 Value: 0x0295
-Register 0x04 Value: 0x0286
-Register 0x04 Value: 0x0267
-Register 0x04 Value: 0x0275
-Register 0x04 Value: 0x0288
-Register 0x04 Value: 0x0293
-Register 0x04 Value: 0x0265
-Register 0x04 Value: 0x0277
-Register 0x04 Value: 0x0281
-Register 0x04 Value: 0x0285
-Register 0x04 Value: 0x025D
-Register 0x04 Value: 0x027A
-Register 0x04 Value: 0x027F
-Register 0x04 Value: 0x0296
-Register 0x04 Value: 0x029D
-Register 0x04 Value: 0x0268
-Register 0x04 Value: 0x0285
-Register 0x04 Value: 0x0281
-Register 0x04 Value: 0x028F
-Register 0x04 Value: 0x026A
-Register 0x04 Value: 0x0273
-Register 0x04 Value: 0x0281
-Register 0x04 Value: 0x0284
-Register 0x04 Value: 0x0272
-Register 0x04 Value: 0x0275
-Register 0x04 Value: 0x0292
-Register 0x04 Value: 0x028B
-Register 0x04 Value: 0x0269
-Register 0x04 Value: 0x027C
-Register 0x04 Value: 0x0280
-Register 0x04 Value: 0x0295
-Register 0x04 Value: 0x0269
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x0286
-Register 0x04 Value: 0x028F
-Register 0x04 Value: 0x026D
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x027F
-Register 0x04 Value: 0x029C
-Register 0x04 Value: 0x026A
-Register 0x04 Value: 0x0279
-Register 0x04 Value: 0x027A
-Register 0x04 Value: 0x028F
-Register 0x04 Value: 0x025A
-Register 0x04 Value: 0x028A
-Register 0x04 Value: 0x0278
-Register 0x04 Value: 0x028C
-Register 0x04 Value: 0x0261
-Register 0x04 Value: 0x0281
-Register 0x04 Value: 0x027E
-Register 0x04 Value: 0x0295
-Register 0x04 Value: 0x025E
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x028D
-Register 0x04 Value: 0x025F
-Register 0x04 Value: 0x0267
-Register 0x04 Value: 0x027F
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x0262
-Register 0x04 Value: 0x0279
-Register 0x04 Value: 0x0277
-Register 0x04 Value: 0x029B
-Register 0x04 Value: 0x0261
-Register 0x04 Value: 0x026F
-Register 0x04 Value: 0x0292
-Register 0x04 Value: 0x0286
-Register 0x04 Value: 0x0288
-Register 0x04 Value: 0x0272
-Register 0x04 Value: 0x0291
-Register 0x04 Value: 0x028F
-Register 0x04 Value: 0x0280
-Register 0x04 Value: 0x026F
-Register 0x04 Value: 0x0284
-Register 0x04 Value: 0x029A
-Register 0x04 Value: 0x028C
-Register 0x04 Value: 0x0271
-Register 0x04 Value: 0x027F
-Register 0x04 Value: 0x027B
-Register 0x04 Value: 0x027C
-Register 0x04 Value: 0x0270
-Register 0x04 Value: 0x0290
-Register 0x04 Value: 0x0279
-Register 0x04 Value: 0x026B
-Register 0x04 Value: 0x026A
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x0288
-Register 0x04 Value: 0x0290
-Register 0x04 Value: 0x0269
-Register 0x04 Value: 0x0271
-Register 0x04 Value: 0x0289
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x027A
-Register 0x04 Value: 0x0275
-Register 0x04 Value: 0x0284
-Register 0x04 Value: 0x0288
-Register 0x04 Value: 0x0261
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x0284
-Register 0x04 Value: 0x0266
-Register 0x04 Value: 0x028F
-Register 0x04 Value: 0x0296
-Register 0x04 Value: 0x028D
-Register 0x04 Value: 0x0266
-Register 0x04 Value: 0x0271
-Register 0x04 Value: 0x027B
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x0264
-Register 0x04 Value: 0x026D
-Register 0x04 Value: 0x028A
-Register 0x04 Value: 0x028E
-Register 0x04 Value: 0x026E
-Register 0x04 Value: 0x027C
-Register 0x04 Value: 0x027D
-Register 0x04 Value: 0x0284
-Register 0x04 Value: 0x0265
-Register 0x04 Value: 0x0277
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x0281
-Register 0x04 Value: 0x025B
-Register 0x04 Value: 0x0274
-Register 0x04 Value: 0x0276
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x025B
-Register 0x04 Value: 0x026E
-Register 0x04 Value: 0x028E
-Register 0x04 Value: 0x0285
-Register 0x04 Value: 0x025D
-Register 0x04 Value: 0x0266
-Register 0x04 Value: 0x0282
-Register 0x04 Value: 0x028E
-Register 0x04 Value: 0x025C
-Register 0x04 Value: 0x0270
-Register 0x04 Value: 0x0280
-Register 0x04 Value: 0x029B
-Register 0x04 Value: 0x0298
-Register 0x04 Value: 0x026D
-Register 0x04 Value: 0x027B
-Register 0x04 Value: 0x0293
-Register 0x04 Value: 0x0288
-Register 0x04 Value: 0x026B
-Register 0x04 Value: 0x0277
-Register 0x04 Value: 0x0281
-Register 0x04 Value: 0x027F
-Register 0x04 Value: 0x026A
-Register 0x04 Value: 0x0283
-Register 0x04 Value: 0x0286
-Register 0x04 Value: 0x0292
-Register 0x04 Value: 0x026B
-Register 0x04 Value: 0x0281
-Register 0x04 Value: 0x027A
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x0268
-Register 0x04 Value: 0x027E
-Register 0x04 Value: 0x027A
-Register 0x04 Value: 0x028A
-Register 0x04 Value: 0x0272
-Register 0x04 Value: 0x0289
-Register 0x04 Value: 0x028F
-Register 0x04 Value: 0x028B
-Register 0x04 Value: 0x027A
-Register 0x04 Value: 0x026F
-Register 0x04 Value: 0x027F
-Register 0x04 Value: 0x029A
-Register 0x04 Value: 0x025F
-Register 0x04 Value: 0x027F
-Register 0x04 Value: 0x028D
-Register 0x04 Value: 0x0280
-Register 0x04 Value: 0x0265
-Register 0x04 Value: 0x027A
-Register 0x04 Value: 0x0285
-Register 0x04 Value: 0x0289
-Register 0x04 Value: 0x0267
-Register 0x04 Value: 0x026E
-Register 0x04 Value: 0x0287
-Register 0x04 Value: 0x028C
-Register 0x04 Value: 0x0263
-Register 0x04 Value: 0x0275
-Register 0x04 Value: 0x0287
+Current: 63100 uA
+Current: 63300 uA
+Current: 63100 uA
+Current: 62900 uA
+Current: 65200 uA
+Current: 66700 uA
+Current: 65100 uA
+Current: 65700 uA
+Current: 64700 uA
+Current: 65800 uA
+Current: 63400 uA
+Current: 62600 uA
+Current: 63300 uA
+Current: 66000 uA
+Current: 66900 uA
+Current: 65900 uA
+Current: 65600 uA
+Current: 66400 uA
+Current: 63800 uA
+Current: 65500 uA
+Current: 64000 uA
+Current: 62500 uA
+Current: 64600 uA
+Current: 63100 uA
+Current: 66000 uA
+Current: 66400 uA
+Current: 65000 uA
+Current: 65500 uA
+Current: 66500 uA
+Current: 65000 uA
+Current: 65200 uA
+Current: 62500 uA
+Current: 62600 uA
+Current: 61200 uA
+Current: 66300 uA
+Current: 66600 uA
+Current: 65600 uA
+Current: 66800 uA
+Current: 64700 uA
+Current: 65500 uA
+Current: 63100 uA
+Current: 62300 uA
+Current: 61300 uA
+Current: 60500 uA
+Current: 65400 uA
+Current: 66100 uA
+Current: 66700 uA
+Current: 65500 uA
+Current: 65200 uA
+Current: 64500 uA
+Current: 63700 uA
+Current: 61900 uA
+Current: 61500 uA
+Current: 61300 uA
+Current: 63400 uA
+Current: 66800 uA
+Current: 66400 uA
+Current: 66300 uA
+Current: 66000 uA
+Current: 64100 uA
+Current: 64100 uA
+Current: 64600 uA
+Current: 62800 uA
+Current: 61700 uA
+Current: 61500 uA
+Current: 65900 uA
+Current: 64900 uA
+Current: 66100 uA
+Current: 65800 uA
+Current: 65400 uA
+Current: 64400 uA
+Current: 64200 uA
+Current: 62600 uA
+Current: 63900 uA
+Current: 60800 uA
+Current: 66900 uA
+Current: 66700 uA
+Current: 66200 uA
+Current: 64100 uA
+Current: 65300 uA
+Current: 65700 uA
+Current: 64300 uA
+Current: 64300 uA
+Current: 62100 uA
+Current: 66200 uA
+Current: 66500 uA
+Current: 65500 uA
+Current: 66200 uA
+Current: 66600 uA
+Current: 64700 uA
+Current: 65600 uA
+Current: 65100 uA
+Current: 65300 uA
+Current: 60700 uA
+Current: 62200 uA
+Current: 66700 uA
+Current: 66200 uA
+Current: 66700 uA
+Current: 66300 uA
+Current: 64800 uA
+Current: 65900 uA
+Current: 63400 uA
+Current: 63300 uA
+Current: 63500 uA
+Current: 61200 uA
+Current: 66100 uA
+Current: 66900 uA
+Current: 66100 uA
+Current: 65400 uA
+Current: 66300 uA
+Current: 63900 uA
+Current: 65100 uA
+Current: 61700 uA
+Current: 63500 uA
+Current: 61500 uA
+Current: 65500 uA
+Current: 65500 uA
+Current: 66200 uA
+Current: 65700 uA
+Current: 66500 uA
+Current: 64000 uA
+Current: 65300 uA
+Current: 64800 uA
+Current: 62900 uA
+Current: 61300 uA
+Current: 63600 uA
+Current: 65400 uA
+Current: 66600 uA
+Current: 66000 uA
+Current: 65200 uA
+Current: 65400 uA
+Current: 63600 uA
+Current: 63400 uA
+Current: 62300 uA
+Current: 62400 uA
+Current: 62200 uA
+Current: 65200 uA
+Current: 65600 uA
+Current: 65500 uA
+Current: 65000 uA
+Current: 64900 uA
+Current: 64200 uA
+Current: 63100 uA
+Current: 62500 uA
+Current: 62300 uA
+Current: 61600 uA
+Current: 66000 uA
+Current: 65000 uA
+Current: 65700 uA
+Current: 66300 uA
+Current: 65000 uA
+Current: 65500 uA
+Current: 65200 uA
+Current: 63900 uA
+Current: 61000 uA
+Current: 63600 uA
+Current: 66800 uA
+Current: 66000 uA
+Current: 65300 uA
+Current: 65600 uA
+Current: 64200 uA
+Current: 65200 uA
+Current: 64800 uA
+Current: 64400 uA
+Current: 61400 uA
+Current: 62300 uA
+Current: 65100 uA
+Current: 66500 uA
+Current: 66400 uA
+Current: 65100 uA
+Current: 66500 uA
+Current: 64400 uA
+Current: 65200 uA
+Current: 62700 uA
+Current: 62300 uA
+Current: 61000 uA
+Current: 65000 uA
+Current: 65500 uA
+Current: 65900 uA
+Current: 65600 uA
+Current: 65500 uA
+Current: 66100 uA
+Current: 62900 uA
+Current: 63300 uA
+Current: 62600 uA
+Current: 60900 uA
+Current: 62500 uA
+Current: 66200 uA
+Current: 66500 uA
+Current: 66100 uA
+Current: 65500 uA
+Current: 63800 uA
+Current: 64700 uA
+Current: 62900 uA
+Current: 62800 uA
+Current: 61300 uA
+Current: 61800 uA
+Current: 66500 uA
+Current: 66100 uA
+Current: 66000 uA
+Current: 65200 uA
+Current: 64700 uA
+Current: 63900 uA
+Current: 62700 uA
+Current: 62200 uA
+Current: 62000 uA
+Current: 65700 uA
+Current: 66200 uA
+Current: 66700 uA
+Current: 66500 uA
+Current: 65200 uA
+Current: 66000 uA
+Current: 65800 uA
+Current: 65300 uA
+Current: 64100 uA
+Current: 62000 uA
+Current: 64700 uA
+Current: 66600 uA
+Current: 66500 uA
+Current: 65900 uA
+Current: 65400 uA
+Current: 65000 uA
+Current: 64300 uA
+Current: 64400 uA
+Current: 61900 uA
+Current: 62300 uA
+Current: 63100 uA
+Current: 65400 uA
+Current: 66400 uA
+Current: 65900 uA
+Current: 66100 uA
+Current: 65500 uA
+Current: 65600 uA
+Current: 64400 uA
+Current: 63700 uA
+Current: 61500 uA
+Current: 60200 uA
+Current: 65400 uA
+Current: 66200 uA
+Current: 65400 uA
+Current: 66700 uA
+Current: 65900 uA
+Current: 64100 uA
+Current: 63600 uA
+Current: 64100 uA
+Current: 61100 uA
+Current: 61500 uA
+Current: 63900 uA
+Current: 66400 uA
+Current: 66700 uA
+Current: 64300 uA
+Current: 66000 uA
+Current: 65400 uA
+Current: 63700 uA
+Current: 65100 uA
+Current: 61500 uA
+Current: 62400 uA
+Current: 62200 uA
+Current: 65400 uA
+Current: 65300 uA
+Current: 66600 uA
+Current: 65600 uA
+Current: 64300 uA
+Current: 63900 uA
+Current: 64900 uA
+Current: 62500 uA
+Current: 62500 uA
+Current: 60700 uA
+Current: 65100 uA
+Current: 65200 uA
+Current: 66300 uA
+Current: 66000 uA
+Current: 65000 uA
+Current: 66100 uA
+Current: 63100 uA
+Current: 63300 uA
+Current: 60800 uA
+Current: 66700 uA
+Current: 65900 uA
+Current: 66700 uA
+Current: 66100 uA
+Current: 64600 uA
+Current: 66200 uA
+Current: 64300 uA
+Current: 64600 uA
+Current: 62700 uA
+Current: 61600 uA
+Current: 65000 uA
+Current: 66600 uA
+Current: 65700 uA
+Current: 65700 uA
+Current: 66500 uA
+Current: 64500 uA
+Current: 65300 uA
+Current: 64600 uA
+Current: 63000 uA
+Current: 62000 uA
+Current: 61500 uA
+Current: 66600 uA
+Current: 66100 uA
+Current: 64900 uA
+Current: 65900 uA
+Current: 65900 uA
+Current: 64800 uA
+Current: 64100 uA
+Current: 63700 uA
+Current: 62800 uA
+Current: 62400 uA
+Current: 65600 uA
+Current: 66300 uA
+Current: 66700 uA
+Current: 66000 uA
+Current: 65400 uA
+Current: 65500 uA
+Current: 64900 uA
+Current: 62500 uA
+Current: 61300 uA
+Current: 61300 uA
+Current: 63500 uA
+Current: 66600 uA
+Current: 66200 uA
+Current: 66400 uA
+Current: 65700 uA
+Current: 65400 uA
+Current: 63400 uA
+Current: 62500 uA
+Current: 62800 uA
+Current: 61300 uA
+Current: 60300 uA
+Current: 66900 uA
+Current: 66600 uA
+Current: 65200 uA
+Current: 65500 uA
+Current: 66000 uA
+Current: 65300 uA
+Current: 63700 uA
+Current: 62700 uA
+Current: 61400 uA
+Current: 66400 uA
+Current: 66800 uA
+Current: 65900 uA
+Current: 65700 uA
+Current: 66300 uA
+Current: 64300 uA
+Current: 65800 uA
+Current: 64700 uA
+Current: 64100 uA
+Current: 61500 uA
+Current: 64500 uA
+Current: 67000 uA
+Current: 66400 uA
+Current: 66700 uA
+Current: 66100 uA
+Current: 64400 uA
+Current: 65200 uA
+Current: 65300 uA
+Current: 62500 uA
+Current: 62600 uA
+Current: 63600 uA
+Current: 65700 uA
+Current: 66500 uA
+Current: 65400 uA
+Current: 65000 uA
+Current: 65100 uA
+Current: 65100 uA
+Current: 64100 uA
+Current: 63600 uA
+Current: 62400 uA
+Current: 60600 uA
+Current: 65400 uA
+Current: 66600 uA
+Current: 65500 uA
+Current: 65900 uA
+Current: 65600 uA
+Current: 65200 uA
+Current: 64700 uA
+Current: 61800 uA
+Current: 61500 uA
+Current: 61800 uA
+Current: 64900 uA
+Current: 65100 uA
+Current: 66000 uA
+Current: 66300 uA
+Current: 65800 uA
+Current: 64700 uA
+Current: 65300 uA
+Current: 62100 uA
+Current: 63400 uA
+Current: 61600 uA
+Current: 60800 uA
+Current: 66800 uA
+Current: 65800 uA
+Current: 66300 uA
+Current: 65800 uA
+Current: 64000 uA
+Current: 64100 uA
+Current: 64300 uA
+Current: 63100 uA
+Current: 63300 uA
+Current: 60300 uA
+Current: 66000 uA
+Current: 66100 uA
+Current: 65800 uA
+Current: 65200 uA
+Current: 66200 uA
+Current: 64700 uA
+Current: 63600 uA
+Current: 62100 uA
+Current: 61600 uA
+Current: 66200 uA
+Current: 65500 uA
+Current: 65700 uA
+Current: 66600 uA
+Current: 66700 uA
+Current: 66100 uA
+Current: 65500 uA
+Current: 64600 uA
+Current: 63900 uA
+Current: 62600 uA
+Current: 65100 uA
+Current: 66000 uA
+Current: 65100 uA
+Current: 66600 uA
+Current: 64800 uA
+Current: 65400 uA
+Current: 65400 uA
+Current: 63900 uA
+Current: 61500 uA
+Current: 62500 uA
+Current: 60600 uA
+Current: 65100 uA
+Current: 65300 uA
+Current: 65300 uA
+Current: 65900 uA
+Current: 64500 uA
+Current: 64300 uA
+Current: 64500 uA
+Current: 62700 uA
+Current: 63400 uA
+Current: 61200 uA
+Current: 66000 uA
+Current: 66800 uA
+Current: 65300 uA
+Current: 66500 uA
+Current: 65000 uA
+Current: 63800 uA
+Current: 65400 uA
+Current: 63900 uA
+Current: 62300 uA
+Current: 61000 uA
+Current: 61500 uA
+Current: 66700 uA
+Current: 66700 uA
+Current: 66100 uA
+Current: 64200 uA
+Current: 65500 uA
+Current: 65900 uA
+Current: 63800 uA
+Current: 63900 uA
+Current: 63800 uA
+Current: 61100 uA
+Current: 66100 uA
+Current: 65200 uA
+Current: 66000 uA
+Current: 65700 uA
+Current: 64500 uA
+Current: 65500 uA
+Current: 64100 uA
+Current: 62100 uA
+Current: 61100 uA
+Current: 66600 uA
+Current: 66900 uA
+Current: 65700 uA
+Current: 66300 uA
+Current: 64500 uA
+Current: 65400 uA
+Current: 65000 uA
+Current: 63200 uA
+Current: 64900 uA
+Current: 60700 uA
+Current: 65900 uA
+Current: 66600 uA
+Current: 66100 uA
+Current: 64800 uA
+Current: 66400 uA
+Current: 65300 uA
+Current: 65400 uA
+Current: 65800 uA
+Current: 63500 uA
+Current: 61900 uA
+Current: 62500 uA
+Current: 66200 uA
+Current: 65500 uA
+Current: 66600 uA
+Current: 66100 uA
+Current: 66000 uA
+Current: 65800 uA
+Current: 64900 uA
+Current: 61800 uA
+Current: 63200 uA
+Current: 61400 uA
+Current: 66700 uA
+Current: 65300 uA
+Current: 66300 uA
+Current: 66200 uA
+Current: 64700 uA
+Current: 64500 uA
+Current: 62500 uA
+Current: 63100 uA
+Current: 61900 uA
+Current: 61000 uA
+Current: 62200 uA
+Current: 66500 uA
+Current: 65900 uA
+Current: 66300 uA
+Current: 64600 uA
+Current: 63700 uA
+Current: 65700 uA
+Current: 62500 uA
+Current: 62600 uA
+Current: 61000 uA
+Current: 63000 uA
+Current: 66100 uA
+Current: 66300 uA
+Current: 65200 uA
+Current: 65300 uA
+Current: 66200 uA
+Current: 65200 uA
+Current: 63500 uA
+Current: 61800 uA
+Current: 60800 uA
+Current: 60700 uA
+Current: 65700 uA
+Current: 65800 uA
+Current: 65000 uA
+Current: 66300 uA
+Current: 64800 uA
+Current: 64400 uA
+Current: 64300 uA
+Current: 64800 uA
+Current: 63200 uA
+Current: 65300 uA
+Current: 66200 uA
+Current: 66400 uA
+Current: 66500 uA
+Current: 65000 uA
+Current: 64700 uA
+Current: 65800 uA
+Current: 63100 uA
+Current: 64800 uA
+Current: 60400 uA
+Current: 63700 uA
+Current: 66000 uA
+Current: 66800 uA
+Current: 66100 uA
+Current: 65100 uA
+Current: 66100 uA
+Current: 65500 uA
+Current: 63800 uA
+Current: 63400 uA
+Current: 62300 uA
+Current: 61200 uA
+Current: 66500 uA
+Current: 65300 uA
+Current: 66400 uA
+Current: 66400 uA
+Current: 64700 uA
+Current: 65200 uA
+Current: 65100 uA
+Current: 62000 uA
+Current: 62600 uA
+Current: 61200 uA
+Current: 64200 uA
+Current: 66100 uA
+Current: 66000 uA
+Current: 66300 uA
+Current: 65000 uA
+Current: 64100 uA
+Current: 64900 uA
+Current: 63600 uA
+Current: 63800 uA
+Current: 60500 uA
+Current: 62200 uA
+Current: 65500 uA
+Current: 65500 uA
+Current: 65900 uA
+Current: 66200 uA
+Current: 66100 uA
+Current: 64200 uA
+Current: 63000 uA
+Current: 64600 uA
+Current: 62700 uA
+Current: 61500 uA
+Current: 66100 uA
+Current: 66300 uA
+Current: 66500 uA
+Current: 66500 uA
+Current: 64500 uA
+Current: 65400 uA
+Current: 62600 uA
+Current: 64200 uA
+Current: 63500 uA
+Current: 61500 uA
+Current: 65700 uA
+Current: 65600 uA
+Current: 66600 uA
+Current: 65600 uA
+Current: 64600 uA
+Current: 65800 uA
+Current: 63000 uA
+Current: 63000 uA
+Current: 62300 uA
+Current: 65200 uA
+Current: 66100 uA
+Current: 65500 uA
+Current: 66500 uA
+Current: 65700 uA
+Current: 65200 uA
+Current: 65100 uA
+Current: 65700 uA
+Current: 63800 uA
+Current: 62500 uA
+Current: 62100 uA
+Current: 64900 uA
+Current: 64900 uA
+Current: 65700 uA
+Current: 66300 uA
+Current: 64400 uA
+Current: 66200 uA
+Current: 65600 uA
+Current: 64000 uA
+Current: 61600 uA
+Current: 60700 uA
+Current: 66100 uA
+Current: 66700 uA
+Current: 65800 uA
+Current: 65200 uA
+Current: 66300 uA
+Current: 66000 uA
+Current: 64400 uA
+Current: 63300 uA
+Current: 61800 uA
+Current: 60500 uA
+Current: 63000 uA
+Current: 66200 uA
+Current: 66500 uA
+Current: 65500 uA
+Current: 65200 uA
+Current: 66100 uA
+Current: 63600 uA
+Current: 63000 uA
+Current: 63000 uA
+Current: 61400 uA
+Current: 61000 uA
+Current: 66400 uA
+Current: 66200 uA
+Current: 66300 uA
+Current: 65700 uA
+Current: 65600 uA
+Current: 65100 uA
+Current: 64900 uA
+Current: 61800 uA
+Current: 62300 uA
+Current: 62000 uA
+Current: 65800 uA
+Current: 66400 uA
+Current: 66000 uA
+Current: 65200 uA
+Current: 64400 uA
+Current: 64800 uA
+Current: 65600 uA
+Current: 62700 uA
+Current: 62200 uA
+Current: 61700 uA
+Current: 66800 uA
+Current: 66300 uA
+Current: 65000 uA
+Current: 65300 uA
+Current: 66000 uA
+Current: 65200 uA
+Current: 64600 uA
+Current: 63200 uA
+Current: 64200 uA
+Current: 62300 uA
+Current: 65900 uA
+Current: 66500 uA
+Current: 65900 uA
+Current: 65300 uA
+Current: 66500 uA
+Current: 65100 uA
+Current: 64300 uA
+Current: 64400 uA
+Current: 61700 uA
+Current: 60900 uA
+Current: 65100 uA
+Current: 66700 uA
+Current: 65800 uA
+Current: 66200 uA
+Current: 64800 uA
+Current: 65800 uA
+Current: 65000 uA
+Current: 63300 uA
+Current: 61400 uA
+Current: 60700 uA
+Current: 64300 uA
+Current: 65600 uA
+Current: 66700 uA
+Current: 66800 uA
+Current: 65300 uA
+Current: 65600 uA
+Current: 64700 uA
+Current: 62500 uA
+Current: 64500 uA
+Current: 60900 uA
+Current: 61900 uA
+Current: 66500 uA
+Current: 66600 uA
+Current: 66400 uA
+Current: 65100 uA
+Current: 64500 uA
+Current: 63900 uA
+Current: 64200 uA
+Current: 63100 uA
+Current: 61600 uA
+Current: 60600 uA
+Current: 66300 uA
+Current: 67000 uA
+Current: 65700 uA
+Current: 64900 uA
+Current: 65400 uA
+Current: 65700 uA
+Current: 64700 uA
+Current: 62800 uA
+Current: 61900 uA
+Current: 61000 uA
+Current: 64200 uA
+Current: 65900 uA
+Current: 65500 uA
+Current: 65100 uA
+Current: 65600 uA
+Current: 65200 uA
+Current: 64400 uA
+Current: 64200 uA
+Current: 61500 uA
+Current: 62400 uA
+Current: 66700 uA
+Current: 65700 uA
+Current: 65800 uA
+Current: 65900 uA
+Current: 66300 uA
+Current: 64400 uA
+Current: 65100 uA
+Current: 65100 uA
+Current: 63000 uA
+Current: 61700 uA
+Current: 65400 uA
+Current: 66500 uA
+Current: 66300 uA
+Current: 64800 uA
+Current: 66200 uA
+Current: 64700 uA
+Current: 65800 uA
+Current: 64700 uA
+Current: 63900 uA
+Current: 61400 uA
+Current: 66300 uA
+Current: 65200 uA
+Current: 66000 uA
+Current: 66300 uA
+Current: 64800 uA
+Current: 65300 uA
+Current: 65100 uA
+Current: 61900 uA
+Current: 61600 uA
+Current: 61600 uA
+Current: 62100 uA
+Current: 65700 uA
+Current: 65700 uA
+Current: 66100 uA
+Current: 66400 uA
+Current: 66100 uA
+Current: 63000 uA
+Current: 64000 uA
+Current: 62700 uA
+Current: 61200 uA
+Current: 60300 uA
+Current: 65500 uA
+Current: 66700 uA
+Current: 65700 uA
+Current: 66800 uA
+Current: 63800 uA
+Current: 65600 uA
+Current: 64600 uA
+Current: 63800 uA
+Current: 61100 uA
+Current: 61900 uA
+Current: 64900 uA
+Current: 65100 uA
+Current: 66300 uA
+Current: 65100 uA
+Current: 65600 uA
+Current: 64900 uA
+Current: 64500 uA
+Current: 63000 uA
+Current: 62900 uA
+Current: 61700 uA
+Current: 63600 uA
+Current: 66700 uA
+Current: 66900 uA
+Current: 66000 uA
+Current: 64600 uA
+Current: 65500 uA
+Current: 64200 uA
+Current: 64000 uA
+Current: 63300 uA
+Current: 61800 uA
+Current: 66500 uA
+Current: 65200 uA
+Current: 65300 uA
+Current: 66000 uA
+Current: 65000 uA
+Current: 66400 uA
+Current: 65000 uA
+Current: 63600 uA
+Current: 64300 uA
+Current: 61000 uA
+Current: 66400 uA
+Current: 65800 uA
+Current: 65700 uA
+Current: 65600 uA
+Current: 66200 uA
+Current: 65200 uA
+Current: 64800 uA
+Current: 64300 uA
+Current: 63600 uA
+Current: 60900 uA
+Current: 63800 uA
+Current: 66400 uA
+Current: 66000 uA
+Current: 66700 uA
+Current: 65200 uA
+Current: 66200 uA
+Current: 65500 uA
+Current: 62300 uA
+Current: 62200 uA
+Current: 61200 uA
+Current: 62300 uA
+Current: 66500 uA
+Current: 66300 uA
+Current: 66500 uA
+Current: 66500 uA
+Current: 66100 uA
+Current: 65400 uA
+Current: 65100 uA
+Current: 62900 uA
+Current: 62200 uA
+Current: 63000 uA
+Current: 65000 uA
+Current: 66500 uA
+Current: 66500 uA
+Current: 65700 uA
+Current: 65900 uA
+Current: 65100 uA
+Current: 64600 uA
+Current: 64600 uA
+Current: 63100 uA
+Current: 61700 uA
+Current: 63600 uA
+Current: 66600 uA
+Current: 65800 uA
+Current: 66400 uA
+Current: 66000 uA
+Current: 63800 uA
+Current: 64700 uA
+Current: 63000 uA
+Current: 62800 uA
+Current: 61600 uA
+Current: 61900 uA
+Current: 66200 uA
+Current: 66400 uA
+Current: 65500 uA
+Current: 66100 uA
+Current: 66000 uA
+Current: 64500 uA
+Current: 64500 uA
+Current: 61900 uA
+Current: 64100 uA
+Current: 61400 uA
+Current: 66100 uA
+Current: 66000 uA
+Current: 66600 uA
+Current: 66300 uA
+Current: 64500 uA
+Current: 65300 uA
+Current: 64200 uA
+Current: 62700 uA
+Current: 62800 uA
+Current: 63800 uA
+Current: 66800 uA
+Current: 65900 uA
+Current: 66200 uA
+Current: 65200 uA
+Current: 66000 uA
+Current: 65500 uA
+Current: 64800 uA
+Current: 63600 uA
+Current: 62000 uA
+Current: 62600 uA
+Current: 65200 uA
+Current: 65700 uA
+Current: 65500 uA
+Current: 65600 uA
+Current: 66600 uA
+Current: 65500 uA
+Current: 64600 uA
+Current: 63000 uA
+Current: 63200 uA
+Current: 62500 uA
+Current: 66200 uA
+Current: 65500 uA
+Current: 66200 uA
+Current: 66100 uA
+Current: 65400 uA
+Current: 64800 uA
+Current: 64600 uA
+Current: 64200 uA
+Current: 61200 uA
+Current: 61100 uA
+Current: 62600 uA
+Current: 66600 uA
+Current: 65900 uA
+Current: 65600 uA
+Current: 65300 uA
+Current: 65100 uA
+Current: 63000 uA
+Current: 62400 uA
+Current: 62800 uA
+Current: 61300 uA
+Current: 60500 uA
+Current: 65600 uA
+Current: 65400 uA
+Current: 65700 uA
+Current: 66100 uA
+Current: 63700 uA
+Current: 65100 uA
+Current: 63700 uA
+Current: 63700 uA
+Current: 63000 uA
+Current: 61100 uA
+Current: 65500 uA
+Current: 66500 uA
+Current: 64900 uA
+Current: 65300 uA
+Current: 65700 uA
+Current: 65600 uA
+Current: 63800 uA
+Current: 62600 uA
+Current: 62600 uA
+Current: 63300 uA
+Current: 66700 uA
+Current: 65100 uA
+Current: 66200 uA
+Current: 66000 uA
+Current: 65000 uA
+Current: 65900 uA
+Current: 64700 uA
+Current: 64000 uA
+Current: 64500 uA
+Current: 62400 uA
+Current: 65300 uA
+Current: 66200 uA
+Current: 66300 uA
+Current: 66100 uA
+Current: 66500 uA
+Current: 65700 uA
+Current: 65600 uA
+Current: 65600 uA
+Current: 62100 uA
+Current: 61900 uA
+Current: 66200 uA
+Current: 65900 uA
+Current: 66700 uA
+Current: 65200 uA
+Current: 65000 uA
+Current: 66100 uA
+Current: 66000 uA
+Current: 61800 uA
+Current: 61400 uA
+Current: 61400 uA
+Current: 64300 uA
+Current: 65400 uA
+Current: 66500 uA
+Current: 66400 uA
+Current: 66200 uA
+Current: 65600 uA
+Current: 65700 uA
+Current: 63800 uA
+Current: 63600 uA
+Current: 60700 uA
+Current: 62000 uA
 
 
 
@@ -1060,7 +1054,7 @@ Register 0x04 Value: 0x0287
 	I2C=200kb/s,	SPI=200kb/s,	UART=1kb/s,	I2C Pull-Up=32768
 
 
-	SIM->SCGC6=0x20000001		RTC->SR=0x10		RTC->TSR=0x56871322
+	SIM->SCGC6=0x20000001		RTC->SR=0x10		RTC->TSR=0x5687132F
 
 	MCG_C1=0x42			MCG_C2=0x00		MCG_S=0x06
 
@@ -1068,7 +1062,7 @@ Register 0x04 Value: 0x0287
 
 	SMC_PMPROT=0x22			SMC_PMCTRL=0x40		SCB->SCR=0x00
 
-	PMC_REGSC=0x00			SIM_SCGC4=0xF0400030	RTC->TPR=0x48A6
+	PMC_REGSC=0x00			SIM_SCGC4=0xF0400030	RTC->TPR=0x571B
 
 
 	0s in RTC Handler to-date,	0 Pmgr Errors
