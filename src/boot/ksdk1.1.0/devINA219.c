@@ -159,7 +159,7 @@ uint32_t readCurrentINA219(i2c_device_t slave, uint16_t current_LSB, uint16_t me
 	if (status == kStatus_I2C_Success){
 		current_register = i2c_buffer[1];
 		current_register |= (i2c_buffer[0] << 8);
-		current = current_register * current_LSB
+		current = current_register * current_LSB;
 		return current;
 	}
 	return -1;
