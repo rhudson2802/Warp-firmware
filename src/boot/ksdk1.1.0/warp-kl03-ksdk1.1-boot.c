@@ -1365,6 +1365,7 @@ main(void)
 							};
 	uint8_t			i2c_buffer[2];
 	uint16_t		ina219_calibration_setting = 0;
+	uint16_t		ina219_current_LSB;
 
 	ina219_status = initINA219(ina219, menuI2cPullupValue);
 	
@@ -1379,7 +1380,12 @@ main(void)
 	}
 
 
-	SEGGER_RTT_WriteString(0, "Enter INA219 calibration setting in hex (e.g. 5E1E): ");
+	SEGGER_RTT_WriteString(0, "Enter INA219 current LSB setting in uA (e.g. 0100 for 100uA): ");
+	ina219_current_LSB = read4digits();
+	SEGGER_RTT_printf(0, "\nEntered %u\n", ina219_current_LSB);
+	OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
+	
+	SEGGER_RTT_WriteString(0, "Enter INA219 calibration register setting in hex (e.g. 0FFF): ");
 	ina219_calibration_setting = readHexByte() << 8;
 	ina219_calibration_setting |= readHexByte();
 	SEGGER_RTT_printf(0, "\nEntered 0x%04x\n", ina219_calibration_setting);
@@ -1409,9 +1415,9 @@ main(void)
 	uint32_t	current_value;
 
 	for (int i=0; i<num_readings; i++){
-		//current_value = readCurrentINA219(ina219, menuI2cPullupValue);
-		//SEGGER_RTT_printf(0, "Current: %lu uA\n", current_value);
-		printRegisterINA219(ina219, 0x04, menuI2cPullupValue);
+		current_value = readCurrentINA219(ina219, ina219_current_LSB, menuI2cPullupValue);
+		SEGGER_RTT_printf(0, "Current: %lu uA\n", current_value);
+		//printRegisterINA219(ina219, 0x04, menuI2cPullupValue);
 	}
 
 	while (1)
