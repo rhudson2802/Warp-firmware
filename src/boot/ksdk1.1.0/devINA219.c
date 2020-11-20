@@ -59,30 +59,35 @@ extern volatile uint32_t		gWarpMenuPrintDelayMilliseconds;
 
 
 i2c_status_t initINA219(i2c_device_t slave, uint16_t menuI2cPullupValue){
-		i2c_status_t		status;
-		uint8_t			configuration_register[1] = {0x00};
-		uint8_t			configuration_value[2] = {0x01, 0x9F};
-		
-		enableI2Cpins(menuI2cPullupValue);
+	/*Sets up the configuration register to 16V bus voltage range, +-40mV shunt voltage range, rest as default*/
+	
+	i2c_status_t		status;
+	uint8_t			configuration_register[1] = {0x00};		/*Configuration register address*/
+	/*Value required to be written to configuration register. Needs to be split to an array of uint8_t for I2C_DRV_MasterSendDataBlocking to handle*/
+	uint8_t			configuration_value[2] = {0x01, 0x9F};
+	
+	enableI2Cpins(menuI2cPullupValue);
 
-		status = I2C_DRV_MasterSendDataBlocking(0,
-											&slave,
-											configuration_register,
-											1,
-											configuration_value,
-											2,
-											gWarpI2cTimeoutMilliseconds);
-											
-		disableI2Cpins();
-		
-		return status;
+	/*Write 0x019F to configuration register*/
+	status = I2C_DRV_MasterSendDataBlocking(0,
+										&slave,
+										configuration_register,
+										1,
+										configuration_value,
+										2,
+										gWarpI2cTimeoutMilliseconds);
+										
+	disableI2Cpins();
+	
+	return status;
 }
 
 
 i2c_status_t setINA219Calibration(i2c_device_t slave, uint16_t calibration_value, uint16_t menuI2cPullupValue){
+	/*Writes calibration_value to calibration register*/
 	
 	i2c_status_t		status;
-	uint8_t			calibration_register[1] = {0x05};
+	uint8_t			calibration_register[1] = {0x05};	/*Calibration register address*/
 	
 	uint8_t			payload[2];
 	
@@ -92,6 +97,7 @@ i2c_status_t setINA219Calibration(i2c_device_t slave, uint16_t calibration_value
 	
 	enableI2Cpins(menuI2cPullupValue);
 
+	/*Write calibration_value to calibration register*/
 	status = I2C_DRV_MasterSendDataBlocking(0,
 										&slave,
 										calibration_register,
@@ -108,6 +114,7 @@ i2c_status_t setINA219Calibration(i2c_device_t slave, uint16_t calibration_value
 
 
 i2c_status_t readRegisterINA219(i2c_device_t slave, uint8_t device_register, uint8_t * i2c_buffer, uint16_t menuI2cPullupValue){
+	/*Performs read of device_register of device slave, storing the results in external array i2c_buffer*/
 	
 	i2c_status_t	status;
 	uint8_t 	address_byte[1] = {device_register};
@@ -129,10 +136,14 @@ i2c_status_t readRegisterINA219(i2c_device_t slave, uint8_t device_register, uin
 
 
 void printRegisterINA219(i2c_device_t slave, uint8_t device_register, uint16_t menuI2cPullupValue){
+	/*Prints value stored in device_register of device slave to screen*/
+	
+	/*Set up buffer to store I2C data*/
 	uint8_t i2c_buffer[2];
 
 	i2c_status_t status;
 
+	/*Get value from register over I2C*/
 	status = readRegisterINA219(slave, device_register, i2c_buffer, menuI2cPullupValue);
 	
 	if (status != kStatus_I2C_Success){
@@ -147,18 +158,23 @@ void printRegisterINA219(i2c_device_t slave, uint8_t device_register, uint16_t m
 
 
 uint32_t readCurrentINA219(i2c_device_t slave, uint16_t current_LSB, uint16_t menuI2cPullupValue){
+	/*Reads current register on device slave, and output current calculated by current = current_register * current_LSB. Current is output in uA*/
 
-	i2c_status_t		status;
-	uint8_t			i2c_buffer[2];
-	uint16_t		current_register = 0;
+	i2c_status_t	status;
+	uint8_t			i2c_buffer[2];			/*Buffer to store I2C data*/
+	uint16_t		current_register = 0;	/*Value of current register*/
 
-	uint32_t		current;
+	uint32_t		current;				/*Value of current calculated*/
 
+	/*Read current register*/
 	status = readRegisterINA219(slave, 0x04, i2c_buffer, menuI2cPullupValue);
 
 	if (status == kStatus_I2C_Success){
+		/*Convert 2x uint8_t array into one uint16_t value*/
 		current_register = i2c_buffer[1];
 		current_register |= (i2c_buffer[0] << 8);
+		
+		/*Calculate current in uA*/
 		current = current_register * current_LSB;
 		return current;
 	}
