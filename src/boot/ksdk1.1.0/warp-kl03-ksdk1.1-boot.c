@@ -88,6 +88,8 @@
 #	include "devMMA8451Q.h"
 #endif
 
+#include "pedometer.h"
+
 
 #define WARP_BUILD_ENABLE_SEGGER_RTT_PRINTF
 //#define WARP_BUILD_BOOT_TO_CSVSTREAM
@@ -1355,80 +1357,9 @@ main(void)
 	 *	Notreached
 	 */
 #endif
-
-	devSSD1331init();
 	
-
-	i2c_status_t	ina219_status;
-	i2c_device_t	ina219 = {
-								.address = 0x40,
-								.baudRate_kbps = gWarpI2cBaudRateKbps
-							};
-	uint8_t			i2c_buffer[2];
-	uint16_t		ina219_calibration_setting = 0;
-	uint16_t		ina219_current_LSB;
-	uint16_t		num_readings;
-	uint32_t		current_value;
-
-
-	/*Set up INA219 configuration register*/
-	ina219_status = initINA219(ina219, menuI2cPullupValue);
 	
-	if (ina219_status != kStatus_I2C_Success){
-		SEGGER_RTT_WriteString(0, "Failed to configure INA219\n");
-		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-	} else{
-		SEGGER_RTT_WriteString(0, "Successfully configured INA219\n");
-		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-		
-		/*Display value written to configuration register*/
-		printRegisterINA219(ina219, 0x00, menuI2cPullupValue);
-	}
-	
-
-	/*Get current LSB from user*/
-	SEGGER_RTT_WriteString(0, "Enter INA219 current LSB setting in uA (e.g. 0100 for 100uA): ");
-	ina219_current_LSB = read4digits();
-	SEGGER_RTT_printf(0, "\nEntered %u\n", ina219_current_LSB);
-	OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-	
-	/*Get the calibration register value corresponding to the current LSB. This assumes the user does the calculation correctly, as the hardware cannot handle floating point arithmetic*/
-	SEGGER_RTT_WriteString(0, "Enter INA219 calibration register setting in hex (e.g. 0FFF): ");
-	ina219_calibration_setting = readHexByte() << 8;
-	ina219_calibration_setting |= readHexByte();
-	SEGGER_RTT_printf(0, "\nEntered 0x%04x\n", ina219_calibration_setting);
-	OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-
-
-	/*Sets calibration register*/
-	ina219_status = setINA219Calibration(ina219, ina219_calibration_setting, menuI2cPullupValue);
-	
-	if (ina219_status != kStatus_I2C_Success){
-		SEGGER_RTT_WriteString(0, "Failed to calibrate INA219\n");
-		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-	} else{
-		SEGGER_RTT_WriteString(0, "Successfully calibrated INA219\n");
-		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-		
-		/*Prints the value written to the calibration register, and a reading from the current register to check it is working*/
-		printRegisterINA219(ina219, 0x05, menuI2cPullupValue);
-		printRegisterINA219(ina219, 0x04, menuI2cPullupValue);
-	}
-
-	/*Get number o
-	f readings the user wants*/
-	SEGGER_RTT_WriteString(0, "Enter number of current measurements required (e.g. 1000): ");
-	num_readings = read4digits();
-	SEGGER_RTT_printf(0, "\n%u readings required\n", num_readings);
-	OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-
-
-	/*Repeat readings on current register*/
-	for (int i=0; i<num_readings; i++){
-		current_value = readCurrentINA219(ina219, ina219_current_LSB, menuI2cPullupValue);
-		SEGGER_RTT_printf(0, "Current: %lu uA\n", current_value);
-		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-	}
+	pedometer()
 
 	while (1)
 	{
