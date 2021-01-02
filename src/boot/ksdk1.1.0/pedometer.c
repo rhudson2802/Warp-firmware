@@ -22,40 +22,146 @@ extern volatile uint32_t		gWarpSupplySettlingDelayMilliseconds;
 extern volatile uint32_t		gWarpMenuPrintDelayMilliseconds;
 
 
-int compute_mean(int data[], int N){
-	int sum = 0;
+
+int32_t compute_mean(int16_t data[], int16_t N){
+	int32_t sum = 0;
 	for (int i=0; i<N; i++){
 		sum += data[i];
 	}
 	return sum / N;
 }
 
-int compute_variance(int data[], int mean, int N){
-	int sum = 0;
+
+int32_t compute_variance(int16_t data[], int32_t mean, int8_t N){
+	int32_t sum = 0;
 	for (int i=0; i<N; i++){
 		sum += data[i] * data[i];
 	}
 	return sum / N - mean*mean;
 }
 
-distribution generate_distribution(int data[], int N){
+
+distribution generate_distribution(int16_t data[], int8_t N){
 	distribution new_dist;
 	new_dist.mean = compute_mean(data, N);
 	new_dist.variance = compute_variance(data, new_dist.mean, N);
 	return new_dist;
 }
 
-int pedometer(){
-	int data1[5] = {1, 2, 3, 4, 5};
-	int data2[5] = {2, 4, 6, 8, 10};
-	int data3[5] = {1000, 2000, 3000, 4000, 5000};
+
+acc_measurement read_accelerometer(){
+	acc_measurement measurement;
 	
-	distribution dist1 = generate_distribution(data1, 5);
-	distribution dist2 = generate_distribution(data2, 5);
-	distribution dist3 = generate_distribution(data3, 5);
+	uint16_t	readSensorRegisterValueLSB;
+	uint16_t	readSensorRegisterValueMSB;
+	int16_t		readSensorRegisterValueCombined;
+	WarpStatus	i2cReadStatus;
 	
-	SEGGER_RTT_printf(0, "Dist 1 mean %d var %d", dist1.mean, dist1.variance);
-	SEGGER_RTT_printf(0, "Dist 2 mean %d var %d", dist2.mean, dist2.variance);
-	SEGGER_RTT_printf(0, "Dist 3 mean %d var %d", dist3.mean, dist3.variance);
+	/* 
+	 * Read the three axes of the accelerometer in turn.
+	 */
+	
+	/*
+	 *	From the MMA8451Q datasheet:
+	 *
+	 *		"A random read access to the LSB registers is not possible.
+	 *		Reading the MSB register and then the LSB register in sequence
+	 *		ensures that both bytes (LSB and MSB) belong to the same data
+	 *		sample, even if a new data sample arrives between reading the
+	 *		MSB and the LSB byte."
+	 *
+	 *	We therefore do 2-byte read transactions, for each of the registers.
+	 *	We could also improve things by doing a 6-byte read transaction.
+	 */
+	
+	i2cReadStatus = readSensorRegisterMMA8451Q(kWarpSensorOutputRegisterMMA8451QOUT_X_MSB, 2 /* numberOfBytes */);
+	readSensorRegisterValueMSB = deviceMMA8451QState.i2cBuffer[0];
+	readSensorRegisterValueLSB = deviceMMA8451QState.i2cBuffer[1];
+	readSensorRegisterValueCombined = ((readSensorRegisterValueMSB & 0xFF) << 6) | (readSensorRegisterValueLSB >> 2);
+	
+	/*
+	 *	Sign extend the 14-bit value based on knowledge that upper 2 bit are 0:
+	 */
+	readSensorRegisterValueCombined = (readSensorRegisterValueCombined ^ (1 << 13)) - (1 << 13);
+	
+	if (i2cReadStatus != kWarpStatusOK){
+		measurement.x = 0;
+	} else{
+		measurement.x = readSensorRegisterValueCombined;
+	}
+	
+	
+	/*
+	 * Y axis
+	 */
+	 
+	i2cReadStatus = readSensorRegisterMMA8451Q(kWarpSensorOutputRegisterMMA8451QOUT_Y_MSB, 2 /* numberOfBytes */);
+	readSensorRegisterValueMSB = deviceMMA8451QState.i2cBuffer[0];
+	readSensorRegisterValueLSB = deviceMMA8451QState.i2cBuffer[1];
+	readSensorRegisterValueCombined = ((readSensorRegisterValueMSB & 0xFF) << 6) | (readSensorRegisterValueLSB >> 2);
+	
+	readSensorRegisterValueCombined = (readSensorRegisterValueCombined ^ (1 << 13)) - (1 << 13);
+	
+	if (i2cReadStatus != kWarpStatusOK){
+		measurement.y = 0;
+	} else{
+		measurement.y = readSensorRegisterValueCombined;
+	}
+	
+	
+	/*
+	 * Z axis
+	 */
+	
+	i2cReadStatus = readSensorRegisterMMA8451Q(kWarpSensorOutputRegisterMMA8451QOUT_Z_MSB, 2 /* numberOfBytes */);
+	readSensorRegisterValueMSB = deviceMMA8451QState.i2cBuffer[0];
+	readSensorRegisterValueLSB = deviceMMA8451QState.i2cBuffer[1];
+	readSensorRegisterValueCombined = ((readSensorRegisterValueMSB & 0xFF) << 6) | (readSensorRegisterValueLSB >> 2);
+	
+	readSensorRegisterValueCombined = (readSensorRegisterValueCombined ^ (1 << 13)) - (1 << 13);
+	
+	if (i2cReadStatus != kWarpStatusOK){
+		measurement.z = 0;
+	} else{
+		measurement.z = readSensorRegisterValueCombined;
+	}
+	
+	return measurement;
+}
+
+
+acc_distribution read_acceleration_distribution(uint8_t N){
+	int16_t x[N];
+	int16_t y[N];
+	int16_t z[N];
+	
+	acc_measurement measurement;
+	acc_distribution distribution;
+	
+	for (int i=0; i<N; i++){
+		measurement = read_accelerometer()
+		x[i] = measurement.x;
+		y[i] = measurement.y;
+		z[i] = measurement.z;
+	}
+	
+	distribution.x = generate_distribution(x, N);
+	distribution.y = generate_distribution(y, N);
+	distribution.z = generate_distribution(z, N);
+	
+	return distribution;
+}
+
+
+int8_t pedometer(){
+	acc_distribution dist;
+	while (1){
+		dist = read_acceleration_distribution(10);
+		SEGGER_RTT_printf(0, "MEAN X: %d \t VAR X: %d\n", dist.x.mean, dist.x.variance);
+		SEGGER_RTT_printf(0, "MEAN Y: %d \t VAR Y: %d\n", dist.y.mean, dist.y.variance);
+		SEGGER_RTT_printf(0, "MEAN Z: %d \t VAR Z: %d\n", dist.z.mean, dist.z.variance);
+		OSA_TimeDelay(1000);
+	}
+	
 	return 0;
 }

@@ -1,11 +1,25 @@
 #include <stdlib.h>
 
 typedef struct distribution{
-	int mean;
-	int variance;
+	int32_t mean;
+	int32_t variance;
 } distribution;
 
-int compute_mean(int data[], int N);
-int compute_variance(int data[], int mean, int N);
-distribution generate_distribution(int data[], int N);
-int pedometer();
+typedef struct acc_distribution{
+	distribution x;
+	distribution y;
+	distribution z;
+} acc_distribution;
+
+typedef struct acc_measurement{
+	int16_t x;
+	int16_t y;
+	int16_t z;
+} acc_measurement;
+
+int32_t compute_mean(int16_t data[], int16_t N);
+int32_t compute_variance(int16_t data[], int32_t mean, int8_t N);
+distribution generate_distribution(int16_t data[], int8_t N);
+acc_measurement read_accelerometer();
+acc_distribution read_acceleration_distribution(uint8_t N);
+int8_t pedometer();
