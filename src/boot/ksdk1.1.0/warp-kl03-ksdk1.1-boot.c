@@ -2025,6 +2025,7 @@ main(void)
 			 */
 			case 'l':
 			{
+				SEGGER_RTT_WriteString(0, "\r\n Case l");
 				pedometer();
 				break;
 			}
