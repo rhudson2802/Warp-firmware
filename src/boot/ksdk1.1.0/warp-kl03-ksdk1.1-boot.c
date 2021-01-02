@@ -1359,7 +1359,6 @@ main(void)
 #endif
 	
 	
-	pedometer();
 
 	while (1)
 	{
@@ -2497,6 +2496,11 @@ main(void)
 			{
 				SEGGER_RTT_WriteString(0, "\r\tPayloads make rockets more than just fireworks.");
 				break;
+			}
+			
+			case '1':
+			{
+				pedometer();
 			}
 
 			default:

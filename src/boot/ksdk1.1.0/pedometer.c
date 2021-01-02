@@ -156,13 +156,13 @@ acc_distribution read_acceleration_distribution(uint8_t N){
 
 int8_t pedometer(){
 	acc_measurement dist;
-//	for(int i=0; i<1000; i++){
+	for(int i=0; i<1000; i++){
 		dist = read_accelerometer();
 		SEGGER_RTT_printf(0, "MEAN X: %d \t Y: %d \t Z: %d \t\n", dist.x, dist.y, dist.z);// VAR X: %d\n", dist.x.mean, dist.x.variance);
 //		SEGGER_RTT_printf(0, "MEAN Y: %d \t VAR Y: %d\n", dist.y.mean, dist.y.variance);
 //		SEGGER_RTT_printf(0, "MEAN Z: %d \t VAR Z: %d\n", dist.z.mean, dist.z.variance);
 		OSA_TimeDelay(1000);
-//	};
+};
 	
 	return 0;
 }
