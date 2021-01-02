@@ -2024,6 +2024,10 @@ main(void)
 			 *	Send repeated byte on I2C or SPI
 			 */
 			case 'l':
+			{
+				pedometer();
+				break;
+			}
 			case 'm':
 			{
 				uint8_t		outBuffer[1];
@@ -2498,10 +2502,6 @@ main(void)
 				break;
 			}
 			
-			case '1':
-			{
-				pedometer();
-			}
 
 			default:
 			{
