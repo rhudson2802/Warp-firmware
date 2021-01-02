@@ -16,6 +16,7 @@
 
 #include "pedometer.h"
 
+extern volatile WarpI2CDeviceState	deviceMMA8451QState;
 extern volatile uint32_t		gWarpI2cBaudRateKbps;
 extern volatile uint32_t		gWarpI2cTimeoutMilliseconds;
 extern volatile uint32_t		gWarpSupplySettlingDelayMilliseconds;
@@ -139,11 +140,11 @@ acc_distribution read_acceleration_distribution(uint8_t N){
 	acc_distribution distribution;
 	
 	for (int i=0; i<N; i++){
-		measurement = read_accelerometer()
+		measurement = read_accelerometer();
 		x[i] = measurement.x;
 		y[i] = measurement.y;
 		z[i] = measurement.z;
-	}
+	};
 	
 	distribution.x = generate_distribution(x, N);
 	distribution.y = generate_distribution(y, N);
@@ -161,7 +162,7 @@ int8_t pedometer(){
 		SEGGER_RTT_printf(0, "MEAN Y: %d \t VAR Y: %d\n", dist.y.mean, dist.y.variance);
 		SEGGER_RTT_printf(0, "MEAN Z: %d \t VAR Z: %d\n", dist.z.mean, dist.z.variance);
 		OSA_TimeDelay(1000);
-	}
+	};
 	
 	return 0;
 }
