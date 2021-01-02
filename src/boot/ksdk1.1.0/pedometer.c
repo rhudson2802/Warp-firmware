@@ -145,7 +145,7 @@ acc_distribution read_acceleration_distribution(uint8_t N){
 		y[i] = measurement.y;
 		z[i] = measurement.z;
 	};
-	
+
 	distribution.x = generate_distribution(x, N);
 	distribution.y = generate_distribution(y, N);
 	distribution.z = generate_distribution(z, N);
@@ -156,13 +156,13 @@ acc_distribution read_acceleration_distribution(uint8_t N){
 
 int8_t pedometer(){
 	acc_distribution dist;
-	for(int i=0; i<1000; i++){
+//	for(int i=0; i<1000; i++){
 		dist = read_acceleration_distribution(10);
 		SEGGER_RTT_printf(0, "MEAN X: %d \t VAR X: %d\n", dist.x.mean, dist.x.variance);
 		SEGGER_RTT_printf(0, "MEAN Y: %d \t VAR Y: %d\n", dist.y.mean, dist.y.variance);
 		SEGGER_RTT_printf(0, "MEAN Z: %d \t VAR Z: %d\n", dist.z.mean, dist.z.variance);
 		OSA_TimeDelay(1000);
-	};
+//	};
 	
 	return 0;
 }
