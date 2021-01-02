@@ -74,7 +74,7 @@ acc_measurement read_accelerometer(){
 	 *	We therefore do 2-byte read transactions, for each of the registers.
 	 *	We could also improve things by doing a 6-byte read transaction.
 	 */
-	
+	SEGGER_RTT_WriteString(0, "Starting x measurement\n");
 	i2cReadStatus = readSensorRegisterMMA8451Q(kWarpSensorOutputRegisterMMA8451QOUT_X_MSB, 2 /* numberOfBytes */);
 	readSensorRegisterValueMSB = deviceMMA8451QState.i2cBuffer[0];
 	readSensorRegisterValueLSB = deviceMMA8451QState.i2cBuffer[1];
@@ -86,8 +86,10 @@ acc_measurement read_accelerometer(){
 	readSensorRegisterValueCombined = (readSensorRegisterValueCombined ^ (1 << 13)) - (1 << 13);
 	
 	if (i2cReadStatus != kWarpStatusOK){
+		SEGGER_RTT_WriteString(0, "x not read\n");
 		measurement.x = 0;
 	} else{
+		SEGGER_RTT_printf(0, "x read %d\n", readSensorRegisterValueCombined);
 		measurement.x = readSensorRegisterValueCombined;
 	}
 	
@@ -95,7 +97,7 @@ acc_measurement read_accelerometer(){
 	/*
 	 * Y axis
 	 */
-	 
+	SEGGER_RTT_WriteString(0, "Starting y measurement\n");
 	i2cReadStatus = readSensorRegisterMMA8451Q(kWarpSensorOutputRegisterMMA8451QOUT_Y_MSB, 2 /* numberOfBytes */);
 	readSensorRegisterValueMSB = deviceMMA8451QState.i2cBuffer[0];
 	readSensorRegisterValueLSB = deviceMMA8451QState.i2cBuffer[1];
@@ -104,8 +106,10 @@ acc_measurement read_accelerometer(){
 	readSensorRegisterValueCombined = (readSensorRegisterValueCombined ^ (1 << 13)) - (1 << 13);
 	
 	if (i2cReadStatus != kWarpStatusOK){
+		SEGGER_RTT_WriteString(0, "y not read\n");
 		measurement.y = 0;
 	} else{
+		SEGGER_RTT_printf(0, "y read %d\n", readSensorRegisterValueCombined);
 		measurement.y = readSensorRegisterValueCombined;
 	}
 	
@@ -113,7 +117,7 @@ acc_measurement read_accelerometer(){
 	/*
 	 * Z axis
 	 */
-	
+	SEGGER_RTT_WriteString(0, "Starting z measurement\n");
 	i2cReadStatus = readSensorRegisterMMA8451Q(kWarpSensorOutputRegisterMMA8451QOUT_Z_MSB, 2 /* numberOfBytes */);
 	readSensorRegisterValueMSB = deviceMMA8451QState.i2cBuffer[0];
 	readSensorRegisterValueLSB = deviceMMA8451QState.i2cBuffer[1];
@@ -122,8 +126,10 @@ acc_measurement read_accelerometer(){
 	readSensorRegisterValueCombined = (readSensorRegisterValueCombined ^ (1 << 13)) - (1 << 13);
 	
 	if (i2cReadStatus != kWarpStatusOK){
+		SEGGER_RTT_WriteString(0, "z not read");
 		measurement.z = 0;
 	} else{
+		SEGGER_RTT_printf(0, "z read %d", readSensorRegisterValueCombined);
 		measurement.z = readSensorRegisterValueCombined;
 	}
 	
@@ -155,11 +161,11 @@ acc_distribution read_acceleration_distribution(uint8_t N){
 
 
 int8_t pedometer(){
-	SEGGER_RTT_WriteString(0, "Starting pedometer");
+	SEGGER_RTT_WriteString(0, "Starting pedometer\n");
 	acc_measurement dist;
 	for(int i=0; i<1000; i++){
 		dist = read_accelerometer();
-		SEGGER_RTT_WriteString(0, "Read accelerometer");
+		SEGGER_RTT_WriteString(0, "Read accelerometer\n");
 		SEGGER_RTT_printf(0, "MEAN X: %d \t Y: %d \t Z: %d \t\n", dist.x, dist.y, dist.z);// VAR X: %d\n", dist.x.mean, dist.x.variance);
 //		SEGGER_RTT_printf(0, "MEAN Y: %d \t VAR Y: %d\n", dist.y.mean, dist.y.variance);
 //		SEGGER_RTT_printf(0, "MEAN Z: %d \t VAR Z: %d\n", dist.z.mean, dist.z.variance);
