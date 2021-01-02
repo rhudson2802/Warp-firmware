@@ -156,7 +156,7 @@ acc_distribution read_acceleration_distribution(uint8_t N){
 
 int8_t pedometer(){
 	acc_distribution dist;
-	while (1){
+	for(int i=0; i<1000; i++){
 		dist = read_acceleration_distribution(10);
 		SEGGER_RTT_printf(0, "MEAN X: %d \t VAR X: %d\n", dist.x.mean, dist.x.variance);
 		SEGGER_RTT_printf(0, "MEAN Y: %d \t VAR Y: %d\n", dist.y.mean, dist.y.variance);
