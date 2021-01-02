@@ -1359,7 +1359,7 @@ main(void)
 #endif
 	
 	
-	pedometer()
+	pedometer();
 
 	while (1)
 	{

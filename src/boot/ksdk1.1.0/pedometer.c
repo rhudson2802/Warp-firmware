@@ -24,7 +24,7 @@ extern volatile uint32_t		gWarpMenuPrintDelayMilliseconds;
 
 int compute_mean(int data[], int N){
 	int sum = 0;
-	for (int i=0; i++; i<N){
+	for (int i=0; i<N; i++){
 		sum += data[i];
 	}
 	return sum / N;
@@ -32,7 +32,7 @@ int compute_mean(int data[], int N){
 
 int compute_variance(int data[], int mean, int N){
 	int sum = 0;
-	for (int i=0; i++; i<N){
+	for (int i=0; i<N; i++){
 		sum += data[i] * data[i];
 	}
 	return sum / N - mean*mean;
@@ -46,16 +46,16 @@ distribution generate_distribution(int data[], int N){
 }
 
 int pedometer(){
-	int data1 = [1, 2, 3, 4, 5];
-	int data2 = [2, 4, 6, 8, 10];
-	int data3 = [1000, 2000, 3000, 4000];
+	int data1[5] = {1, 2, 3, 4, 5};
+	int data2[5] = {2, 4, 6, 8, 10};
+	int data3[5] = {1000, 2000, 3000, 4000, 5000};
 	
 	distribution dist1 = generate_distribution(data1, 5);
 	distribution dist2 = generate_distribution(data2, 5);
 	distribution dist3 = generate_distribution(data3, 5);
 	
-	SEGGER_RTT_printf(0, "Dist 1 mean %d var %d", dist1.mean, dist1.variance)
-	SEGGER_RTT_printf(0, "Dist 2 mean %d var %d", dist2.mean, dist2.variance)
-	SEGGER_RTT_printf(0, "Dist 3 mean %d var %d", dist3.mean, dist3.variance)
+	SEGGER_RTT_printf(0, "Dist 1 mean %d var %d", dist1.mean, dist1.variance);
+	SEGGER_RTT_printf(0, "Dist 2 mean %d var %d", dist2.mean, dist2.variance);
+	SEGGER_RTT_printf(0, "Dist 3 mean %d var %d", dist3.mean, dist3.variance);
 	return 0;
 }
