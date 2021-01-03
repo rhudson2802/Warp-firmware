@@ -58,8 +58,6 @@ acc_measurement read_accelerometer(){
 	int16_t		readSensorRegisterValueCombined;
 	WarpStatus	i2cReadStatus;
 
-//	enableI2Cpins(menuI2cPullupValue);
-	
 	/* 
 	 * Read the three axes of the accelerometer in turn.
 	 */
@@ -134,8 +132,6 @@ acc_measurement read_accelerometer(){
 		SEGGER_RTT_printf(0, "z read %d", readSensorRegisterValueCombined);
 		measurement.z = readSensorRegisterValueCombined;
 	}
-	
-//	disableI2Cpins();
 
 	return measurement;
 }
@@ -166,15 +162,15 @@ acc_distribution read_acceleration_distribution(uint8_t N){
 
 int8_t pedometer(){
 	SEGGER_RTT_WriteString(0, "Starting pedometer\n");
-	acc_measurement dist;
+	acc_distribution dist;
 	for(int i=0; i<1000; i++){
-		dist = read_accelerometer();
+		dist = read_acceleration_distribution(10);
 		SEGGER_RTT_WriteString(0, "Read accelerometer\n");
-		SEGGER_RTT_printf(0, "MEAN X: %d \t Y: %d \t Z: %d \t\n", dist.x, dist.y, dist.z);// VAR X: %d\n", dist.x.mean, dist.x.variance);
-//		SEGGER_RTT_printf(0, "MEAN Y: %d \t VAR Y: %d\n", dist.y.mean, dist.y.variance);
-//		SEGGER_RTT_printf(0, "MEAN Z: %d \t VAR Z: %d\n", dist.z.mean, dist.z.variance);
+		SEGGER_RTT_printf(0, "MEAN X: %d \t VAR X: %d\n", dist.x.mean, dist.x.variance);
+		SEGGER_RTT_printf(0, "MEAN Y: %d \t VAR Y: %d\n", dist.y.mean, dist.y.variance);
+		SEGGER_RTT_printf(0, "MEAN Z: %d \t VAR Z: %d\n", dist.z.mean, dist.z.variance);
 		OSA_TimeDelay(1000);
-};
+	};
 	
 	return 0;
 }
