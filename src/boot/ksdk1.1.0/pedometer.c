@@ -33,8 +33,8 @@ int32_t compute_mean(int16_t data[], int16_t N){
 }
 
 
-int32_t compute_variance(int16_t data[], int32_t mean, int8_t N){
-	int32_t sum = 0;
+int64_t compute_variance(int16_t data[], int32_t mean, int8_t N){
+	int64_t sum = 0;
 	for (int i=0; i<N; i++){
 		sum += data[i] * data[i];
 	}
@@ -126,10 +126,10 @@ acc_measurement read_accelerometer(){
 	readSensorRegisterValueCombined = (readSensorRegisterValueCombined ^ (1 << 13)) - (1 << 13);
 	
 	if (i2cReadStatus != kWarpStatusOK){
-		SEGGER_RTT_WriteString(0, "z not read");
+		SEGGER_RTT_WriteString(0, "z not read\n");
 		measurement.z = 0;
 	} else{
-		SEGGER_RTT_printf(0, "z read %d", readSensorRegisterValueCombined);
+		SEGGER_RTT_printf(0, "z read %d\n", readSensorRegisterValueCombined);
 		measurement.z = readSensorRegisterValueCombined;
 	}
 
@@ -161,14 +161,13 @@ acc_distribution read_acceleration_distribution(uint8_t N){
 
 
 int8_t pedometer(){
-	SEGGER_RTT_WriteString(0, "Starting pedometer\n");
+	SEGGER_RTT_WriteString(0, "Starting pedometer\n\n");
 	acc_distribution dist;
 	for(int i=0; i<1000; i++){
 		dist = read_acceleration_distribution(10);
-		SEGGER_RTT_WriteString(0, "Read accelerometer\n");
-		SEGGER_RTT_printf(0, "MEAN X: %d \t VAR X: %d\n", dist.x.mean, dist.x.variance);
-		SEGGER_RTT_printf(0, "MEAN Y: %d \t VAR Y: %d\n", dist.y.mean, dist.y.variance);
-		SEGGER_RTT_printf(0, "MEAN Z: %d \t VAR Z: %d\n", dist.z.mean, dist.z.variance);
+		SEGGER_RTT_printf(0, "\nMEAN X: %ld \t VAR X: %lld\n", dist.x.mean, dist.x.variance);
+		SEGGER_RTT_printf(0, "MEAN Y: %ld \t VAR Y: %lld\n", dist.y.mean, dist.y.variance);
+		SEGGER_RTT_printf(0, "MEAN Z: %ld \t VAR Z: %lld\n\n\n\n", dist.z.mean, dist.z.variance);
 		OSA_TimeDelay(1000);
 	};
 	
