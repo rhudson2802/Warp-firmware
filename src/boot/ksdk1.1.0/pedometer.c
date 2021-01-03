@@ -165,9 +165,9 @@ int8_t pedometer(){
 	acc_distribution dist;
 	for(int i=0; i<1000; i++){
 		dist = read_acceleration_distribution(10);
-		SEGGER_RTT_printf(0, "\nMEAN X: %ld \t VAR X: %lld\n", dist.x.mean, dist.x.variance);
-		SEGGER_RTT_printf(0, "MEAN Y: %ld \t VAR Y: %lld\n", dist.y.mean, dist.y.variance);
-		SEGGER_RTT_printf(0, "MEAN Z: %ld \t VAR Z: %lld\n\n\n\n", dist.z.mean, dist.z.variance);
+		SEGGER_RTT_printf(0, "\nMEAN X: %ld \t VAR X: %ld\n", dist.x.mean, dist.x.variance);
+		SEGGER_RTT_printf(0, "MEAN Y: %ld \t VAR Y: %ld\n", dist.y.mean, dist.y.variance);
+		SEGGER_RTT_printf(0, "MEAN Z: %ld \t VAR Z: %ld\n\n\n\n", dist.z.mean, dist.z.variance);
 		OSA_TimeDelay(1000);
 	};
 	
