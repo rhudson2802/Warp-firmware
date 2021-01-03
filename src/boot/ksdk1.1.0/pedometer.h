@@ -2,7 +2,7 @@
 
 typedef struct distribution{
 	int32_t mean;
-	int64_t variance;
+	int32_t variance;
 } distribution;
 
 typedef struct acc_distribution{
@@ -18,7 +18,7 @@ typedef struct acc_measurement{
 } acc_measurement;
 
 int32_t compute_mean(int16_t data[], int16_t N);
-int64_t compute_variance(int16_t data[], int32_t mean, int8_t N);
+int32_t compute_variance(int16_t data[], int32_t mean, int8_t N);
 distribution generate_distribution(int16_t data[], int8_t N);
 acc_measurement read_accelerometer();
 acc_distribution read_acceleration_distribution(uint8_t N);
