@@ -2026,7 +2026,9 @@ main(void)
 			case 'l':
 			{
 				SEGGER_RTT_WriteString(0, "\r\n Case l");
+				enableI2Cpins(menuI2cPullupValue);
 				pedometer();
+				disableI2Cpins();
 				break;
 			}
 			case 'm':

@@ -57,6 +57,8 @@ acc_measurement read_accelerometer(){
 	uint16_t	readSensorRegisterValueMSB;
 	int16_t		readSensorRegisterValueCombined;
 	WarpStatus	i2cReadStatus;
+
+//	enableI2Cpins(menuI2cPullupValue);
 	
 	/* 
 	 * Read the three axes of the accelerometer in turn.
@@ -133,6 +135,8 @@ acc_measurement read_accelerometer(){
 		measurement.z = readSensorRegisterValueCombined;
 	}
 	
+//	disableI2Cpins();
+
 	return measurement;
 }
 
