@@ -39,12 +39,13 @@ int32_t compute_variance(int16_t data[], int32_t mean, int8_t N){
 	SEGGER_RTT_printf(0, "\nMean = %ld \t Mean^2 = %ld\n", mean, mean*mean);
 	for (int i=0; i<N; i++){
 		data_squared = data[i] * data[i];
-		sum = sum + data_squared;
+		sum = sum + (data[i] - mean)*(data[i] - mean);
+		SEGGER_RTT_printf(0, "d = %d\n", data[i]);
 		SEGGER_RTT_printf(0, "d^2 = %ld\n", data_squared);
 		SEGGER_RTT_printf(0, "Sum = %ld\n", sum);
 	}
 	SEGGER_RTT_printf(0, "Sum/N = %ld\n\n", sum/N);
-	return sum / N - mean*mean;
+	return sum / N;
 }
 
 
