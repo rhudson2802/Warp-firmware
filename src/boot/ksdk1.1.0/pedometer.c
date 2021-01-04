@@ -16,6 +16,8 @@
 
 #include "pedometer.h"
 
+#define LOW_PASS_ORDER 5
+
 extern volatile WarpI2CDeviceState	deviceMMA8451QState;
 extern volatile uint32_t		gWarpI2cBaudRateKbps;
 extern volatile uint32_t		gWarpI2cTimeoutMilliseconds;
@@ -35,16 +37,16 @@ int32_t compute_mean(int16_t data[], int16_t N){
 
 int32_t compute_variance(int16_t data[], int32_t mean, int8_t N){
 	int32_t sum = 0;
-	int32_t data_squared;
-	SEGGER_RTT_printf(0, "\nMean = %ld \t Mean^2 = %ld\n", mean, mean*mean);
+	//int32_t data_squared;
+	//SEGGER_RTT_printf(0, "\nMean = %ld \t Mean^2 = %ld\n", mean, mean*mean);
 	for (int i=0; i<N; i++){
-		data_squared = data[i] * data[i];
+		//data_squared = data[i] * data[i];
 		sum = sum + (data[i] - mean)*(data[i] - mean);
-		SEGGER_RTT_printf(0, "d = %d\n", data[i]);
-		SEGGER_RTT_printf(0, "d^2 = %ld\n", data_squared);
-		SEGGER_RTT_printf(0, "Sum = %ld\n", sum);
+		//SEGGER_RTT_printf(0, "d = %d\n", data[i]);
+		//SEGGER_RTT_printf(0, "d^2 = %ld\n", data_squared);
+		//SEGGER_RTT_printf(0, "Sum = %ld\n", sum);
 	}
-	SEGGER_RTT_printf(0, "Sum/N = %ld\n\n", sum/N);
+	//SEGGER_RTT_printf(0, "Sum/N = %ld\n\n", sum/N);
 	return sum / N;
 }
 
@@ -93,10 +95,10 @@ acc_measurement read_accelerometer(){
 	readSensorRegisterValueCombined = (readSensorRegisterValueCombined ^ (1 << 13)) - (1 << 13);
 	
 	if (i2cReadStatus != kWarpStatusOK){
-		SEGGER_RTT_WriteString(0, "x not read\n");
+		//SEGGER_RTT_WriteString(0, "x not read\n");
 		measurement.x = 0;
 	} else{
-		SEGGER_RTT_printf(0, "x read %d\n", readSensorRegisterValueCombined);
+		//SEGGER_RTT_printf(0, "x read %d\n", readSensorRegisterValueCombined);
 		measurement.x = readSensorRegisterValueCombined;
 	}
 	
@@ -113,10 +115,10 @@ acc_measurement read_accelerometer(){
 	readSensorRegisterValueCombined = (readSensorRegisterValueCombined ^ (1 << 13)) - (1 << 13);
 	
 	if (i2cReadStatus != kWarpStatusOK){
-		SEGGER_RTT_WriteString(0, "y not read\n");
+		//SEGGER_RTT_WriteString(0, "y not read\n");
 		measurement.y = 0;
 	} else{
-		SEGGER_RTT_printf(0, "y read %d\n", readSensorRegisterValueCombined);
+		//SEGGER_RTT_printf(0, "y read %d\n", readSensorRegisterValueCombined);
 		measurement.y = readSensorRegisterValueCombined;
 	}
 	
@@ -133,10 +135,10 @@ acc_measurement read_accelerometer(){
 	readSensorRegisterValueCombined = (readSensorRegisterValueCombined ^ (1 << 13)) - (1 << 13);
 	
 	if (i2cReadStatus != kWarpStatusOK){
-		SEGGER_RTT_WriteString(0, "z not read\n");
+		//SEGGER_RTT_WriteString(0, "z not read\n");
 		measurement.z = 0;
 	} else{
-		SEGGER_RTT_printf(0, "z read %d\n", readSensorRegisterValueCombined);
+		//SEGGER_RTT_printf(0, "z read %d\n", readSensorRegisterValueCombined);
 		measurement.z = readSensorRegisterValueCombined;
 	}
 
@@ -167,16 +169,87 @@ acc_distribution read_acceleration_distribution(uint8_t N){
 }
 
 
+acc_distribution low_pass_filter(acc_distribution data[], uint8_t N){
+	int32_t sum_x = 0;
+	int32_t sum_y = 0;
+	int32_t sum_z = 0;
+	
+	int32_t var_x = 0;
+	int32_t var_y = 0;
+	int32_t var_z = 0;
+	
+	acc_distribution output;
+	
+	for(int i=0; i<N; i++){
+		sum_x += data[i].x.mean / N;
+		sum_y += data[i].y.mean / N;
+		sum_z += data[i].z.mean / N;
+		
+		var_x += data[i].x.variance / (N*N);
+		var_y += data[i].y.variance / (N*N);
+		var_z += data[i].z.variance / (N*N);
+	}
+	
+	output.x.mean = sum_x;
+	output.y.mean = sum_y;
+	output.z.mean = sum_z;
+	
+	output.x.variance = var_x;
+	output.y.variance = var_y;
+	output.z.variance = var_z;
+	
+	return output;
+}
+
+void rotate_array_by_one(acc_distribution data[], uint8_t N){
+	// Takes input array and moves contents to left by 1 element. Last element is kept the same
+	
+	for(int i=0; i<N-1 ; i++){
+		data[i] = data[i+1];
+	}
+}
+
+void print_acceleration_data_array(acc_distribution data[], uint8_t N){
+	for (int i=0; i<N; i++){
+		SEGGER_RTT_printf(0, "Index %d", i);
+		print_acc_distribution(dist);
+	}
+}
+
+void print_acc_distribution(acc_distribution dist){
+	SEGGER_RTT_printf(0, "\nX\tMEAN: %ld\tVARIANCE: %ld\n", dist.x.mean, dist.x.variance);
+	SEGGER_RTT_printf(0, "Y\t%ld\t%ld\n", dist.y.mean, dist.y.variance);
+	SEGGER_RTT_printf(0, "Z\t%ld\t%ld\n", dist.z.mean, dist.z.variance);
+}
+
+
+
+
 int8_t pedometer(){
 	SEGGER_RTT_WriteString(0, "Starting pedometer\n\n");
 	acc_distribution dist;
-	for(int i=0; i<1000; i++){
+	
+	uint8_t N = 8;
+	acc_distribution data[N];
+	acc_distribution low_pass;
+	
+	
+	for(int i=0; i<N; i++){
 		dist = read_acceleration_distribution(10);
-		SEGGER_RTT_printf(0, "\nMEAN X: %ld \t VAR X: %ld\n", dist.x.mean, dist.x.variance);
-		SEGGER_RTT_printf(0, "MEAN Y: %ld \t VAR Y: %ld\n", dist.y.mean, dist.y.variance);
-		SEGGER_RTT_printf(0, "MEAN Z: %ld \t VAR Z: %ld\n\n\n\n", dist.z.mean, dist.z.variance);
+		print_acc_distribution(dist);
 		OSA_TimeDelay(1000);
+		data[i] = dist;
 	};
+	
+	for (int i=0; i<N+1; i++){
+		SEGGER_RTT_printf(0, "\n\nShift %d\n", i);
+		print_acceleration_data_array(data, N);
+		low_pass = low_pass_filter(data, N);
+		SEGGER_RTT_WriteString(0, "\nLow pass\n");
+		print_acc_distribution(low_pass);
+		
+		rotate_array_by_one(data, N);
+	}
 	
 	return 0;
 }
