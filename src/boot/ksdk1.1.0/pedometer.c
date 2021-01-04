@@ -216,13 +216,13 @@ void print_acceleration_data_array(acc_distribution data[], uint8_t N){
 		print_acc_distribution(data[i]);
 	}
 }
-
+*/
 void print_acc_distribution(acc_distribution dist){
 	SEGGER_RTT_printf(0, "\nX\tMEAN: %ld\tVARIANCE: %ld\n", dist.x.mean, dist.x.variance);
 	SEGGER_RTT_printf(0, "Y\t%ld\t%ld\n", dist.y.mean, dist.y.variance);
 	SEGGER_RTT_printf(0, "Z\t%ld\t%ld\n", dist.z.mean, dist.z.variance);
 }
-*/
+
 
 
 
