@@ -169,7 +169,7 @@ acc_distribution read_acceleration_distribution(uint8_t N){
 	return distribution;
 }
 
-
+/*
 acc_distribution low_pass_filter(acc_distribution data[], uint8_t N){
 	int32_t sum_x = 0;
 	int32_t sum_y = 0;
@@ -222,7 +222,7 @@ void print_acc_distribution(acc_distribution dist){
 	SEGGER_RTT_printf(0, "Y\t%ld\t%ld\n", dist.y.mean, dist.y.variance);
 	SEGGER_RTT_printf(0, "Z\t%ld\t%ld\n", dist.z.mean, dist.z.variance);
 }
-
+*/
 
 
 
@@ -237,11 +237,11 @@ int8_t pedometer(){
 	
 	for(int i=0; i<N; i++){
 		dist = read_acceleration_distribution(10);
-		print_acc_distribution(dist);
+		//print_acc_distribution(dist);
 		OSA_TimeDelay(1000);
 		data[i] = dist;
 	};
-	
+	/*
 	for (int i=0; i<N+1; i++){
 		SEGGER_RTT_printf(0, "\n\nShift %d\n", i);
 		print_acceleration_data_array(data, N);
@@ -251,6 +251,6 @@ int8_t pedometer(){
 		
 		rotate_array_by_one(data, N);
 	}
-	
+	*/
 	return 0;
 }
