@@ -85,6 +85,7 @@ acc_measurement read_accelerometer(){
 	 */
 	SEGGER_RTT_WriteString(0, "Starting x measurement\n");
 	i2cReadStatus = readSensorRegisterMMA8451Q(kWarpSensorOutputRegisterMMA8451QOUT_X_MSB, 2 /* numberOfBytes */);
+	SEGGER_RTT_WriteString(0, "I2C Active");
 	readSensorRegisterValueMSB = deviceMMA8451QState.i2cBuffer[0];
 	readSensorRegisterValueLSB = deviceMMA8451QState.i2cBuffer[1];
 	readSensorRegisterValueCombined = ((readSensorRegisterValueMSB & 0xFF) << 6) | (readSensorRegisterValueLSB >> 2);
@@ -95,10 +96,10 @@ acc_measurement read_accelerometer(){
 	readSensorRegisterValueCombined = (readSensorRegisterValueCombined ^ (1 << 13)) - (1 << 13);
 	
 	if (i2cReadStatus != kWarpStatusOK){
-		//SEGGER_RTT_WriteString(0, "x not read\n");
+		SEGGER_RTT_WriteString(0, "x not read\n");
 		measurement.x = 0;
 	} else{
-		//SEGGER_RTT_printf(0, "x read %d\n", readSensorRegisterValueCombined);
+		SEGGER_RTT_printf(0, "x read %d\n", readSensorRegisterValueCombined);
 		measurement.x = readSensorRegisterValueCombined;
 	}
 	
