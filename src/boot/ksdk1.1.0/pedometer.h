@@ -24,6 +24,6 @@ acc_measurement read_accelerometer();
 acc_distribution read_acceleration_distribution(uint8_t N);
 acc_distribution low_pass_filter(acc_distribution data[], uint8_t N);
 void rotate_array_by_one(acc_distribution data[], uint8_t N);
-void print_acceleration_data_array(acc_distribution data, uint8_t N);
+void print_acc_data_array(acc_distribution data, uint8_t N);
 void print_acc_distribution(acc_distribution dist);
 int8_t pedometer();
