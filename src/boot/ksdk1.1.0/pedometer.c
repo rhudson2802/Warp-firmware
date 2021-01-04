@@ -237,7 +237,7 @@ int8_t pedometer(){
 	
 	for(int i=0; i<N; i++){
 		dist = read_acceleration_distribution(10);
-		//print_acc_distribution(dist);
+		print_acc_distribution(dist);
 		OSA_TimeDelay(1000);
 		data[i] = dist;
 	};
