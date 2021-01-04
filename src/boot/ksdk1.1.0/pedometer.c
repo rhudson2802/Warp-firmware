@@ -213,7 +213,7 @@ void rotate_array_by_one(acc_distribution data[], uint8_t N){
 void print_acceleration_data_array(acc_distribution * data, uint8_t N){
 	for (int i=0; i<N; i++){
 		SEGGER_RTT_printf(0, "Index %d", i);
-		print_acc_distribution(data[i]);
+		//print_acc_distribution(data[i]);
 	}
 }
 
