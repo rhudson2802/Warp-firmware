@@ -37,16 +37,16 @@ int32_t compute_mean(int16_t data[], int16_t N){
 
 int32_t compute_variance(int16_t data[], int32_t mean, int8_t N){
 	int32_t sum = 0;
-	//int32_t data_squared;
-	//SEGGER_RTT_printf(0, "\nMean = %ld \t Mean^2 = %ld\n", mean, mean*mean);
+	int32_t data_squared;
+	SEGGER_RTT_printf(0, "\nMean = %ld \t Mean^2 = %ld\n", mean, mean*mean);
 	for (int i=0; i<N; i++){
-		//data_squared = data[i] * data[i];
+		data_squared = data[i] * data[i];
 		sum = sum + (data[i] - mean)*(data[i] - mean);
-		//SEGGER_RTT_printf(0, "d = %d\n", data[i]);
-		//SEGGER_RTT_printf(0, "d^2 = %ld\n", data_squared);
-		//SEGGER_RTT_printf(0, "Sum = %ld\n", sum);
+		SEGGER_RTT_printf(0, "d = %d\n", data[i]);
+		SEGGER_RTT_printf(0, "d^2 = %ld\n", data_squared);
+		SEGGER_RTT_printf(0, "Sum = %ld\n", sum);
 	}
-	//SEGGER_RTT_printf(0, "Sum/N = %ld\n\n", sum/N);
+	SEGGER_RTT_printf(0, "Sum/N = %ld\n\n", sum/N);
 	return sum / N;
 }
 
@@ -116,10 +116,10 @@ acc_measurement read_accelerometer(){
 	readSensorRegisterValueCombined = (readSensorRegisterValueCombined ^ (1 << 13)) - (1 << 13);
 	
 	if (i2cReadStatus != kWarpStatusOK){
-		//SEGGER_RTT_WriteString(0, "y not read\n");
+		SEGGER_RTT_WriteString(0, "y not read\n");
 		measurement.y = 0;
 	} else{
-		//SEGGER_RTT_printf(0, "y read %d\n", readSensorRegisterValueCombined);
+		SEGGER_RTT_printf(0, "y read %d\n", readSensorRegisterValueCombined);
 		measurement.y = readSensorRegisterValueCombined;
 	}
 	
@@ -136,10 +136,10 @@ acc_measurement read_accelerometer(){
 	readSensorRegisterValueCombined = (readSensorRegisterValueCombined ^ (1 << 13)) - (1 << 13);
 	
 	if (i2cReadStatus != kWarpStatusOK){
-		//SEGGER_RTT_WriteString(0, "z not read\n");
+		SEGGER_RTT_WriteString(0, "z not read\n");
 		measurement.z = 0;
 	} else{
-		//SEGGER_RTT_printf(0, "z read %d\n", readSensorRegisterValueCombined);
+		SEGGER_RTT_printf(0, "z read %d\n", readSensorRegisterValueCombined);
 		measurement.z = readSensorRegisterValueCombined;
 	}
 
