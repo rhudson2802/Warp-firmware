@@ -181,7 +181,7 @@ void rotate_array_by_one(acc_distribution data[], uint8_t N){
 
 void print_array(int32_t data[], uint8_t N){
 	SEGGER_RTT_WriteString(0, "\nARRAY: ");
-	for(int i=0; i<N-1 ; i++){
+	for(int i=0; i<N ; i++){
 		SEGGER_RTT_printf(0, "%ld, ", data[i]);
 	}
 	SEGGER_RTT_WriteString(0, "\n");
