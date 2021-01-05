@@ -169,11 +169,11 @@ void read_acceleration_distribution(uint8_t N, int32_t * x_mean, uint32_t * x_va
 	*x_mean = distribution.x.mean;
 	*x_var = distribution.x.variance;
 	
-	*y_mean = distribution.y.mean;
-	*y_var = distribution.y.variance;
+//	*y_mean = distribution.y.mean;
+//	*y_var = distribution.y.variance;
 	
-	*z_mean = distribution.z.mean;
-	*z_var = distribution.z.variance;
+//	*z_mean = distribution.z.mean;
+//	*z_var = distribution.z.variance;
 }
 
 
