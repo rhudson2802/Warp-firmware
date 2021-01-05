@@ -170,7 +170,7 @@ acc_distribution read_acceleration_distribution(uint8_t N){
 }
 
 
-acc_distribution low_pass_filter(acc_distribution data[], uint8_t N){
+uint32_t low_pass_filter(uint16_t data[], uint8_t N){
 	int32_t sum_x = 0;
 	int32_t sum_y = 0;
 	int32_t sum_z = 0;
@@ -179,25 +179,19 @@ acc_distribution low_pass_filter(acc_distribution data[], uint8_t N){
 	int32_t var_y = 0;
 	int32_t var_z = 0;
 	
-	acc_distribution output;
+	uint32_t output;
 	
 	for(int i=0; i<N; i++){
-		sum_x += data[i].x.mean / N;
-		sum_y += data[i].y.mean / N;
-		sum_z += data[i].z.mean / N;
+		sum_x += data[i] / N;
+		sum_y += data[i] / N;
+		sum_z += data[i] / N;
 		
-		var_x += data[i].x.variance / (N*N);
-		var_y += data[i].y.variance / (N*N);
-		var_z += data[i].z.variance / (N*N);
+		var_x += data[i] / (N*N);
+		var_y += data[i] / (N*N);
+		var_z += data[i] / (N*N);
 	}
 	
-	output.x.mean = sum_x;
-	output.y.mean = sum_y;
-	output.z.mean = sum_z;
-	
-	output.x.variance = var_x;
-	output.y.variance = var_y;
-	output.z.variance = var_z;
+	output = sum_x;
 	
 	return output;
 }
@@ -233,7 +227,8 @@ int8_t pedometer(){
 	
 	uint8_t N = 8;
 	acc_distribution data[N];
-	acc_distribution low_pass;
+	uint16_t mean_data[N] = {1,2,3,4,5,6,7,8};
+	uint32_t low_pass;
 	
 	
 	for(int i=0; i<N; i++){
@@ -248,7 +243,7 @@ int8_t pedometer(){
 		//print_acc_data_array(data[i], N);
 		low_pass = low_pass_filter(data, N);
 		SEGGER_RTT_WriteString(0, "\nLow pass\n");
-		print_acc_distribution(low_pass);
+		SEGGER_RTT_printf(0, "%ld\n\n", low_pass
 		
 		//rotate_array_by_one(data, N);
 	//}
