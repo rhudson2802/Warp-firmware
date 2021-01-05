@@ -230,23 +230,26 @@ int8_t pedometer(){
 	int32_t low_2;
 	int32_t low_2_var;
 	
-//	int32_t x_mean[N];
-//	int32_t x_var[N];
+	int32_t x_mean[N];
+	int32_t x_var[N];
 	
-//	int32_t y_mean[N];
-//	int32_t y_var[N];
+	int32_t y_mean[N];
+	int32_t y_var[N];
 	
 	int32_t z_mean[N];
 	int32_t z_var[N];
 
-	int32_t x_mean[8] = {400, 400, 500, 500, 600, 600, 700, 700};
-	int32_t x_var[8] = {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000};
+//	int32_t x_mean[8] = {400, 400, 500, 500, 600, 600, 700, 700};
+//	int32_t x_var[8] = {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000};
 
-	int32_t y_mean[8] = {10, 20, 30, 40, 50, 60, 70, 80};
-	int32_t y_var[8] = {2000, 3000, 2000, 6000, 4000, 1000, 4000, 6000};
+//	int32_t y_mean[8] = {10, 20, 30, 40, 50, 60, 70, 80};
+//	int32_t y_var[8] = {2000, 3000, 2000, 6000, 4000, 1000, 4000, 6000};
 	
 	for(int i=0; i<N; i++){
-		read_acceleration_distribution(10, &z_mean[i], &z_var[i]);
+		read_acceleration_distribution(10, &x_mean, &x_var, &y_mean, &y_var, &z_mean[i], &z_var[i]);
+		
+		SEGGER_RTT_printf(0, "X\tMEAN: %ld\tVARIANCE: %lu\n", x_mean[i], x_var[i]);
+		SEGGER_RTT_printf(0, "Y\tMEAN: %ld\tVARIANCE: %lu\n", y_mean[i], y_var[i]);
 		SEGGER_RTT_printf(0, "Z\tMEAN: %ld\tVARIANCE: %lu\n", z_mean[i], z_var[i]);
 		//print_acc_distribution(dist);
 		
@@ -267,6 +270,10 @@ int8_t pedometer(){
 	print_array(x_mean, 8);
 	rotate_array_by_one(x_mean, 8);
 	print_array(x_mean, 8);
+	
+	print_array(z_var, 8);
+	rotate_array_by_one(z_var, 8);
+	print_array(z_var, 8);
 	
 	
 	//for (int i=0; i<N+1; i++){
