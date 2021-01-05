@@ -188,7 +188,7 @@ void low_pass_filter(int32_t data[], int32_t vars[], int32_t * output, int32_t *
 void rotate_array_by_one(int32_t data[], uint8_t N){
 	// Takes input array and moves contents to left by 1 element. Last element is kept the same
 	
-	for(int i=0; i<N-1 ; i++){
+	for(int i=0; i<N ; i++){
 		data[i] = data[i+1];
 	}
 }
