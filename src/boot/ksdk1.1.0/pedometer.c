@@ -218,8 +218,8 @@ int8_t pedometer(){
 	int32_t low_pass;
 	uint32_t low_pass_var;
 	
-	int32_t x_mean[N];
-	uint32_t x_var[N];
+//	int32_t x_mean[N];
+//	uint32_t x_var[N];
 	
 	int32_t y_mean[N];
 	uint32_t y_var[N];
@@ -229,8 +229,8 @@ int8_t pedometer(){
 	
 	SEGGER_RTT_WriteString(0, "\nDec vars\n");
 
-//	int32_t x_mean[8] = {10, 20, 30, 40, 50, 60, 70, 80};
-//	uint32_t x_var[8] = {2000, 3000, 2000, 6000, 4000, 1000, 4000, 6000};
+	int32_t x_mean[8] = {10, 20, 30, 40, 50, 60, 70, 80};
+	uint32_t x_var[8] = {2000, 3000, 2000, 6000, 4000, 1000, 4000, 6000};
 	
 	for(int i=0; i<N; i++){
 		SEGGER_RTT_WriteString(0, "\nFor\n");
