@@ -256,7 +256,23 @@ int8_t pedometer(){
 	
 	low_pass_filter(x_mean, x_var, N, &low_pass, &low_pass_var);
 	
-	SEGGER_RTT_printf(0, "op: %ld, error: %ld", low_pass, low_pass_var);
+	SEGGER_RTT_printf(0, "op: %ld, error: %ld\n", low_pass, low_pass_var);
+
+
+	print_array(y_mean, N);
+	print_array(y_var, N);
+	
+	low_pass_filter(y_mean, y_var, N, &low_pass, &low_pass_var);
+	
+	SEGGER_RTT_printf(0, "op: %ld, error: %ld\n", low_pass, low_pass_var);
+
+
+	print_array(z_mean, N);
+	print_array(z_var, N);
+	
+	low_pass_filter(z_mean, z_var, N, &low_pass, &low_pass_var);
+	
+	SEGGER_RTT_printf(0, "op: %ld, error: %ld\n", low_pass, low_pass_var);
 
 	return 0;
 }
