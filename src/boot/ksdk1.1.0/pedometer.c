@@ -218,8 +218,8 @@ int8_t pedometer(){
 	int32_t low_pass;
 	uint32_t low_pass_var;
 	
-//	int32_t x_mean[N];
-//	uint32_t x_var[N];
+	int32_t x_mean[N];
+	uint32_t x_var[N];
 	
 	int32_t y_mean[N];
 	uint32_t y_var[N];
@@ -227,16 +227,16 @@ int8_t pedometer(){
 	int32_t z_mean[N];
 	uint32_t z_var[N];
 
-	int32_t x_mean[8] = {10, 20, 30, 40, 50, 60, 70, 80};
-	uint32_t x_var[8] = {2000, 3000, 2000, 6000, 4000, 1000, 4000, 6000};
+//	int32_t x_mean[8] = {10, 20, 30, 40, 50, 60, 70, 80};
+//	uint32_t x_var[8] = {2000, 3000, 2000, 6000, 4000, 1000, 4000, 6000};
 	
 	for(int i=0; i<N; i++){
 		dist = read_acceleration_distribution(10);
 		print_acc_distribution(dist);
-/*		
+		
 		x_mean[i] = dist.x.mean;
 		x_var[i] = dist.x.variance;
-		
+/*		
 		y_mean[i] = dist.y.mean;
 		y_var[i] = dist.y.variance;
 		
