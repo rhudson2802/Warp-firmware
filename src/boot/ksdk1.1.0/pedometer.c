@@ -239,9 +239,9 @@ int8_t pedometer(){
 	uint32_t y_var[8] = {2000, 3000, 2000, 6000, 4000, 1000, 4000, 6000};
 	
 	for(int i=0; i<N; i++){
-		SEGGER_RTT_WriteString(0, "\nFor\n");
-		dist = read_acceleration_distribution(10);
-		print_acc_distribution(dist);
+//		SEGGER_RTT_WriteString(0, "\nFor\n");
+//		dist = read_acceleration_distribution(10);
+//		print_acc_distribution(dist);
 		
 //		x_mean[i] = dist.x.mean;
 //		x_var[i] = dist.x.variance;
