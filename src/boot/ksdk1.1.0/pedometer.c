@@ -246,7 +246,7 @@ int8_t pedometer(){
 //	int32_t y_var[8] = {2000, 3000, 2000, 6000, 4000, 1000, 4000, 6000};
 	
 	for(int i=0; i<N; i++){
-		read_acceleration_distribution(10, &x_mean, &x_var, &y_mean, &y_var, &z_mean[i], &z_var[i]);
+		read_acceleration_distribution(10, &x_mean[i], &x_var[i], &y_mean[i], &y_var[i], &z_mean[i], &z_var[i]);
 		
 		SEGGER_RTT_printf(0, "X\tMEAN: %ld\tVARIANCE: %lu\n", x_mean[i], x_var[i]);
 		SEGGER_RTT_printf(0, "Y\tMEAN: %ld\tVARIANCE: %lu\n", y_mean[i], y_var[i]);
