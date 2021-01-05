@@ -35,9 +35,9 @@ int32_t compute_mean(int16_t data[], uint8_t N){
 }
 
 
-uint32_t compute_variance(int16_t data[], int32_t mean, uint8_t N){
-	uint32_t sum = 0;
-	uint32_t data_squared;
+int32_t compute_variance(int16_t data[], int32_t mean, uint8_t N){
+	int32_t sum = 0;
+	int32_t data_squared;
 	//SEGGER_RTT_printf(0, "\nMean = %ld \t Mean^2 = %ld\n", mean, mean*mean);
 	for (int i=0; i<N; i++){
 		data_squared = data[i] * data[i];
@@ -147,7 +147,7 @@ acc_measurement read_accelerometer(){
 }
 
 
-void read_acceleration_distribution(uint8_t N, int32_t * z_mean, uint32_t * z_var){
+void read_acceleration_distribution(uint8_t N, int32_t * z_mean, int32_t * z_var){
 	//int16_t x[N];
 	//int16_t y[N];
 	int16_t z[N];
@@ -170,9 +170,9 @@ void read_acceleration_distribution(uint8_t N, int32_t * z_mean, uint32_t * z_va
 }
 
 
-void low_pass_filter(int32_t data[], uint32_t vars[], int32_t * output, uint32_t * out_var, uint8_t N){
+void low_pass_filter(int32_t data[], int32_t vars[], int32_t * output, int32_t * out_var, uint8_t N){
 	int32_t sum = 0;
-	uint32_t sum_vars = 0;
+	int32_t sum_vars = 0;
 	
 	for(int i=0; i<N; i++){
 		sum += data[i];
@@ -184,8 +184,8 @@ void low_pass_filter(int32_t data[], uint32_t vars[], int32_t * output, uint32_t
 	*out_var = sum_vars / (N*N);
 }
 
-/*
-void rotate_array_by_one(acc_distribution data[], uint8_t N){
+
+void rotate_array_by_one(int32_t data[], uint8_t N){
 	// Takes input array and moves contents to left by 1 element. Last element is kept the same
 	
 	for(int i=0; i<N-1 ; i++){
@@ -193,6 +193,15 @@ void rotate_array_by_one(acc_distribution data[], uint8_t N){
 	}
 }
 
+void print_array(int32_t data[], uint8_t N){
+	SEGGER_RTT_WriteString(0, "\nARRAY: ");
+	for(int i=0; i<N-1 ; i++){
+		SEGGER_RTT_printf(0, "%ld, ", data[i]);
+	}
+	SEGGER_RTT_WriteString(0, "\n");
+}
+
+/*
 void print_acc_data_array(acc_distribution data, uint8_t N){
 	for (int i=0; i<N; i++){
 		SEGGER_RTT_printf(0, "Index %d", i);
@@ -216,25 +225,25 @@ int8_t pedometer(){
 	
 	uint8_t N = 8;
 	int32_t low_pass;
-	uint32_t low_pass_var;
+	int32_t low_pass_var;
 
 	int32_t low_2;
-	uint32_t low_2_var;
+	int32_t low_2_var;
 	
 //	int32_t x_mean[N];
-//	uint32_t x_var[N];
+//	int32_t x_var[N];
 	
 //	int32_t y_mean[N];
-//	uint32_t y_var[N];
+//	int32_t y_var[N];
 	
 	int32_t z_mean[N];
-	uint32_t z_var[N];
+	int32_t z_var[N];
 
 	int32_t x_mean[8] = {400, 400, 500, 500, 600, 600, 700, 700};
-	uint32_t x_var[8] = {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000};
+	int32_t x_var[8] = {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000};
 
 	int32_t y_mean[8] = {10, 20, 30, 40, 50, 60, 70, 80};
-	uint32_t y_var[8] = {2000, 3000, 2000, 6000, 4000, 1000, 4000, 6000};
+	int32_t y_var[8] = {2000, 3000, 2000, 6000, 4000, 1000, 4000, 6000};
 	
 	for(int i=0; i<N; i++){
 		read_acceleration_distribution(10, &z_mean[i], &z_var[i]);
@@ -253,14 +262,21 @@ int8_t pedometer(){
 		OSA_TimeDelay(1000);
 	};
 	
+	print_array(x_mean, 8);
+	rotate_array_by_one(x_mean, 8);
+	print_array(x_mean, 8);
+	rotate_array_by_one(x_mean, 8);
+	print_array(x_mean, 8);
+	
+	
 	//for (int i=0; i<N+1; i++){
 		//SEGGER_RTT_printf(0, "\n\nShift %d\n", i);
 		//print_acc_data_array(data[i], N);
-		low_pass_filter(x_mean, x_var, &low_pass, &low_pass_var, 8);
-		SEGGER_RTT_WriteString(0, "\nLow pass\n");
-		SEGGER_RTT_printf(0, "%ld\t%lu\n\n", low_pass, low_pass_var);
+//		low_pass_filter(x_mean, x_var, &low_pass, &low_pass_var, 8);
+//		SEGGER_RTT_WriteString(0, "\nLow pass\n");
+//		SEGGER_RTT_printf(0, "%ld\t%lu\n\n", low_pass, low_pass_var);
 
-		OSA_TimeDelay(500);
+//		OSA_TimeDelay(500);
 		
 //		low_pass_filter(y_mean, y_var, &low_2, &low_2_var, 8);
 //		SEGGER_RTT_WriteString(0, "\nLow pass\n");
