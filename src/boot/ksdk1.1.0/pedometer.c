@@ -237,32 +237,14 @@ int8_t pedometer(){
 		x_mean[i] = dist.x.mean;
 		x_var[i] = dist.x.variance;
 		
-//		y_mean[i] = dist.y.mean;
-//		y_var[i] = dist.y.variance;
+		y_mean[i] = dist.y.mean;
+		y_var[i] = dist.y.variance;
 		
-//		z_mean[i] = dist.z.mean;
-//		z_var[i] = dist.z.variance;
+		z_mean[i] = dist.z.mean;
+		z_var[i] = dist.z.variance;
 		
 		OSA_TimeDelay(1000);
 	};
-	
-	//for (int i=0; i<N+1; i++){
-		//SEGGER_RTT_printf(0, "\n\nShift %d\n", i);
-		//print_acc_data_array(data[i], N);
-		low_pass_filter(x_mean, x_var, &low_pass, &low_pass_var, 8);
-		SEGGER_RTT_WriteString(0, "\nLow pass\n");
-		SEGGER_RTT_printf(0, "%ld\t%lu\n\n", low_pass, low_pass_var);
-		
-//		low_pass_filter(y_mean, y_var, &low_pass, &low_pass_var, 8);
-//		SEGGER_RTT_WriteString(0, "\nLow pass\n");
-//		SEGGER_RTT_printf(0, "%ld\t%lu\n\n", low_pass, low_pass_var);
-		
-//		low_pass_filter(z_mean, z_var, &low_pass, &low_pass_var, 8);
-//		SEGGER_RTT_WriteString(0, "\nLow pass\n");
-//		SEGGER_RTT_printf(0, "%ld\t%lu\n\n", low_pass, low_pass_var);
-		
-		//rotate_array_by_one(data, N);
-	//}
 	
 	return 0;
 }
