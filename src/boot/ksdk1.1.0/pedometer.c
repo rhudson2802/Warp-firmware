@@ -243,15 +243,15 @@ int8_t pedometer(){
 		data[i] = dist;
 	};
 	
-	for (int i=0; i<N+1; i++){
-		SEGGER_RTT_printf(0, "\n\nShift %d\n", i);
+	//for (int i=0; i<N+1; i++){
+		//SEGGER_RTT_printf(0, "\n\nShift %d\n", i);
 		//print_acc_data_array(data[i], N);
 		//low_pass = low_pass_filter(data, N);
 		//SEGGER_RTT_WriteString(0, "\nLow pass\n");
 		//print_acc_distribution(low_pass);
 		
 		//rotate_array_by_one(data, N);
-	}
+	//}
 	
 	return 0;
 }
