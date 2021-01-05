@@ -218,20 +218,22 @@ int8_t pedometer(){
 	int32_t low_pass;
 	uint32_t low_pass_var;
 	
-	int32_t x_mean[N];
-	uint32_t x_var[N];
+//	int32_t x_mean[N];
+//	uint32_t x_var[N];
 	
 	int32_t y_mean[N];
 	uint32_t y_var[N];
 	
 	int32_t z_mean[N];
 	uint32_t z_var[N];
-	
+
+	int32_t x_mean[8] = {1, 2, 3, 4, 5, 6, 7, 8};
+	uint32_t x_var[8] = {2, 3, 2, 6, 4, 1, 4, 6};
 	
 	for(int i=0; i<N; i++){
 		dist = read_acceleration_distribution(10);
 		print_acc_distribution(dist);
-		
+/*		
 		x_mean[i] = dist.x.mean;
 		x_var[i] = dist.x.variance;
 		
@@ -240,7 +242,7 @@ int8_t pedometer(){
 		
 		z_mean[i] = dist.z.mean;
 		z_var[i] = dist.z.variance;
-		
+*/		
 		OSA_TimeDelay(1000);
 	};
 	
@@ -250,7 +252,7 @@ int8_t pedometer(){
 		low_pass_filter(x_mean, x_var, &low_pass, &low_pass_var, 8);
 		SEGGER_RTT_WriteString(0, "\nLow pass\n");
 		SEGGER_RTT_printf(0, "%ld\t%lu\n\n", low_pass, low_pass_var);
-		
+/*		
 		low_pass_filter(y_mean, y_var, &low_pass, &low_pass_var, 8);
 		SEGGER_RTT_WriteString(0, "\nLow pass\n");
 		SEGGER_RTT_printf(0, "%ld\t%lu\n\n", low_pass, low_pass_var);
@@ -258,7 +260,7 @@ int8_t pedometer(){
 		low_pass_filter(z_mean, z_var, &low_pass, &low_pass_var, 8);
 		SEGGER_RTT_WriteString(0, "\nLow pass\n");
 		SEGGER_RTT_printf(0, "%ld\t%lu\n\n", low_pass, low_pass_var);
-		
+*/		
 		//rotate_array_by_one(data, N);
 	//}
 	
