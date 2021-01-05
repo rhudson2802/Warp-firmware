@@ -179,11 +179,12 @@ void rotate_array_by_one(acc_distribution data[], uint8_t N){
 }
 
 
-void print_acc_distribution_array(acc_distribution data[], uint8_t N){
-	
-	for(int i=0; i<N ; i++){
-		print_acc_distribution(data[i]);
+void print_array(int32_t data[], uint8_t N){
+	SEGGER_RTT_WriteString(0, "\nARRAY: ");
+	for(int i=0; i<N-1 ; i++){
+		SEGGER_RTT_printf(0, "%ld, ", data[i]);
 	}
+	SEGGER_RTT_WriteString(0, "\n");
 }
 
 
@@ -203,7 +204,7 @@ int8_t pedometer(){
 	uint8_t N = 8;
 	int32_t low_pass;
 	uint32_t low_pass_var;
-	/*
+	
 	int32_t x_mean[N];
 	uint32_t x_var[N];
 	
@@ -215,15 +216,11 @@ int8_t pedometer(){
 
 	int32_t test_1[8] = {10, 20, 30, 40, 50, 60, 70, 80};
 	uint32_t test_2[8] = {2000, 3000, 2000, 6000, 4000, 1000, 4000, 6000};
-	*/
 	
-	acc_distribution data[N];
 	
 	for(int i=0; i<N; i++){
 		dist = read_acceleration_distribution(10);
-		print_acc_distribution(dist);
-		data[i] = dist;
-		/*
+		
 		x_mean[i] = dist.x.mean;
 		x_var[i] = dist.x.variance;
 		
@@ -232,11 +229,11 @@ int8_t pedometer(){
 		
 		z_mean[i] = dist.z.mean;
 		z_var[i] = dist.z.variance;
-		*/
+		
 		OSA_TimeDelay(1000);
 	};
 	
-	print_acc_distribution_array(data, N);
+	print_array(x_mean, N);
 	
 	
 	return 0;
