@@ -233,7 +233,7 @@ int8_t pedometer(){
 	SEGGER_RTT_WriteString(0, "Starting pedometer\n\n");
 	//acc_distribution dist;
 	
-	uint8_t N = 8;
+	const uint8_t N = 8;
 	int32_t low_pass;
 	int32_t low_pass_var;
 
