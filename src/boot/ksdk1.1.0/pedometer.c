@@ -169,7 +169,7 @@ acc_distribution read_acceleration_distribution(uint8_t N){
 	return distribution;
 }
 
-/*
+
 acc_distribution low_pass_filter(acc_distribution data[], uint8_t N){
 	int32_t sum_x = 0;
 	int32_t sum_y = 0;
@@ -201,7 +201,7 @@ acc_distribution low_pass_filter(acc_distribution data[], uint8_t N){
 	
 	return output;
 }
-
+/*
 void rotate_array_by_one(acc_distribution data[], uint8_t N){
 	// Takes input array and moves contents to left by 1 element. Last element is kept the same
 	
@@ -209,13 +209,14 @@ void rotate_array_by_one(acc_distribution data[], uint8_t N){
 		data[i] = data[i+1];
 	}
 }
-*/
+
 void print_acc_data_array(acc_distribution data, uint8_t N){
 	for (int i=0; i<N; i++){
 		SEGGER_RTT_printf(0, "Index %d", i);
 		print_acc_distribution(data);
 	}
 }
+*/
 
 void print_acc_distribution(acc_distribution dist){
 	SEGGER_RTT_printf(0, "\nX\tMEAN: %ld\tVARIANCE: %ld\n", dist.x.mean, dist.x.variance);
@@ -244,10 +245,10 @@ int8_t pedometer(){
 	
 	for (int i=0; i<N+1; i++){
 		SEGGER_RTT_printf(0, "\n\nShift %d\n", i);
-		print_acc_data_array(data[i], N);
-		//low_pass = low_pass_filter(data, N);
-		//SEGGER_RTT_WriteString(0, "\nLow pass\n");
-		//print_acc_distribution(low_pass);
+		//print_acc_data_array(data[i], N);
+		low_pass = low_pass_filter(data, N);
+		SEGGER_RTT_WriteString(0, "\nLow pass\n");
+		print_acc_distribution(low_pass);
 		
 		//rotate_array_by_one(data, N);
 	}
