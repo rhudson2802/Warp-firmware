@@ -237,8 +237,8 @@ int8_t pedometer(){
 		dist = read_acceleration_distribution(10);
 		print_acc_distribution(dist);
 		
-		x_mean[i] = dist.x.mean;
-		x_var[i] = dist.x.variance;
+//		x_mean[i] = dist.x.mean;
+//		x_var[i] = dist.x.variance;
 		
 		y_mean[i] = dist.y.mean;
 		y_var[i] = dist.y.variance;
