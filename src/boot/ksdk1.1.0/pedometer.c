@@ -157,14 +157,21 @@ void read_acceleration_distribution(uint8_t N, int32_t * x_mean, int32_t * x_var
 	
 	for (int i=0; i<N; i++){
 		measurement = read_accelerometer();
-		//x[i] = measurement.x;
-		//y[i] = measurement.y;
+		x[i] = measurement.x;
+		y[i] = measurement.y;
 		z[i] = measurement.z;
 	};
 
-	//distribution.x = generate_distribution(x, N);
-	//distribution.y = generate_distribution(y, N);
+	x_distribution = generate_distribution(x, N);
+	y_distribution = generate_distribution(y, N);
 	z_distribution = generate_distribution(z, N);
+	
+	*x_mean = x_distribution.mean;
+	*x_var = x_distribution.variance;
+	
+	*y_mean = y_distribution.mean;
+	*y_var = y_distribution.variance;
+	
 	*z_mean = z_distribution.mean;
 	*z_var = z_distribution.variance;
 }
@@ -265,12 +272,16 @@ int8_t pedometer(){
 		OSA_TimeDelay(1000);
 	};
 	
+	SEGGER_RTT_WriteString(0, "x_mean \n");
 	print_array(x_mean, 8);
 	rotate_array_by_one(x_mean, 8);
 	print_array(x_mean, 8);
 	rotate_array_by_one(x_mean, 8);
 	print_array(x_mean, 8);
 	
+	OSA_TimeDelay(10);
+	
+	SEGGER_RTT_WriteString(0, "z_var \n");
 	print_array(z_var, 8);
 	rotate_array_by_one(z_var, 8);
 	print_array(z_var, 8);
