@@ -237,8 +237,8 @@ int8_t pedometer(){
 		x_mean[i] = dist.x.mean;
 		x_var[i] = dist.x.variance;
 		
-//		y_mean[i] = dist.y.mean;
-//		y_var[i] = dist.y.variance;
+		y_mean[i] = dist.y.mean;
+		y_var[i] = dist.y.variance;
 		
 //		z_mean[i] = dist.z.mean;
 //		z_var[i] = dist.z.variance;
@@ -253,9 +253,9 @@ int8_t pedometer(){
 		SEGGER_RTT_WriteString(0, "\nLow pass\n");
 		SEGGER_RTT_printf(0, "%ld\t%lu\n\n", low_pass, low_pass_var);
 		
-//		low_pass_filter(y_mean, y_var, &low_pass, &low_pass_var, 8);
-//		SEGGER_RTT_WriteString(0, "\nLow pass\n");
-//		SEGGER_RTT_printf(0, "%ld\t%lu\n\n", low_pass, low_pass_var);
+		low_pass_filter(y_mean, y_var, &low_pass, &low_pass_var, 8);
+		SEGGER_RTT_WriteString(0, "\nLow pass\n");
+		SEGGER_RTT_printf(0, "%ld\t%lu\n\n", low_pass, low_pass_var);
 		
 //		low_pass_filter(z_mean, z_var, &low_pass, &low_pass_var, 8);
 //		SEGGER_RTT_WriteString(0, "\nLow pass\n");
