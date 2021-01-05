@@ -2026,10 +2026,10 @@ main(void)
 			case 'l':
 			{
 				SEGGER_RTT_WriteString(0, "\r\n Case l");
+				enableI2Cpins(menuI2cPullupValue);
 				#ifdef WARP_BUILD_ENABLE_DEVMMA8451Q
 					configureSensorMMA8451Q(0x00, 0x01, menuI2cPullupValue);
 				#endif
-				enableI2Cpins(menuI2cPullupValue);
 				pedometer();
 				disableI2Cpins();
 				break;
