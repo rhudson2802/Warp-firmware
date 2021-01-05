@@ -147,7 +147,7 @@ acc_measurement read_accelerometer(){
 }
 
 
-acc_distribution read_acceleration_distribution(uint8_t N, int32_t * x_mean, uint32_t * x_var, int32_t * y_mean, uint32_t * y_var, int32_t * z_mean, uint32_t * z_var){
+void read_acceleration_distribution(uint8_t N, int32_t * x_mean, uint32_t * x_var, int32_t * y_mean, uint32_t * y_var, int32_t * z_mean, uint32_t * z_var){
 	int16_t x[N];
 	int16_t y[N];
 	int16_t z[N];
@@ -241,7 +241,7 @@ int8_t pedometer(){
 	
 	for(int i=0; i<N; i++){
 		SEGGER_RTT_WriteString(0, "\nFor\n");
-		dist = read_acceleration_distribution(10, &x_mean[i], &x_var[i], &y_mean[i], &y_var[i], &z_mean[i], &z_var[i]);
+		read_acceleration_distribution(10, &x_mean[i], &x_var[i], &y_mean[i], &y_var[i], &z_mean[i], &z_var[i]);
 		SEGGER_RTT_printf(0, "\nX\tMEAN: %ld\tVARIANCE: %lu\n", x_mean[i], x_var[i]);
 		SEGGER_RTT_printf(0, "\nY\tMEAN: %ld\tVARIANCE: %lu\n", y_mean[i], y_var[i]);
 		SEGGER_RTT_printf(0, "\nZ\tMEAN: %ld\tVARIANCE: %lu\n", z_mean[i], z_var[i]);
@@ -256,9 +256,9 @@ int8_t pedometer(){
 		SEGGER_RTT_WriteString(0, "\nLow pass\n");
 		SEGGER_RTT_printf(0, "%ld\t%lu\n\n", low_pass, low_pass_var);
 		
-		low_pass_filter(y_mean, y_var, &low_pass, &low_pass_var, 8);
-		SEGGER_RTT_WriteString(0, "\nLow pass\n");
-		SEGGER_RTT_printf(0, "%ld\t%lu\n\n", low_pass, low_pass_var);
+//		low_pass_filter(y_mean, y_var, &low_pass, &low_pass_var, 8);
+//		SEGGER_RTT_WriteString(0, "\nLow pass\n");
+//		SEGGER_RTT_printf(0, "%ld\t%lu\n\n", low_pass, low_pass_var);
 		
 //		low_pass_filter(z_mean, z_var, &low_pass, &low_pass_var, 8);
 //		SEGGER_RTT_WriteString(0, "\nLow pass\n");
