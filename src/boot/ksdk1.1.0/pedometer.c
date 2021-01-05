@@ -188,6 +188,23 @@ void print_array(int32_t data[], uint8_t N){
 }
 
 
+void low_pass_filter(int32_t means[], int32_t vars[], uint8_t N, int32_t * output, int32_t * uncertainty){
+	int32_t sum_mean;
+	int32_t sum_vars;
+	
+	sum_mean = 0;
+	sum_vars = 0;
+	
+	for (int i=0; i<N; i++){
+		sum_mean = sum_mean + means[i];
+		sum_vars = sum_vars + vars[i];
+	}
+	
+	*output = sum_mean / N;
+	*uncertainty = sum_vars / (N*N);
+}
+
+
 void print_acc_distribution(acc_distribution dist){
 	SEGGER_RTT_printf(0, "\nX\tMEAN: %ld\tVARIANCE: %lu\n", dist.x.mean, dist.x.variance);
 	SEGGER_RTT_printf(0, "Y\tMEAN: %ld\tVARIANCE: %lu\n", dist.y.mean, dist.y.variance);
@@ -235,11 +252,12 @@ int8_t pedometer(){
 	};
 	
 	print_array(x_mean, N);
-	rotate_array_by_one(x_mean, N);
-	print_array(x_mean, N);
+	print_array(x_var, N);
 	
-	print_array(y_var, N);
-	rotate_array_by_one(y_var, N);
-	print_array(y_var, N);
+	low_pass(x_mean, x_var, N, &low_pass, &low_pass_var);
+	
+	print_array(x_mean, N);
+	print_array(x_var, N);
+
 	return 0;
 }
