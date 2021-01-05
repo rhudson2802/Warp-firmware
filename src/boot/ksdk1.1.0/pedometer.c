@@ -264,7 +264,7 @@ int8_t pedometer(){
 		
 		low_pass_filter(y_mean, y_var, &low_2, &low_2_var, 8);
 		SEGGER_RTT_WriteString(0, "\nLow pass\n");
-		SEGGER_RTT_printf(0, "%ld\t%lu\n\n", low_pass, low_pass_var);
+		SEGGER_RTT_printf(0, "%ld\t%lu\n\n", low_2, low_2_var);
 		
 //		low_pass_filter(z_mean, z_var, &low_pass, &low_pass_var, 8);
 //		SEGGER_RTT_WriteString(0, "\nLow pass\n");
