@@ -235,6 +235,8 @@ int8_t pedometer(){
 	};
 	
 	print_array(x_mean, N);
+	rotate_array_by_one(x_mean, N);
+	print_array(x_mean, N);
 	
 	
 	return 0;
