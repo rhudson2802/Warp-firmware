@@ -26,7 +26,7 @@ extern volatile uint32_t		gWarpMenuPrintDelayMilliseconds;
 
 
 
-int32_t compute_mean(int16_t data[], int8_t N){
+int32_t compute_mean(int16_t data[], uint8_t N){
 	int32_t sum = 0;
 	for (int i=0; i<N; i++){
 		sum += data[i];
@@ -35,7 +35,7 @@ int32_t compute_mean(int16_t data[], int8_t N){
 }
 
 
-uint32_t compute_variance(int16_t data[], int32_t mean, int8_t N){
+uint32_t compute_variance(int16_t data[], int32_t mean, uint8_t N){
 	uint32_t sum = 0;
 	uint32_t data_squared;
 	//SEGGER_RTT_printf(0, "\nMean = %ld \t Mean^2 = %ld\n", mean, mean*mean);
@@ -51,7 +51,7 @@ uint32_t compute_variance(int16_t data[], int32_t mean, int8_t N){
 }
 
 
-distribution generate_distribution(int16_t data[], int8_t N){
+distribution generate_distribution(int16_t data[], uint8_t N){
 	distribution new_dist;
 	new_dist.mean = compute_mean(data, N);
 	new_dist.variance = compute_variance(data, new_dist.mean, N);
