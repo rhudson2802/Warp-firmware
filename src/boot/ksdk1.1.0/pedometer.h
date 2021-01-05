@@ -19,7 +19,7 @@ typedef struct acc_measurement{
 
 int32_t compute_mean(int16_t data[], uint8_t N);
 int32_t compute_variance(int16_t data[], int32_t mean, uint8_t N);
-void generate_distribution(int16_t data[], uint8_t N, int32_t * mean, int32_t * variance)
+void generate_distribution(int16_t data[], uint8_t N, int32_t * mean, int32_t * variance);
 acc_measurement read_accelerometer();
 void read_acceleration_distribution(uint8_t N, int32_t * x_mean, int32_t * x_var, int32_t * y_mean, int32_t * y_var, int32_t * z_mean, int32_t * z_var);
 void low_pass_filter(int32_t data[], int32_t vars[], int32_t * output, int32_t * out_var, uint8_t N);
