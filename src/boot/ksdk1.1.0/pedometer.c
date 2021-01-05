@@ -147,26 +147,26 @@ acc_measurement read_accelerometer(){
 }
 
 
-acc_distribution read_acceleration_distribution(uint8_t N){
-	int16_t x[N];
-	int16_t y[N];
+void read_acceleration_distribution(uint8_t N, int32_t * z_mean, uint32_t * z_var){
+	//int16_t x[N];
+	//int16_t y[N];
 	int16_t z[N];
 	
 	acc_measurement measurement;
-	acc_distribution distribution;
+	distribution z_distribution;
 	
 	for (int i=0; i<N; i++){
 		measurement = read_accelerometer();
-		x[i] = measurement.x;
-		y[i] = measurement.y;
+		//x[i] = measurement.x;
+		//y[i] = measurement.y;
 		z[i] = measurement.z;
 	};
 
-	distribution.x = generate_distribution(x, N);
-	distribution.y = generate_distribution(y, N);
-	distribution.z = generate_distribution(z, N);
-	
-	return distribution;
+	//distribution.x = generate_distribution(x, N);
+	//distribution.y = generate_distribution(y, N);
+	z_distribution = generate_distribution(z, N);
+	*z_mean = z_distribution.mean;
+	*z_var = z_distribution.variance;
 }
 
 
@@ -212,7 +212,7 @@ void print_acc_distribution(acc_distribution dist){
 
 int8_t pedometer(){
 	SEGGER_RTT_WriteString(0, "Starting pedometer\n\n");
-	acc_distribution dist;
+	//acc_distribution dist;
 	
 	uint8_t N = 8;
 	int32_t low_pass;
@@ -227,10 +227,8 @@ int8_t pedometer(){
 //	int32_t y_mean[N];
 //	uint32_t y_var[N];
 	
-//	int32_t z_mean[N];
-//	uint32_t z_var[N];
-	
-	SEGGER_RTT_WriteString(0, "\nDec vars\n");
+	int32_t z_mean[N];
+	uint32_t z_var[N];
 
 	int32_t x_mean[8] = {400, 400, 500, 500, 600, 600, 700, 700};
 	uint32_t x_var[8] = {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000};
@@ -239,9 +237,9 @@ int8_t pedometer(){
 	uint32_t y_var[8] = {2000, 3000, 2000, 6000, 4000, 1000, 4000, 6000};
 	
 	for(int i=0; i<N; i++){
-		SEGGER_RTT_WriteString(0, "\nFor\n");
-		dist = read_acceleration_distribution(10);
-		print_acc_distribution(dist);
+		read_acceleration_distribution(10, &z_mean[i], &z_var[i]);
+		SEGGER_RTT_printf(0, "Z\tMEAN: %ld\tVARIANCE: %lu\n", z_mean[i], z_var[i]);
+		//print_acc_distribution(dist);
 		
 //		x_mean[i] = dist.x.mean;
 //		x_var[i] = dist.x.variance;
