@@ -189,6 +189,7 @@ uint32_t low_pass_filter(uint16_t data[], uint8_t N){
 		var_x += data[i] / (N*N);
 		var_y += data[i] / (N*N);
 		var_z += data[i] / (N*N);
+		SEGGER_RTT_printf(0, "data: %ld, sum: %ld", data[i], sum_x);
 	}
 	
 	output = sum_x;
