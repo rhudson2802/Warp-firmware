@@ -170,21 +170,6 @@ acc_distribution read_acceleration_distribution(uint8_t N){
 }
 
 
-void low_pass_filter(int32_t data[], uint32_t vars[], int32_t * output, uint32_t * out_var, uint8_t N){
-	int32_t sum = 0;
-	uint32_t sum_vars = 0;
-	
-	for(int i=0; i<N; i++){
-		sum += data[i];
-		sum_vars += vars[i];
-		//SEGGER_RTT_printf(0, "data: %ld, sum: %lu", data[i], sum);
-	}
-	
-	*output = sum / N;
-	*out_var = sum_vars / (N*N);
-}
-
-/*
 void rotate_array_by_one(acc_distribution data[], uint8_t N){
 	// Takes input array and moves contents to left by 1 element. Last element is kept the same
 	
@@ -193,13 +178,14 @@ void rotate_array_by_one(acc_distribution data[], uint8_t N){
 	}
 }
 
-void print_acc_data_array(acc_distribution data, uint8_t N){
-	for (int i=0; i<N; i++){
-		SEGGER_RTT_printf(0, "Index %d", i);
-		print_acc_distribution(data);
+
+void print_acc_distribution_array(acc_distribution data[], uint8_t N){
+	
+	for(int i=0; i<N ; i++){
+		data[i] = data[i+1];
 	}
 }
-*/
+
 
 void print_acc_distribution(acc_distribution dist){
 	SEGGER_RTT_printf(0, "\nX\tMEAN: %ld\tVARIANCE: %lu\n", dist.x.mean, dist.x.variance);
@@ -217,7 +203,7 @@ int8_t pedometer(){
 	uint8_t N = 8;
 	int32_t low_pass;
 	uint32_t low_pass_var;
-	
+	/*
 	int32_t x_mean[N];
 	uint32_t x_var[N];
 	
@@ -227,13 +213,17 @@ int8_t pedometer(){
 	int32_t z_mean[N];
 	uint32_t z_var[N];
 
-//	int32_t x_mean[8] = {10, 20, 30, 40, 50, 60, 70, 80};
-//	uint32_t x_var[8] = {2000, 3000, 2000, 6000, 4000, 1000, 4000, 6000};
+	int32_t test_1[8] = {10, 20, 30, 40, 50, 60, 70, 80};
+	uint32_t test_2[8] = {2000, 3000, 2000, 6000, 4000, 1000, 4000, 6000};
+	*/
+	
+	acc_distribution data[N];
 	
 	for(int i=0; i<N; i++){
 		dist = read_acceleration_distribution(10);
 		print_acc_distribution(dist);
-		
+		data[i] = dist;
+		/*
 		x_mean[i] = dist.x.mean;
 		x_var[i] = dist.x.variance;
 		
@@ -242,9 +232,12 @@ int8_t pedometer(){
 		
 		z_mean[i] = dist.z.mean;
 		z_var[i] = dist.z.variance;
-		
+		*/
 		OSA_TimeDelay(1000);
 	};
+	
+	print_acc_distribution_array(data, N);
+	
 	
 	return 0;
 }
