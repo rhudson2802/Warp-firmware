@@ -51,11 +51,10 @@ int32_t compute_variance(int16_t data[], int32_t mean, uint8_t N){
 }
 
 
-distribution generate_distribution(int16_t data[], uint8_t N){
+void generate_distribution(int16_t data[], uint8_t N, int32_t * mean, int32_t * variance){
 	distribution new_dist;
-	new_dist.mean = compute_mean(data, N);
-	new_dist.variance = compute_variance(data, new_dist.mean, N);
-	return new_dist;
+	*mean = compute_mean(data, N);
+	*variance = compute_variance(data, *mean, N);
 }
 
 
@@ -153,10 +152,6 @@ void read_acceleration_distribution(uint8_t N, int32_t * x_mean, int32_t * x_var
 	int16_t z[N];
 	
 	acc_measurement measurement;
-
-	distribution x_distribution;
-	distribution y_distribution;
-	distribution z_distribution;
 	
 	for (int i=0; i<N; i++){
 		measurement = read_accelerometer();
@@ -165,18 +160,9 @@ void read_acceleration_distribution(uint8_t N, int32_t * x_mean, int32_t * x_var
 		z[i] = measurement.z;
 	};
 
-	x_distribution = generate_distribution(x, N);
-	y_distribution = generate_distribution(y, N);
-	z_distribution = generate_distribution(z, N);
-	
-	*x_mean = x_distribution.mean;
-	*x_var = x_distribution.variance;
-	
-	*y_mean = y_distribution.mean;
-	*y_var = y_distribution.variance;
-	
-	*z_mean = z_distribution.mean;
-	*z_var = z_distribution.variance;
+	generate_distribution(x, N, x_mean, x_var);
+	generate_distribution(y, N, y_mean, y_var);
+	generate_distribution(z, N, z_mean, z_var);
 }
 
 
@@ -219,13 +205,13 @@ void print_acc_data_array(acc_distribution data, uint8_t N){
 	}
 }
 */
-
+/*
 void print_acc_distribution(acc_distribution dist){
 	SEGGER_RTT_printf(0, "\nX\tMEAN: %ld\tVARIANCE: %lu\n", dist.x.mean, dist.x.variance);
 	SEGGER_RTT_printf(0, "Y\tMEAN: %ld\tVARIANCE: %lu\n", dist.y.mean, dist.y.variance);
 	SEGGER_RTT_printf(0, "Z\tMEAN: %ld\tVARIANCE: %lu\n", dist.z.mean, dist.z.variance);
 }
-
+*/
 
 
 
