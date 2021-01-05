@@ -182,7 +182,7 @@ void rotate_array_by_one(acc_distribution data[], uint8_t N){
 void print_acc_distribution_array(acc_distribution data[], uint8_t N){
 	
 	for(int i=0; i<N ; i++){
-		data[i] = data[i+1];
+		print_acc_distribution(data[i]);
 	}
 }
 
