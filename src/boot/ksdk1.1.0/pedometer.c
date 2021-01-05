@@ -217,6 +217,9 @@ int8_t pedometer(){
 	uint8_t N = 8;
 	int32_t low_pass;
 	uint32_t low_pass_var;
+
+	int32_t low_2;
+	uint32_t low_2_var;
 	
 //	int32_t x_mean[N];
 //	uint32_t x_var[N];
@@ -259,7 +262,7 @@ int8_t pedometer(){
 		SEGGER_RTT_WriteString(0, "\nLow pass\n");
 		SEGGER_RTT_printf(0, "%ld\t%lu\n\n", low_pass, low_pass_var);
 		
-		low_pass_filter(y_mean, y_var, &low_pass, &low_pass_var, 8);
+		low_pass_filter(y_mean, y_var, &low_2, &low_2_var, 8);
 		SEGGER_RTT_WriteString(0, "\nLow pass\n");
 		SEGGER_RTT_printf(0, "%ld\t%lu\n\n", low_pass, low_pass_var);
 		
