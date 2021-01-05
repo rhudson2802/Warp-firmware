@@ -227,8 +227,8 @@ int8_t pedometer(){
 	int32_t z_mean[N];
 	uint32_t z_var[N];
 
-	int32_t x_mean[8] = {1, 2, 3, 4, 5, 6, 7, 8};
-	uint32_t x_var[8] = {2, 3, 2, 6, 4, 1, 4, 6};
+	int32_t x_mean[8] = {10, 20, 30, 40, 50, 60, 70, 80};
+	uint32_t x_var[8] = {2000, 3000, 2000, 6000, 4000, 1000, 4000, 6000};
 	
 	for(int i=0; i<N; i++){
 		dist = read_acceleration_distribution(10);
