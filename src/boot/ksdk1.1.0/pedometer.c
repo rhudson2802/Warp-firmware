@@ -147,7 +147,7 @@ acc_measurement read_accelerometer(){
 }
 
 
-acc_distribution read_acceleration_distribution(uint8_t N){
+acc_distribution read_acceleration_distribution(uint8_t N, int32_t * x_mean, uint32_t * x_var, int32_t * y_mean, uint32_t * y_var, int32_t * z_mean, uint32_t * z_var){
 	int16_t x[N];
 	int16_t y[N];
 	int16_t z[N];
@@ -166,7 +166,14 @@ acc_distribution read_acceleration_distribution(uint8_t N){
 	distribution.y = generate_distribution(y, N);
 	distribution.z = generate_distribution(z, N);
 	
-	return distribution;
+	*x_mean = distribution.x.mean;
+	*x_var = distribution.x.variance;
+	
+	*y_mean = distribution.y.mean;
+	*y_var = distribution.y.variance;
+	
+	*z_mean = distribution.z.mean;
+	*z_var = distribution.z.variance;
 }
 
 
@@ -218,8 +225,8 @@ int8_t pedometer(){
 	int32_t low_pass;
 	uint32_t low_pass_var;
 	
-//	int32_t x_mean[N];
-//	uint32_t x_var[N];
+	int32_t x_mean[N];
+	uint32_t x_var[N];
 	
 	int32_t y_mean[N];
 	uint32_t y_var[N];
@@ -229,22 +236,15 @@ int8_t pedometer(){
 	
 	SEGGER_RTT_WriteString(0, "\nDec vars\n");
 
-	int32_t x_mean[8] = {10, 20, 30, 40, 50, 60, 70, 80};
-	uint32_t x_var[8] = {2000, 3000, 2000, 6000, 4000, 1000, 4000, 6000};
+	//int32_t x_mean[8] = {10, 20, 30, 40, 50, 60, 70, 80};
+	//uint32_t x_var[8] = {2000, 3000, 2000, 6000, 4000, 1000, 4000, 6000};
 	
 	for(int i=0; i<N; i++){
 		SEGGER_RTT_WriteString(0, "\nFor\n");
-		dist = read_acceleration_distribution(10);
-		print_acc_distribution(dist);
-		
-//		x_mean[i] = dist.x.mean;
-//		x_var[i] = dist.x.variance;
-		
-		y_mean[i] = dist.y.mean;
-		y_var[i] = dist.y.variance;
-		
-//		z_mean[i] = dist.z.mean;
-//		z_var[i] = dist.z.variance;
+		dist = read_acceleration_distribution(10, &x_mean[i], &x_var[i], &y_mean[i], &y_var[i], &z_mean[i], &z_var[i]);
+		SEGGER_RTT_printf(0, "\nX\tMEAN: %ld\tVARIANCE: %lu\n", x_mean[i], x_var[i]);
+		SEGGER_RTT_printf(0, "\nY\tMEAN: %ld\tVARIANCE: %lu\n", y_mean[i], y_var[i]);
+		SEGGER_RTT_printf(0, "\nZ\tMEAN: %ld\tVARIANCE: %lu\n", z_mean[i], z_var[i]);
 		
 		OSA_TimeDelay(1000);
 	};
