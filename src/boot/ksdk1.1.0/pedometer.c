@@ -274,7 +274,7 @@ int8_t pedometer(){
 		
 		OSA_TimeDelay(1000);
 	};
-	
+/*	
 	SEGGER_RTT_WriteString(0, "x_mean \n");
 	print_array(x_mean, 8);
 	rotate_array_by_one(x_mean, 8);
@@ -288,7 +288,7 @@ int8_t pedometer(){
 	print_array(z_var, 8);
 	rotate_array_by_one(z_var, 8);
 	print_array(z_var, 8);
-	
+*/	
 	
 	//for (int i=0; i<N+1; i++){
 		//SEGGER_RTT_printf(0, "\n\nShift %d\n", i);
