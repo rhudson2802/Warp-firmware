@@ -35,9 +35,9 @@ int32_t compute_mean(int16_t data[], uint8_t N){
 }
 
 
-uint32_t compute_variance(int16_t data[], int32_t mean, uint8_t N){
-	uint32_t sum = 0;
-	uint32_t data_squared;
+int32_t compute_variance(int16_t data[], int32_t mean, uint8_t N){
+	int32_t sum = 0;
+	int32_t data_squared;
 	//SEGGER_RTT_printf(0, "\nMean = %ld \t Mean^2 = %ld\n", mean, mean*mean);
 	for (int i=0; i<N; i++){
 		data_squared = data[i] * data[i];
@@ -203,19 +203,19 @@ int8_t pedometer(){
 	
 	uint8_t N = 8;
 	int32_t low_pass;
-	uint32_t low_pass_var;
+	int32_t low_pass_var;
 	
 	int32_t x_mean[N];
-	uint32_t x_var[N];
+	int32_t x_var[N];
 	
 	int32_t y_mean[N];
-	uint32_t y_var[N];
+	int32_t y_var[N];
 	
 	int32_t z_mean[N];
-	uint32_t z_var[N];
+	int32_t z_var[N];
 
 	int32_t test_1[8] = {10, 20, 30, 40, 50, 60, 70, 80};
-	uint32_t test_2[8] = {2000, 3000, 2000, 6000, 4000, 1000, 4000, 6000};
+	int32_t test_2[8] = {2000, 3000, 2000, 6000, 4000, 1000, 4000, 6000};
 	
 	
 	for(int i=0; i<N; i++){
@@ -238,6 +238,8 @@ int8_t pedometer(){
 	rotate_array_by_one(x_mean, N);
 	print_array(x_mean, N);
 	
-	
+	print_array(y_var, N);
+	rotate_array_by_one(y_var, N);
+	print_array(y_var, N);
 	return 0;
 }
