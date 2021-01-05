@@ -176,7 +176,7 @@ void low_pass_filter(int32_t data[], uint32_t vars[], int32_t * output, uint32_t
 	
 	for(int i=0; i<N; i++){
 		sum += data[i];
-		sum_vars += data[i];
+		sum_vars += vars[i];
 		//SEGGER_RTT_printf(0, "data: %ld, sum: %lu", data[i], sum);
 	}
 	
