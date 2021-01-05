@@ -227,7 +227,7 @@ int8_t pedometer(){
 	
 	uint8_t N = 8;
 	acc_distribution data[N];
-	uint16_t mean_data[N] = {1,2,3,4,5,6,7,8};
+	uint16_t mean_data[8] = {1,2,3,4,5,6,7,8};
 	uint32_t low_pass;
 	
 	
@@ -241,9 +241,9 @@ int8_t pedometer(){
 	//for (int i=0; i<N+1; i++){
 		//SEGGER_RTT_printf(0, "\n\nShift %d\n", i);
 		//print_acc_data_array(data[i], N);
-		low_pass = low_pass_filter(data, N);
+		low_pass = low_pass_filter(mean_data, 8);
 		SEGGER_RTT_WriteString(0, "\nLow pass\n");
-		SEGGER_RTT_printf(0, "%ld\n\n", low_pass
+		SEGGER_RTT_printf(0, "%ld\n\n", low_pass);
 		
 		//rotate_array_by_one(data, N);
 	//}
