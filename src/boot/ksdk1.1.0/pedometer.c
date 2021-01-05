@@ -220,6 +220,7 @@ int8_t pedometer(){
 	
 	for(int i=0; i<N; i++){
 		dist = read_acceleration_distribution(10);
+		print_acc_distribution(dist);
 		
 		x_mean[i] = dist.x.mean;
 		x_var[i] = dist.x.variance;
