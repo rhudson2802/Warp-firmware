@@ -1477,7 +1477,7 @@ main(void)
 		{
 			/*
 			 *		Select sensor
-			 */
+			 *
 			case 'a':
 			{
 				SEGGER_RTT_WriteString(0, "\r\tSelect:\n");
@@ -1757,11 +1757,11 @@ main(void)
 				}
 
 				break;
-			}
+			}*/
 
 			/*
 			 *	Change default I2C baud rate
-			 */
+			 *
 			case 'b':
 			{
 				SEGGER_RTT_WriteString(0, "\r\n\tSet I2C baud rate in kbps (e.g., '0001')> ");
@@ -1769,7 +1769,7 @@ main(void)
 
 				/*
 				 *	Round 9999kbps to 10Mbps
-				 */
+				 *
 				if (gWarpI2cBaudRateKbps == 9999)
 				{
 					gWarpI2cBaudRateKbps = 10000;
@@ -1780,11 +1780,11 @@ main(void)
 #endif
 
 				break;
-			}
+			}*/
 
 			/*
 			 *	Change default SPI baud rate
-			 */
+			 *
 			case 'c':
 			{
 				SEGGER_RTT_WriteString(0, "\r\n\tSet SPI baud rate in kbps (e.g., '0001')> ");
@@ -1792,7 +1792,7 @@ main(void)
 
 				/*
 				 *	Round 9999kbps to 10Mbps
-				 */
+				 *
 				if (gWarpSpiBaudRateKbps == 9999)
 				{
 					gWarpSpiBaudRateKbps = 10000;
@@ -1807,7 +1807,7 @@ main(void)
 
 			/*
 			 *	Change default UART baud rate
-			 */
+			 *
 			case 'd':
 			{
 				SEGGER_RTT_WriteString(0, "\r\n\tSet UART baud rate in kbps (e.g., '0001')> ");
@@ -1821,7 +1821,7 @@ main(void)
 
 			/*
 			 *	Set register address for subsequent operations
-			 */
+			 *
 			case 'e':
 			{
 				SEGGER_RTT_WriteString(0, "\r\n\tEnter 2-nybble register hex address (e.g., '3e')> ");
@@ -1835,7 +1835,7 @@ main(void)
 
 			/*
 			 *	Write byte to sensor
-			 */
+			 *
 			case 'f':
 			{
 				uint8_t		i2cAddress, payloadByte[1], commandByte[1];
@@ -1861,11 +1861,11 @@ main(void)
 #ifdef WARP_BUILD_ENABLE_DEVADXL362
 #ifdef WARP_BUILD_ENABLE_SEGGER_RTT_PRINTF
 					SEGGER_RTT_printf(0, "\r\n\tWriting [0x%02x] to SPI register [0x%02x]...\n", payloadByte[0], menuRegisterAddress);
-#endif
-					status = writeSensorRegisterADXL362(	0x0A			/* command == write register	*/,
-										menuRegisterAddress,
-										payloadByte[0]		/* writeValue			*/
-									);
+#endif*/
+		//			status = writeSensorRegisterADXL362(	0x0A			/* command == write register	*/,
+			//							menuRegisterAddress,
+				//						payloadByte[0]		/* writeValue			*/
+					/*				);
 					if (status != kWarpStatusOK)
 					{
 #ifdef WARP_BUILD_ENABLE_SEGGER_RTT_PRINTF
@@ -1889,8 +1889,8 @@ main(void)
 
 					commandByte[0] = menuRegisterAddress;
 					i2cStatus = I2C_DRV_MasterSendDataBlocking(
-											0 /* I2C instance */,
-											&slave,
+					*///						0 /* I2C instance */,
+					/*						&slave,
 											commandByte,
 											1,
 											payloadByte,
@@ -1907,7 +1907,7 @@ main(void)
 
 				/*
 				 *	NOTE: do not disable the supply here, because we typically want to build on the effect of this register write command.
-				 */
+				 *
 
 				break;
 			}
@@ -1929,17 +1929,17 @@ main(void)
 			/*
 			 *	Activate low-power modes in all sensors.
 			 */
-			case 'h':
-			{
-				SEGGER_RTT_WriteString(0, "\r\n\tNOTE: First power sensors and enable I2C\n\n");
-				activateAllLowPowerSensorModes(true /* verbose */);
+			//case 'h':
+			//{
+				//SEGGER_RTT_WriteString(0, "\r\n\tNOTE: First power sensors and enable I2C\n\n");
+				//activateAllLowPowerSensorModes(true /* verbose */);
 
-				break;
-			}
+				//break;
+			//}
 
 			/*
 			 *	Configure default pullup enable value
-			 */
+			 *
 			case 'i':
 			{
 				SEGGER_RTT_WriteString(0, "\r\n\tDefault pullup enable value in kiloOhms (e.g., '0000')> ");
@@ -1954,7 +1954,7 @@ main(void)
 
 			/*
 			 *	Start repeated read
-			 */
+			 *
 			case 'j':
 			{
 				bool		autoIncrement, chatty;
@@ -1992,12 +1992,12 @@ main(void)
 				SEGGER_RTT_printf(0, "\r\n\tRepeating dev%d @ 0x%02x, reps=%d, pull=%d, delay=%dms:\n\n",
 					menuTargetSensor, menuRegisterAddress, repetitionsPerAddress, menuI2cPullupValue, spinDelay);
 #endif
-
-				repeatRegisterReadForDeviceAndAddress(	menuTargetSensor /*warpSensorDevice*/,
-									menuRegisterAddress /*baseAddress */,
-									menuI2cPullupValue,
-									autoIncrement /*autoIncrement*/,
-									chunkReadsPerAddress,
+*/
+	//			repeatRegisterReadForDeviceAndAddress(	menuTargetSensor /*warpSensorDevice*/,
+		//							menuRegisterAddress /*baseAddress */,
+			//						menuI2cPullupValue,
+				//					autoIncrement /*autoIncrement*/,
+					/*				chunkReadsPerAddress,
 									chatty,
 									spinDelay,
 									repetitionsPerAddress,
@@ -2012,13 +2012,13 @@ main(void)
 			/*
 			 *	Sleep for 30 seconds.
 			 */
-			case 'k':
+			/*case 'k':
 			{
 				SEGGER_RTT_WriteString(0, "\r\n\tSleeping until system reset...\n");
 				sleepUntilReset();
 
 				break;
-			}
+			}*/
 
 			/*
 			 *	Send repeated byte on I2C or SPI
@@ -2034,7 +2034,7 @@ main(void)
 				disableI2Cpins();
 				break;
 			}
-			case 'm':
+			/*case 'm':
 			{
 				uint8_t		outBuffer[1];
 				int		repetitions;
@@ -2053,9 +2053,9 @@ main(void)
 						repetitions, outBuffer[0], menuI2cPullupValue, menuSupplyVoltage);
 #endif
 					for (int i = 0; i < repetitions; i++)
-					{
-						writeByteToI2cDeviceRegister(0xFF, true /* sedCommandByte */, outBuffer[0] /* commandByte */, false /* sendPayloadByte */, 0 /* payloadByte */);
-					}
+					{*/
+						//writeByteToI2cDeviceRegister(0xFF, true /* sedCommandByte */, outBuffer[0] /* commandByte */, false /* sendPayloadByte */, 0 /* payloadByte */);
+					}/*
 				}
 				else
 				{
@@ -2064,13 +2064,13 @@ main(void)
 						repetitions, outBuffer[0], menuSupplyVoltage);
 #endif
 					for (int i = 0; i < repetitions; i++)
-					{
-						writeBytesToSpi(outBuffer /* payloadByte */, 1 /* payloadLength */);
-					}
+					{*/
+					//	writeBytesToSpi(outBuffer /* payloadByte */, 1 /* payloadLength */);
+					/*}
 				}
 
 				break;
-			}
+			}*/
 
 
 			/*
@@ -2094,11 +2094,11 @@ main(void)
 			/*
 			 *	Switch to VLPR
 			 */
-			case 'p':
-			{
-				warpSetLowPowerMode(kWarpPowerModeVLPR, 0 /* sleep seconds : irrelevant here */);
-				break;
-			}
+			//case 'p':
+			//{
+				//warpSetLowPowerMode(kWarpPowerModeVLPR, 0 /* sleep seconds : irrelevant here */);
+				//break;
+			//}
 #ifdef WARP_BUILD_ENABLE_DEVMAX11300
 			case 'q':
 			{
@@ -2129,7 +2129,7 @@ main(void)
 
 			/*
 			 *	Dump processor state
-			 */
+			 *
 			case 't':
 			{
 				dumpProcessorState();
@@ -2150,7 +2150,7 @@ main(void)
 				}
 
 				break;
-			}
+			}*/
 #ifdef WARP_BUILD_ENABLE_DEVRV8803C7
 			case 'v':
 			{
@@ -2163,7 +2163,7 @@ main(void)
 #endif
 			/*
 			 *	Simply spin for 10 seconds. Since the SWD pins should only be enabled when we are waiting for key at top of loop (or toggling after printf), during this time there should be no interference from the SWD.
-			 */
+			 *
 			case 'x':
 			{
 				SEGGER_RTT_WriteString(0, "\r\n\tSpinning for 10 seconds...\n");
@@ -2171,33 +2171,33 @@ main(void)
 				SEGGER_RTT_WriteString(0, "\r\tDone.\n\n");
 
 				break;
-			}
+			}*/
 
 			/*
 			 *	Stress test, including bit-wise toggling and checksum, as well as extensive add and mul, with continous read and write to I2C MMA8451Q
-			 */
+			 *
 #ifdef WARP_BUILD_ENABLE_THERMALCHAMBERANALYSIS
 			case 'y':
 			{
 				/*
 				 *	I2C MMA8451Q initialization
-				 */
+				 *
 
 				WarpStatus i2cWriteStatusA, i2cWriteStatusB;
 				WarpStatus i2cReadStatusX = kWarpStatusDeviceCommunicationFailed;
 				WarpStatus i2cReadStatusY = kWarpStatusDeviceCommunicationFailed;
 				WarpStatus i2cReadStatusZ = kWarpStatusDeviceCommunicationFailed;
 
-				enableI2Cpins(menuI2cPullupValue);
-				i2cWriteStatusA = writeSensorRegisterMMA8451Q(0x09 /* register address F_SETUP */,
-										0x00 /* payload: Disable FIFO */,
-										1);
+				enableI2Cpins(menuI2cPullupValue);*/
+				//i2cWriteStatusA = writeSensorRegisterMMA8451Q(0x09 /* register address F_SETUP */,
+					//					0x00 /* payload: Disable FIFO */,
+						//				1);
 
-				i2cWriteStatusB = writeSensorRegisterMMA8451Q(0x2A /* register address */,
-										0x03 /* payload: Enable fast read 8bit, 800Hz, normal, active mode */,
-										1);
+				//i2cWriteStatusB = writeSensorRegisterMMA8451Q(0x2A /* register address */,
+					//					0x03 /* payload: Enable fast read 8bit, 800Hz, normal, active mode */,
+						//				1);
 
-				if((i2cWriteStatusA != kWarpStatusOK) && (i2cWriteStatusB != kWarpStatusOK))
+				/*if((i2cWriteStatusA != kWarpStatusOK) && (i2cWriteStatusB != kWarpStatusOK))
 				{
 					SEGGER_RTT_printf(0, "\nError when writing to I2C device");
 					for(int errorLED = 0; errorLED < 5; errorLED++)
@@ -2205,7 +2205,7 @@ main(void)
 						/*
 						 *	Error when writing to I2C device
 						 *	LED pattern : All On -> All off -> Red
-						 */
+						 *
 						GPIO_DRV_ClearPinOutput(kWarpPinFRDMKL03LED_Red);
 						GPIO_DRV_ClearPinOutput(kWarpPinFRDMKL03LED_Blue);
 						GPIO_DRV_ClearPinOutput(kWarpPinFRDMKL03LED_Green);
@@ -2221,7 +2221,7 @@ main(void)
 				/*
 				 *	Fill up the remaining memory space using a fixed size array
 				 *	The size of this array is highly dependent on the firmware code size
-				 */
+				 *
 				WarpThermalChamberKL03MemoryFill	KL03MemoryFill;
 				KL03MemoryFill.outputBuffer[0] = 0;
 				KL03MemoryFill.outputBuffer[1] = 0;
@@ -2259,7 +2259,7 @@ main(void)
 					 *	(1) addAndMultiplicationLoop performs basic multiplication and addition
 					 *	(2) bit-wise toggling and checksum operations are performed
 					 *	(3) checking the I2C read and write status
-					 */
+					 *
 
 					GPIO_DRV_ClearPinOutput(kWarpPinFRDMKL03LED_Green);
 					GPIO_DRV_SetPinOutput(kWarpPinFRDMKL03LED_Red);
@@ -2271,7 +2271,7 @@ main(void)
 					/*
 					 *	Error-less operation
 					 *	LED pattern : Blue -> Red -> Blue
-					 */
+					 *
 					GPIO_DRV_ClearPinOutput(kWarpPinFRDMKL03LED_Blue);
 					GPIO_DRV_SetPinOutput(kWarpPinFRDMKL03LED_Red);
 					GPIO_DRV_SetPinOutput(kWarpPinFRDMKL03LED_Green);
@@ -2294,15 +2294,15 @@ main(void)
 					uint8_t checkSumValueOnline = checkSum(KL03MemoryFill.memoryFillingBuffer,
 										sizeof(KL03MemoryFill.memoryFillingBuffer));
 					if(checkSumValue == checkSumValueOnline)
-					{
-						i2cWriteStatusA = writeSensorRegisterMMA8451Q(0x09 /* register address F_SETUP */,
-												0x00 /* payload: Disable FIFO */,
-												1);
+					{*/
+						//i2cWriteStatusA = writeSensorRegisterMMA8451Q(0x09 /* register address F_SETUP */,
+							//					0x00 /* payload: Disable FIFO */,
+								//				1);
 
-						i2cWriteStatusB = writeSensorRegisterMMA8451Q(0x2A /* register address */,
-												0x03 /* payload: Enable fast read 8bit, 800Hz, normal, active mode */,
-												1);
-						SEGGER_RTT_printf(0, "\nWriting to I2C device");
+						//i2cWriteStatusB = writeSensorRegisterMMA8451Q(0x2A /* register address */,
+							//					0x03 /* payload: Enable fast read 8bit, 800Hz, normal, active mode */,
+								//				1);
+						/*SEGGER_RTT_printf(0, "\nWriting to I2C device");
 						if((i2cWriteStatusA != kWarpStatusOK) && (i2cWriteStatusB != kWarpStatusOK))
 						{
 							SEGGER_RTT_printf(0, "\nError when writing to I2C device");
@@ -2311,7 +2311,7 @@ main(void)
 								/*
 								 *	Error when writing to I2C device
 								 *	LED pattern : All On -> All off -> Red
-								 */
+								 *
 								GPIO_DRV_ClearPinOutput(kWarpPinFRDMKL03LED_Red);
 								GPIO_DRV_ClearPinOutput(kWarpPinFRDMKL03LED_Blue);
 								GPIO_DRV_ClearPinOutput(kWarpPinFRDMKL03LED_Green);
@@ -2355,7 +2355,7 @@ main(void)
 								/*
 								 *	Error when reading from I2C device
 								 *	LED pattern : Red -> All off
-								 */
+								 *
 								GPIO_DRV_ClearPinOutput(kWarpPinFRDMKL03LED_Red);
 								GPIO_DRV_ClearPinOutput(kWarpPinFRDMKL03LED_Blue);
 								GPIO_DRV_ClearPinOutput(kWarpPinFRDMKL03LED_Green);
@@ -2380,7 +2380,7 @@ main(void)
 							/*
 							 *	Error in checksum leading to error in bit wise operation
 							 *	LED pattern : Red -> All off
-							 */
+							 *
 							SEGGER_RTT_printf(0, "\nError in checksum");
 							GPIO_DRV_ClearPinOutput(kWarpPinFRDMKL03LED_Red);
 							GPIO_DRV_SetPinOutput(kWarpPinFRDMKL03LED_Blue);
@@ -2388,16 +2388,16 @@ main(void)
 							OSA_TimeDelay(100);
 							GPIO_DRV_SetPinOutput(kWarpPinFRDMKL03LED_Red);
 							OSA_TimeDelay(100);
+*/
+	//						SEGGER_RTT_printf(0, "\nWriting to I2C device");
+		//					i2cWriteStatusA = writeSensorRegisterMMA8451Q(0x09 /* register address F_SETUP */,
+			//									0x00 /* payload: Disable FIFO */,
+				//								1);
 
-							SEGGER_RTT_printf(0, "\nWriting to I2C device");
-							i2cWriteStatusA = writeSensorRegisterMMA8451Q(0x09 /* register address F_SETUP */,
-												0x00 /* payload: Disable FIFO */,
-												1);
-
-							i2cWriteStatusB = writeSensorRegisterMMA8451Q(0x2A /* register address */,
-												0x03 /* payload: Enable fast read 8bit, 800Hz, normal, active mode */,
-												1);
-
+					//		i2cWriteStatusB = writeSensorRegisterMMA8451Q(0x2A /* register address */,
+						//						0x03 /* payload: Enable fast read 8bit, 800Hz, normal, active mode */,
+							//					1);
+/*
 							if((i2cWriteStatusA != kWarpStatusOK) && (i2cWriteStatusB != kWarpStatusOK))
 							{
 								SEGGER_RTT_printf(0, "\nError when writing to I2C device");
@@ -2406,7 +2406,7 @@ main(void)
 									/*
 									 *	Error when writing to I2C device
 									 *	LED pattern : All On -> All off -> Red
-									 */
+									 *
 									GPIO_DRV_ClearPinOutput(kWarpPinFRDMKL03LED_Red);
 									GPIO_DRV_ClearPinOutput(kWarpPinFRDMKL03LED_Blue);
 									GPIO_DRV_ClearPinOutput(kWarpPinFRDMKL03LED_Green);
@@ -2450,7 +2450,7 @@ main(void)
 									/*
 									 *	Error when reading from I2C device
 									 *	LED pattern : All on -> All off
-									 */
+									 *
 									GPIO_DRV_ClearPinOutput(kWarpPinFRDMKL03LED_Red);
 									GPIO_DRV_ClearPinOutput(kWarpPinFRDMKL03LED_Blue);
 									GPIO_DRV_ClearPinOutput(kWarpPinFRDMKL03LED_Green);
@@ -2468,7 +2468,7 @@ main(void)
 
 				break;
 			}
-#endif
+#endif*/
 			/*
 			 *	Dump all the sensor data in one go
 			 */
