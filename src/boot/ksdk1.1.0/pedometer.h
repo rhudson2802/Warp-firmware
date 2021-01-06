@@ -1,7 +1,5 @@
 #include <stdlib.h>
 
-typedef enum axis{X, Y, Z} axis;
-
 typedef struct acc_measurement{
 	int16_t x;
 	int16_t y;

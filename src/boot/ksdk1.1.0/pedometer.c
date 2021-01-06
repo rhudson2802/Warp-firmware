@@ -250,7 +250,7 @@ int8_t pedometer(){
 	int16_t min_z[2] = {0, 0};
 
 
-	axis max_axis;
+	uint8_t max_axis;
 	int16_t threshold[2] = {0, 0}; 		//	 Form: threshold, uncertainty.
 
 
@@ -367,22 +367,22 @@ int8_t pedometer(){
 		if (count == 0){
 			if ((max_x[0] - min_x[0] > max_y[0] - min_y[0]) && (max_x[0] - min_x[0] > max_z[0] - min_z[0])){
 				SEGGER_RTT_WriteString(0, "X is max axis");
-				max_axis = X;
+				max_axis = 0;
 				threshold[0] = (max_x[0] - min_x[0]) / 2;
 				threshold[1] = (max_x[1] + min_x[0]) / 4;
 
 			} else if ((max_y[0] - min_y[0] > max_x[0] - min_x[0]) && (max_y[0] - min_y[0] > max_z[0] - min_z[0])) {
 				SEGGER_RTT_WriteString(0, "Y is max axisl");
-				max_axis = Y;
+				max_axis = 1;
 				threshold[0] = (max_y[0] - min_y[0]) / 2;
 				threshold[1] = (max_y[1] + min_y[0]) / 4;
 
 			} else{
 				SEGGER_RTT_WriteString(0, "Z is max axis");
-				max_axis = Z;
+				max_axis = 2;
 				threshold[0] = (max_z[0] - min_z[0]) / 2;
 				threshold[1] = (max_z[1] + min_z[0]) / 4;
-				
+
 			}
 			SEGGER_RTT_printf(0, "MAX AXIS: %d\t THRESHOLD: %d\t UNCERTAINTY: %d\n\n", max_axis, threshold[0], threshold[1]);
 			first_run_flag = 1;
