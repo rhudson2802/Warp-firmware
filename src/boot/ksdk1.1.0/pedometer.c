@@ -260,10 +260,10 @@ int8_t pedometer(){
 	
 	print_array(x_mean, N);
 	print_array(x_var, N);
-	print_array(y_mean, N);
-	print_array(y_var, N);
-	print_array(z_mean, N);
-	print_array(z_var, N);
+//	print_array(y_mean, N);
+//	print_array(y_var, N);
+//	print_array(z_mean, N);
+//	print_array(z_var, N);
 	
 	
 //	low_pass_filter(test_1, test_2, N, &low_pass_x, &low_pass_var_x);
