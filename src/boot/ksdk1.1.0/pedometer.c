@@ -338,7 +338,7 @@ int8_t pedometer(){
 			equate_arrays(low_pass_y, max_y, 2);
 
 		} else if(low_pass_y[MEAN] < min_y[MEAN]){
-			equate_arrays(low_pass_x, min_y, 2);
+			equate_arrays(low_pass_y, min_y, 2);
 		}
 
 
