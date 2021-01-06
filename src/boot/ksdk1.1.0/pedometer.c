@@ -198,7 +198,7 @@ void low_pass_filter(int16_t means[], int16_t vars[], uint8_t N, int16_t output[
 	}
 
 	output[MEAN] = sum_mean / N;
-	uncertainty[VAR] = sum_vars / (N*N);
+	output[VAR] = sum_vars / (N*N);
 }
 
 
