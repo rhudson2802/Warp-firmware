@@ -53,7 +53,7 @@ int16_t compute_variance(int16_t data[], int16_t mean, uint8_t N){
 
 void generate_distribution(int16_t data[], uint8_t N, int16_t * mean, int16_t * variance){
 	*mean = compute_mean(data, N);
-	*variance = compute_variance(data, new_dist.mean, N);
+	*variance = compute_variance(data, *mean, N);
 }
 
 
@@ -149,6 +149,8 @@ void read_acceleration_distribution(uint8_t N, int16_t * x_mean, int16_t * x_var
 	int16_t x[N];
 	int16_t y[N];
 	int16_t z[N];
+
+	acc_measurement measurement;
 
 	for (int i=0; i<N; i++){
 		measurement = read_accelerometer();
