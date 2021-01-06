@@ -18,7 +18,7 @@
 
 #include "pedometer.h"
 
-#define LOW_PASS_ORDER 5
+#define LOW_PASS_ORDER 3
 #define SAMPLE_WINDOW 50
 
 extern volatile WarpI2CDeviceState	deviceMMA8451QState;
