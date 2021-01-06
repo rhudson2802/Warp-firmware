@@ -26,5 +26,6 @@ acc_distribution read_acceleration_distribution(uint8_t N);
 void rotate_array_by_one(int16_t data[], uint8_t N);
 void print_array(int16_t data[], uint8_t N);
 void low_pass_filter(int16_t means[], int16_t vars[], uint8_t N, int16_t * output, int16_t * uncertainty);
+void equate_arrays(int16_t input, int16_t output, uint8_t length);
 void print_acc_distribution(acc_distribution dist);
 int8_t pedometer();

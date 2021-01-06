@@ -208,6 +208,13 @@ void low_pass_filter(int16_t means[], int16_t vars[], uint8_t N, int16_t * outpu
 }
 
 
+void equate_arrays(int16_t input, int16_t output, uint8_t length){
+	for (int i=0; i<length; i++){
+		output[i] = input[i];
+	}
+}
+
+
 void print_acc_distribution(acc_distribution dist){
 	SEGGER_RTT_printf(0, "\nX\tMEAN: %d\tVARIANCE: %d\n", dist.x.mean, dist.x.variance);
 	SEGGER_RTT_printf(0, "Y\tMEAN: %d\tVARIANCE: %d\n", dist.y.mean, dist.y.variance);
@@ -221,7 +228,9 @@ int8_t pedometer(){
 	SEGGER_RTT_WriteString(0, "Starting pedometer\n\n");
 	acc_distribution dist;
 	
-	int8_t count = 0;
+	int8_t count = 1;
+	int8_t first_run_flag = 0;
+
 	
 	
 	int16_t x_mean[LOW_PASS_ORDER];
@@ -234,6 +243,7 @@ int8_t pedometer(){
 	int16_t z_var[LOW_PASS_ORDER];
 	
 	
+	
 	int16_t low_pass_x[2];
 	int16_t low_pass_var_x[2];
 	
@@ -244,6 +254,7 @@ int8_t pedometer(){
 	int16_t low_pass_var_z[2];
 	
 	
+	
 	int16_t max_x[2] = {0, 0};
 	int16_t min_x[2] = {0, 0};
 	
@@ -252,6 +263,22 @@ int8_t pedometer(){
 	
 	int16_t max_z[2] = {0, 0};
 	int16_t min_z[2] = {0, 0};
+	
+	
+	
+	int16_t old_max_x[2] = {0, 0};
+	int16_t old_min_x[2] = {0, 0};
+	
+	int16_t old_max_y[2] = {0, 0};
+	int16_t old_min_y[2] = {0, 0};
+	
+	int16_t old_max_z[2] = {0, 0};
+	int16_t old_min_z[2] = {0, 0};
+	
+	
+	int16_t x_pp;
+	int16_t y_pp;
+	int16_t z_pp;
 	
 	
 	
@@ -328,6 +355,36 @@ int8_t pedometer(){
 		}
 		
 		
+		if (count == 0){
+			if (first_run_flag){
+				x_pp = max_x[0] - min_x[0];
+				y_pp = max_y[0] - min_y[0];
+				z_pp = max_z[0] - min_z[0];
+				
+				if (x_pp > y_pp & x_pp > z_pp){
+					SEGGER_RTT_WriteString(0, "X is max axis");
+				} else if (y_pp > x_pp & y_pp > z_pp) {
+					SEGGER_RTT_WriteString(0, "Y is max axis");
+				} else{
+					SEGGER_RTT_WriteString(0, "Z is max axis");
+				}
+				
+			} else{
+				first_run_flag = 1;
+			}
+			
+			equate_arrays(max_x, old_max_x);
+			equate_arrays(min_x, old_min_x);
+			
+			equate_arrays(max_y, old_max_y);
+			equate_arrays(min_y, old_min_y);
+			
+			equate_arrays(max_z, old_max_z);
+			equate_arrays(min_z, old_min_z);
+			
+		}
+		
+		
 		
 		print_array(x_mean, LOW_PASS_ORDER);
 		print_array(x_var, LOW_PASS_ORDER);
@@ -344,8 +401,10 @@ int8_t pedometer(){
 		SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_z[1], low_pass_var_z[1]);
 		OSA_TimeDelay(100);
 		
-		SEGGER_RTT_printf(0, "X\tMAX: %d\tMIN: %d", max_x[0], min_x[0]);
+		SEGGER_RTT_printf(0, "X\tMAX: %d\tMIN: %d\n", max_x[0], min_x[0]);
 		
+		
+		count = (count + 1) % SAMPLE_WINDOW;
 		OSA_TimeDelay(700);
 	};
 
