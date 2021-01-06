@@ -230,13 +230,9 @@ int8_t pedometer(){
 
 
 	int16_t low_pass_x[2];
-	int16_t low_pass_var_x[2];
-
 	int16_t low_pass_y[2];
-	int16_t low_pass_var_y[2];
-
 	int16_t low_pass_z[2];
-	int16_t low_pass_var_z[2];
+	int16_t low_pass_old[2];
 
 
 
@@ -274,22 +270,22 @@ int8_t pedometer(){
 
 
 	// Initialise max and min arrays
-	low_pass_filter(x_mean, x_var, LOW_PASS_ORDER, &low_pass_x[1], &low_pass_var_x[1]);
-	low_pass_filter(y_mean, y_var, LOW_PASS_ORDER, &low_pass_y[1], &low_pass_var_y[1]);
-	low_pass_filter(z_mean, z_var, LOW_PASS_ORDER, &low_pass_z[1], &low_pass_var_z[1]);
+	low_pass_filter(x_mean, x_var, LOW_PASS_ORDER, &low_pass_x[0], &low_pass_x[1]);
+	low_pass_filter(y_mean, y_var, LOW_PASS_ORDER, &low_pass_y[0], &low_pass_y[1]);
+	low_pass_filter(z_mean, z_var, LOW_PASS_ORDER, &low_pass_z[0], &low_pass_z[1]);
 	
-	max_x[0] = low_pass_x[1];
-	max_x[1] = low_pass_var_x[1];
-	min_x[0] = low_pass_x[1];
-	min_x[1] = low_pass_var_x[1];
-	max_y[0] = low_pass_y[1];
-	max_y[1] = low_pass_var_y[1];
-	min_y[0] = low_pass_y[1];
-	min_y[1] = low_pass_var_y[1];
-	max_z[0] = low_pass_z[1];
-	max_z[1] = low_pass_var_z[1];
+	max_x[0] = low_pass_x[0];
+	max_x[1] = low_pass_x[1];
+	min_x[0] = low_pass_x[0];
+	min_x[1] = low_pass_x[1];
+	max_y[0] = low_pass_y[0];
+	max_y[1] = low_pass_y[1];
+	min_y[0] = low_pass_y[0];
+	min_y[1] = low_pass_y[1];
+	max_z[0] = low_pass_z[0];
+	max_z[1] = low_pass_z[1];
+	min_z[0] = low_pass_z[0];
 	min_z[0] = low_pass_z[1];
-	min_z[0] = low_pass_var_z[1];
 
 
 
@@ -307,14 +303,16 @@ int8_t pedometer(){
 
 
 		// Rotate low pass arrays
-		low_pass_x[0] = low_pass_x[1];
-		low_pass_var_x[0] = low_pass_var_x[1];
-
-		low_pass_y[0] = low_pass_y[1];
-		low_pass_var_y[0] = low_pass_var_y[1];
-
-		low_pass_y[0] = low_pass_y[1];
-		low_pass_var_y[0] = low_pass_var_y[1];
+		if (max_axis == 0){
+			low_pass_old[0] = low_pass_x[0];
+			low_pass_old[1] = low_pass_x[1];
+		} else if (max_axis == 1){
+			low_pass_old[0] = low_pass_y[0];
+			low_pass_old[1] = low_pass_y[1];
+		} else{
+			low_pass_old[0] = low_pass_z[0];
+			low_pass_old[1] = low_pass_z[1];
+		}
 
 
 		// Save new datapoint
@@ -326,41 +324,41 @@ int8_t pedometer(){
 
 
 		// Filter current data array
-		low_pass_filter(x_mean, x_var, LOW_PASS_ORDER, &low_pass_x[1], &low_pass_var_x[1]);
-		low_pass_filter(y_mean, y_var, LOW_PASS_ORDER, &low_pass_y[1], &low_pass_var_y[1]);
-		low_pass_filter(z_mean, z_var, LOW_PASS_ORDER, &low_pass_z[1], &low_pass_var_z[1]);
+		low_pass_filter(x_mean, x_var, LOW_PASS_ORDER, &low_pass_x[0], &low_pass_x[1]);
+		low_pass_filter(y_mean, y_var, LOW_PASS_ORDER, &low_pass_y[0], &low_pass_y[1]);
+		low_pass_filter(z_mean, z_var, LOW_PASS_ORDER, &low_pass_z[0], &low_pass_z[1]);
 		
 		
 		
 
 		// Check if we have a new maximum
-		if (low_pass_x[1] > max_x[0]){
-			max_x[0] = low_pass_x[1];
-			max_x[1] = low_pass_var_x[1];
+		if (low_pass_x[0] > max_x[0]){
+			max_x[0] = low_pass_x[0];
+			max_x[1] = low_pass_x[1];
 
-		} else if(low_pass_x[1] < min_x[0]){
-			min_x[0] = low_pass_x[1];
-			min_x[1] = low_pass_var_x[1];
+		} else if(low_pass_x[0] < min_x[0]){
+			min_x[0] = low_pass_x[0];
+			min_x[1] = low_pass_x[1];
 		}
 
 
-		if (low_pass_y[1] > max_y[0]){
-			max_y[0] = low_pass_y[1];
-			max_y[1] = low_pass_var_y[1];
+		if (low_pass_y[0] > max_y[0]){
+			max_y[0] = low_pass_y[0];
+			max_y[1] = low_pass_y[1];
 
-		} else if(low_pass_y[1] < min_y[0]){
-			min_y[0] = low_pass_y[1];
-			min_y[1] = low_pass_var_y[1];
+		} else if(low_pass_y[0] < min_y[0]){
+			min_y[0] = low_pass_y[0];
+			min_y[1] = low_pass_y[1];
 		}
 
 
-		if (low_pass_z[1] > max_z[0]){
-			max_z[0] = low_pass_z[1];
-			max_z[1] = low_pass_var_z[1];
+		if (low_pass_z[0] > max_z[0]){
+			max_z[0] = low_pass_z[0];
+			max_z[1] = low_pass_z[1];
 
-		} else if(low_pass_z[1] < min_z[0]){
+		} else if(low_pass_z[0] < min_z[0]){
+			min_z[0] = low_pass_z[0];
 			min_z[0] = low_pass_z[1];
-			min_z[0] = low_pass_var_z[1];
 		}
 
 
@@ -393,17 +391,17 @@ int8_t pedometer(){
 
 		//print_array(x_mean, LOW_PASS_ORDER);
 		//print_array(x_var, LOW_PASS_ORDER);
-		//SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_x[1], low_pass_var_x[1]);
+		//SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_x[0], low_pass_x[1]);
 		OSA_TimeDelay(100);
 
 		//print_array(y_mean, LOW_PASS_ORDER);
 		//print_array(y_var, LOW_PASS_ORDER);
-		//SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_y[1], low_pass_var_y[1]);
+		//SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_y[0], low_pass_y[1]);
 		OSA_TimeDelay(100);
 
 		//print_array(z_mean, LOW_PASS_ORDER);
 		//print_array(z_var, LOW_PASS_ORDER);
-		//SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_z[1], low_pass_var_z[1]);
+		//SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_z[0], low_pass_z[1]);
 		OSA_TimeDelay(100);
 
 		SEGGER_RTT_printf(0, "X\tMAX: %d\tMIN: %d\n", max_x[0], min_x[0]);
