@@ -285,17 +285,17 @@ int8_t pedometer(){
 		
 		print_array(x_mean, ARRAY_SIZE);
 		print_array(x_var, ARRAY_SIZE);
-		SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_x, low_pass_var_x);
+		SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_x[1], low_pass_var_x[1]);
 		OSA_TimeDelay(100);
 		
 		print_array(y_mean, ARRAY_SIZE);
 		print_array(y_var, ARRAY_SIZE);
 		OSA_TimeDelay(100);
-		SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_y, low_pass_var_y);
+		SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_y[1], low_pass_var_y[1]);
 		
 		print_array(z_mean, ARRAY_SIZE);
 		print_array(z_var, ARRAY_SIZE);
-		SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_z, low_pass_var_z);
+		SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_z[1], low_pass_var_z[1]);
 		OSA_TimeDelay(100);
 		
 		OSA_TimeDelay(700);
