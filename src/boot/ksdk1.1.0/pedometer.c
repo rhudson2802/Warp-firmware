@@ -40,13 +40,10 @@ int16_t compute_mean(int16_t data[], uint8_t N){
 
 int16_t compute_variance(int16_t data[], int16_t mean, uint8_t N){
 	int16_t sum = 0;
-	int16_t data_squared;
 	//SEGGER_RTT_printf(0, "\nMean = %d \t Mean^2 = %d\n", mean, mean*mean);
 	for (int i=0; i<N; i++){
-		data_squared = data[i] * data[i];
 		sum = sum + (data[i] - mean)*(data[i] - mean);
 		//SEGGER_RTT_printf(0, "d = %d\n", data[i]);
-		//SEGGER_RTT_printf(0, "d^2 = %d\n", data_squared);
 		//SEGGER_RTT_printf(0, "Sum = %d\n", sum);
 	}
 	//SEGGER_RTT_printf(0, "Sum/N = %d\n\n", sum/N);
@@ -64,16 +61,16 @@ distribution generate_distribution(int16_t data[], uint8_t N){
 
 acc_measurement read_accelerometer(){
 	acc_measurement measurement;
-	
+
 	uint16_t	readSensorRegisterValueLSB;
 	uint16_t	readSensorRegisterValueMSB;
 	int16_t		readSensorRegisterValueCombined;
 	WarpStatus	i2cReadStatus;
 
-	/* 
+	/*
 	 * Read the three axes of the accelerometer in turn.
 	 */
-	
+
 	/*
 	 *	From the MMA8451Q datasheet:
 	 *
@@ -92,12 +89,12 @@ acc_measurement read_accelerometer(){
 	readSensorRegisterValueMSB = deviceMMA8451QState.i2cBuffer[0];
 	readSensorRegisterValueLSB = deviceMMA8451QState.i2cBuffer[1];
 	readSensorRegisterValueCombined = ((readSensorRegisterValueMSB & 0xFF) << 6) | (readSensorRegisterValueLSB >> 2);
-	
+
 	/*
 	 *	Sign extend the 14-bit value based on knowledge that upper 2 bit are 0:
 	 */
 	readSensorRegisterValueCombined = (readSensorRegisterValueCombined ^ (1 << 13)) - (1 << 13);
-	
+
 	if (i2cReadStatus != kWarpStatusOK){
 		//SEGGER_RTT_WriteString(0, "x not read\n");
 		measurement.x = 0;
@@ -105,8 +102,8 @@ acc_measurement read_accelerometer(){
 		//SEGGER_RTT_printf(0, "x read %d\n", readSensorRegisterValueCombined);
 		measurement.x = readSensorRegisterValueCombined;
 	}
-	
-	
+
+
 	/*
 	 * Y axis
 	 */
@@ -115,9 +112,9 @@ acc_measurement read_accelerometer(){
 	readSensorRegisterValueMSB = deviceMMA8451QState.i2cBuffer[0];
 	readSensorRegisterValueLSB = deviceMMA8451QState.i2cBuffer[1];
 	readSensorRegisterValueCombined = ((readSensorRegisterValueMSB & 0xFF) << 6) | (readSensorRegisterValueLSB >> 2);
-	
+
 	readSensorRegisterValueCombined = (readSensorRegisterValueCombined ^ (1 << 13)) - (1 << 13);
-	
+
 	if (i2cReadStatus != kWarpStatusOK){
 		//SEGGER_RTT_WriteString(0, "y not read\n");
 		measurement.y = 0;
@@ -125,8 +122,8 @@ acc_measurement read_accelerometer(){
 		//SEGGER_RTT_printf(0, "y read %d\n", readSensorRegisterValueCombined);
 		measurement.y = readSensorRegisterValueCombined;
 	}
-	
-	
+
+
 	/*
 	 * Z axis
 	 */
@@ -135,9 +132,9 @@ acc_measurement read_accelerometer(){
 	readSensorRegisterValueMSB = deviceMMA8451QState.i2cBuffer[0];
 	readSensorRegisterValueLSB = deviceMMA8451QState.i2cBuffer[1];
 	readSensorRegisterValueCombined = ((readSensorRegisterValueMSB & 0xFF) << 6) | (readSensorRegisterValueLSB >> 2);
-	
+
 	readSensorRegisterValueCombined = (readSensorRegisterValueCombined ^ (1 << 13)) - (1 << 13);
-	
+
 	if (i2cReadStatus != kWarpStatusOK){
 		//SEGGER_RTT_WriteString(0, "z not read\n");
 		measurement.z = 0;
@@ -154,10 +151,10 @@ acc_distribution read_acceleration_distribution(uint8_t N){
 	int16_t x[N];
 	int16_t y[N];
 	int16_t z[N];
-	
+
 	acc_measurement measurement;
 	acc_distribution distribution;
-	
+
 	for (int i=0; i<N; i++){
 		measurement = read_accelerometer();
 		x[i] = measurement.x;
@@ -168,14 +165,14 @@ acc_distribution read_acceleration_distribution(uint8_t N){
 	distribution.x = generate_distribution(x, N);
 	distribution.y = generate_distribution(y, N);
 	distribution.z = generate_distribution(z, N);
-	
+
 	return distribution;
 }
 
 
 void rotate_array_by_one(int16_t data[], uint8_t N){
 	// Takes input array and moves contents to left by 1 element. Last element is kept the same
-	
+
 	for(int i=0; i<N-1 ; i++){
 		data[i] = data[i+1];
 	}
@@ -194,15 +191,15 @@ void print_array(int16_t data[], uint8_t N){
 void low_pass_filter(int16_t means[], int16_t vars[], uint8_t N, int16_t * output, int16_t * uncertainty){
 	int16_t sum_mean;
 	int16_t sum_vars;
-	
+
 	sum_mean = 0;
 	sum_vars = 0;
-	
+
 	for (int i=0; i<N; i++){
 		sum_mean = sum_mean + means[i];
 		sum_vars = sum_vars + vars[i];
 	}
-	
+
 	*output = sum_mean / N;
 	*uncertainty = sum_vars / (N*N);
 }
@@ -227,84 +224,84 @@ void print_acc_distribution(acc_distribution dist){
 int8_t pedometer(){
 	SEGGER_RTT_WriteString(0, "Starting pedometer\n\n");
 	acc_distribution dist;
-	
+
 	int8_t count = 1;
 	int8_t first_run_flag = 0;
 
-	
-	
+
+
 	int16_t x_mean[LOW_PASS_ORDER];
 	int16_t x_var[LOW_PASS_ORDER];
-	
+
 	int16_t y_mean[LOW_PASS_ORDER];
 	int16_t y_var[LOW_PASS_ORDER];
-	
+
 	int16_t z_mean[LOW_PASS_ORDER];
 	int16_t z_var[LOW_PASS_ORDER];
-	
-	
-	
+
+
+
 	int16_t low_pass_x[2];
 	int16_t low_pass_var_x[2];
-	
+
 	int16_t low_pass_y[2];
 	int16_t low_pass_var_y[2];
-	
+
 	int16_t low_pass_z[2];
 	int16_t low_pass_var_z[2];
-	
-	
-	
+
+
+
 	int16_t max_x[2] = {0, 0};
 	int16_t min_x[2] = {0, 0};
-	
+
 	int16_t max_y[2] = {0, 0};
 	int16_t min_y[2] = {0, 0};
-	
+
 	int16_t max_z[2] = {0, 0};
 	int16_t min_z[2] = {0, 0};
-	
-	
-	
+
+
+
 	int16_t old_max_x[2] = {0, 0};
 	int16_t old_min_x[2] = {0, 0};
-	
+
 	int16_t old_max_y[2] = {0, 0};
 	int16_t old_min_y[2] = {0, 0};
-	
+
 	int16_t old_max_z[2] = {0, 0};
 	int16_t old_min_z[2] = {0, 0};
-	
-	
+
+
 	int16_t x_pp;
 	int16_t y_pp;
 	int16_t z_pp;
-	
-	
-	
+
+
+
 	for(int i=0; i<1000; i++){
 		// Rotate data arrays to save new datapoint at end
 		rotate_array_by_one(x_mean, LOW_PASS_ORDER);
 		rotate_array_by_one(x_var, LOW_PASS_ORDER);
-		
+
 		rotate_array_by_one(y_mean, LOW_PASS_ORDER);
 		rotate_array_by_one(y_var, LOW_PASS_ORDER);
-		
+
 		rotate_array_by_one(z_mean, LOW_PASS_ORDER);
 		rotate_array_by_one(z_var, LOW_PASS_ORDER);
-		
-		
+
+
 		// Rotate low pass arrays
 		low_pass_x[0] = low_pass_x[1];
 		low_pass_var_x[0] = low_pass_var_x[1];
-		
+
 		low_pass_y[0] = low_pass_y[1];
 		low_pass_var_y[0] = low_pass_var_y[1];
-		
+
 		low_pass_y[0] = low_pass_y[1];
 		low_pass_var_y[0] = low_pass_var_y[1];
-		
-		
+
+
 		// Save new datapoint
 		dist = read_acceleration_distribution(10);
 		print_acc_distribution(dist);
@@ -357,13 +354,10 @@ int8_t pedometer(){
 
 		if (count == 0){
 			if (first_run_flag){
-				x_pp = max_x[0] - min_x[0];
-				y_pp = max_y[0] - min_y[0];
-				z_pp = max_z[0] - min_z[0];
 
-				if ((x_pp > y_pp) && (x_pp > z_pp)){
+				if ((max_x[0] - min_x[0] > max_y[0] - min_y[0]) && (max_x[0] - min_x[0] > max_z[0] - min_z[0])){
 					SEGGER_RTT_WriteString(0, "X is max axis");
-				} else if ((y_pp > x_pp) && (y_pp > z_pp)) {
+				} else if ((max_y[0] - min_y[0] > max_x[0] - min_x[0]) && (max_y[0] - min_y[0] > max_z[0] - min_z[0])) {
 					SEGGER_RTT_WriteString(0, "Y is max axis");
 				} else{
 					SEGGER_RTT_WriteString(0, "Z is max axis");
