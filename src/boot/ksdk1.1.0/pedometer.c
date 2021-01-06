@@ -248,7 +248,7 @@ int8_t pedometer(){
 	int16_t min_z[2] = {0, 0};
 
 
-	uint8_t max_axis;
+	uint8_t max_axis = 0;
 	int16_t threshold[2] = {0, 0}; 		//	 Form: threshold, uncertainty.
 
 
