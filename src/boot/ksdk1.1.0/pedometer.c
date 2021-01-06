@@ -254,7 +254,45 @@ int8_t pedometer(){
 
 
 
+	// Fill arrays with initial data
+	for (int i=0; i<LOW_PASS_ORDER; i++) {
+		// Rotate data arrays to save new datapoint at end
+		rotate_array_by_one(x_mean, LOW_PASS_ORDER);
+		rotate_array_by_one(x_var, LOW_PASS_ORDER);
 
+		rotate_array_by_one(y_mean, LOW_PASS_ORDER);
+		rotate_array_by_one(y_var, LOW_PASS_ORDER);
+
+		rotate_array_by_one(z_mean, LOW_PASS_ORDER);
+		rotate_array_by_one(z_var, LOW_PASS_ORDER);
+
+		// Save new datapoint
+		read_acceleration_distribution(10, &x_mean[LOW_PASS_ORDER-1], &x_var[LOW_PASS_ORDER-1], &y_mean[LOW_PASS_ORDER-1], &y_var[LOW_PASS_ORDER-1], &z_mean[LOW_PASS_ORDER-1], &z_var[LOW_PASS_ORDER-1]);
+	}
+
+
+
+	// Initialise max and min arrays
+	low_pass_filter(x_mean, x_var, LOW_PASS_ORDER, &low_pass_x[1], &low_pass_var_x[1]);
+	low_pass_filter(y_mean, y_var, LOW_PASS_ORDER, &low_pass_y[1], &low_pass_var_y[1]);
+	low_pass_filter(z_mean, z_var, LOW_PASS_ORDER, &low_pass_z[1], &low_pass_var_z[1]);
+	
+	max_x[0] = low_pass_x[1];
+	max_x[1] = low_pass_var_x[1];
+	min_x[0] = low_pass_x[1];
+	min_x[1] = low_pass_var_x[1];
+	max_y[0] = low_pass_y[1];
+	max_y[1] = low_pass_var_y[1];
+	min_y[0] = low_pass_y[1];
+	min_y[1] = low_pass_var_y[1];
+	max_z[0] = low_pass_z[1];
+	max_z[1] = low_pass_var_z[1];
+	min_z[0] = low_pass_z[1];
+	min_z[0] = low_pass_var_z[1];
+
+
+
+	// Main loop
 	for(int i=0; i<1000; i++){
 		// Rotate data arrays to save new datapoint at end
 		rotate_array_by_one(x_mean, LOW_PASS_ORDER);
@@ -291,22 +329,6 @@ int8_t pedometer(){
 		low_pass_filter(y_mean, y_var, LOW_PASS_ORDER, &low_pass_y[1], &low_pass_var_y[1]);
 		low_pass_filter(z_mean, z_var, LOW_PASS_ORDER, &low_pass_z[1], &low_pass_var_z[1]);
 		
-		
-		// Initialise max and min arrays
-		if (!first_run_flag && count==1){
-			max_x[0] = low_pass_x[1];
-			max_x[1] = low_pass_var_x[1];
-			min_x[0] = low_pass_x[1];
-			min_x[1] = low_pass_var_x[1];
-			max_y[0] = low_pass_y[1];
-			max_y[1] = low_pass_var_y[1];
-			min_y[0] = low_pass_y[1];
-			min_y[1] = low_pass_var_y[1];
-			max_z[0] = low_pass_z[1];
-			max_z[1] = low_pass_var_z[1];
-			min_z[0] = low_pass_z[1];
-			min_z[0] = low_pass_var_z[1];
-		}
 		
 		
 
@@ -380,7 +402,7 @@ int8_t pedometer(){
 		SEGGER_RTT_printf(0, "Y\tMAX: %d\tMIN: %d\n", max_z[0], min_z[0]);
 
 
-		//count = (count + 1) % SAMPLE_WINDOW;
+		count = (count + 1) % SAMPLE_WINDOW;
 		OSA_TimeDelay(700);
 	};
 
