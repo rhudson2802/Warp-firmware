@@ -244,19 +244,14 @@ int8_t pedometer(){
 	int16_t low_pass_var_z[2];
 	
 	
-	int16_t max_x[2];
-	int16_t min_x[2];
+	int16_t max_x[2] = {0, 0};
+	int16_t min_x[2] = {0, 0};
 	
-	int16_t max_y[2];
-	int16_t min_y[2];
+	int16_t max_y[2] = {0, 0};
+	int16_t min_y[2] = {0, 0};
 	
-	int16_t max_y[2];
-	int16_t min_y[2];
-	
-	
-	
-	stats current_stats;
-	stats new_stats;
+	int16_t max_z[2] = {0, 0};
+	int16_t min_z[2] = {0, 0};
 	
 	
 	
@@ -349,7 +344,7 @@ int8_t pedometer(){
 		SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_z[1], low_pass_var_z[1]);
 		OSA_TimeDelay(100);
 		
-		print_stats(new_stats);
+		SEGGER_RTT_printf(0, "X\tMAX: %d\tMIN: %d", max_x[0], min_x[0]);
 		
 		OSA_TimeDelay(700);
 	};
