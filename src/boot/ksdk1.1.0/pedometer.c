@@ -213,7 +213,8 @@ int8_t pedometer(){
 	SEGGER_RTT_WriteString(0, "Starting pedometer\n\n");
 
 	int8_t count = 1;
-	int8_t first_run_flag = 1;
+	// First run flag is set when we have passed through 1 SAMPLE_WINDOW of data, as this is when we can start counting steps
+	int8_t first_run_flag = 0;
 
 
 
@@ -249,8 +250,8 @@ int8_t pedometer(){
 	int16_t min_z[2] = {0, 0};
 
 
-
-	int16_t threshold[2] = {0, 0};
+	axis max_axis;
+	int16_t threshold[2] = {0, 0}; 		//	 Form: threshold, uncertainty.
 
 
 
@@ -364,19 +365,27 @@ int8_t pedometer(){
 
 
 		if (count == 0){
-			if (first_run_flag){
+			if ((max_x[0] - min_x[0] > max_y[0] - min_y[0]) && (max_x[0] - min_x[0] > max_z[0] - min_z[0])){
+				SEGGER_RTT_WriteString(0, "X is max axis");
+				max_axis = X;
+				threshold[0] = (max_x[0] - min_x[0]) / 2;
+				threshold[1] = (max_x[1] + min_x[0]) / 4;
 
-				if ((max_x[0] - min_x[0] > max_y[0] - min_y[0]) && (max_x[0] - min_x[0] > max_z[0] - min_z[0])){
-					SEGGER_RTT_WriteString(0, "X is max axis");
-				} else if ((max_y[0] - min_y[0] > max_x[0] - min_x[0]) && (max_y[0] - min_y[0] > max_z[0] - min_z[0])) {
-					SEGGER_RTT_WriteString(0, "Y is max axis");
-				} else{
-					SEGGER_RTT_WriteString(0, "Z is max axis");
-				}
+			} else if ((max_y[0] - min_y[0] > max_x[0] - min_x[0]) && (max_y[0] - min_y[0] > max_z[0] - min_z[0])) {
+				SEGGER_RTT_WriteString(0, "Y is max axisl");
+				max_axis = Y;
+				threshold[0] = (max_y[0] - min_y[0]) / 2;
+				threshold[1] = (max_y[1] + min_y[0]) / 4;
 
 			} else{
-				first_run_flag = 1;
+				SEGGER_RTT_WriteString(0, "Z is max axis");
+				max_axis = Z;
+				threshold[0] = (max_z[0] - min_z[0]) / 2;
+				threshold[1] = (max_z[1] + min_z[0]) / 4;
+				
 			}
+			SEGGER_RTT_printf(0, "MAX AXIS: %d\t THRESHOLD: %d\t UNCERTAINTY: %d\n\n", max_axis, threshold[0], threshold[1]);
+			first_run_flag = 1;
 
 		}
 
