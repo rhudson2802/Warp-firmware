@@ -14,10 +14,12 @@
 #include "SEGGER_RTT.h"
 #include "warp.h"
 
+#include "devMMA8451Q.h"
+
 #include "pedometer.h"
 
 #define LOW_PASS_ORDER 5
-#define ARRAY_SIZE 5
+#define SAMPLE_WINDOW 50
 
 extern volatile WarpI2CDeviceState	deviceMMA8451QState;
 extern volatile uint32_t		gWarpI2cBaudRateKbps;
@@ -212,12 +214,32 @@ void print_acc_distribution(acc_distribution dist){
 	SEGGER_RTT_printf(0, "Z\tMEAN: %d\tVARIANCE: %d\n", dist.z.mean, dist.z.variance);
 }
 
+void print_stats(stats data){
+	SEGGER_RTT_WriteString(0, "\n\nAXIS\tMAX\tMIN\tTHR\n");
+	SEGGER_RTT_printf(0, "X\t%d\t%d\t%d\n", data.max[X], data.min[X], data.threshold[X]);
+	SEGGER_RTT_printf(0, "Y\t%d\t%d\t%d\n", data.max[Y], data.min[Y], data.threshold[Y]);
+	SEGGER_RTT_printf(0, "Z\t%d\t%d\t%d\n", data.max[Z], data.min[Z], data.threshold[Z]);
+}
+
 
 
 
 int8_t pedometer(){
 	SEGGER_RTT_WriteString(0, "Starting pedometer\n\n");
 	acc_distribution dist;
+	
+	int8_t count = 0;
+	
+	
+	int16_t x_mean[LOW_PASS_ORDER];
+	int16_t x_var[LOW_PASS_ORDER];
+	
+	int16_t y_mean[LOW_PASS_ORDER];
+	int16_t y_var[LOW_PASS_ORDER];
+	
+	int16_t z_mean[LOW_PASS_ORDER];
+	int16_t z_var[LOW_PASS_ORDER];
+	
 	
 	int16_t low_pass_x[2];
 	int16_t low_pass_var_x[2];
@@ -229,26 +251,21 @@ int8_t pedometer(){
 	int16_t low_pass_var_z[2];
 	
 	
-	int16_t x_mean[ARRAY_SIZE];
-	int16_t x_var[ARRAY_SIZE];
+	stats current_stats;
+	stats new_stats;
 	
-	int16_t y_mean[ARRAY_SIZE];
-	int16_t y_var[ARRAY_SIZE];
-	
-	int16_t z_mean[ARRAY_SIZE];
-	int16_t z_var[ARRAY_SIZE];
 	
 	
 	for(int i=0; i<1000; i++){
 		// Rotate data arrays to save new datapoint at end
-		rotate_array_by_one(x_mean, ARRAY_SIZE);
-		rotate_array_by_one(x_var, ARRAY_SIZE);
+		rotate_array_by_one(x_mean, LOW_PASS_ORDER);
+		rotate_array_by_one(x_var, LOW_PASS_ORDER);
 		
-		rotate_array_by_one(y_mean, ARRAY_SIZE);
-		rotate_array_by_one(y_var, ARRAY_SIZE);
+		rotate_array_by_one(y_mean, LOW_PASS_ORDER);
+		rotate_array_by_one(y_var, LOW_PASS_ORDER);
 		
-		rotate_array_by_one(z_mean, ARRAY_SIZE);
-		rotate_array_by_one(z_var, ARRAY_SIZE);
+		rotate_array_by_one(z_mean, LOW_PASS_ORDER);
+		rotate_array_by_one(z_var, LOW_PASS_ORDER);
 		
 		
 		// Rotate low pass arrays
@@ -266,37 +283,69 @@ int8_t pedometer(){
 		dist = read_acceleration_distribution(10);
 		print_acc_distribution(dist);
 		
-		x_mean[ARRAY_SIZE-1] = dist.x.mean;
-		x_var[ARRAY_SIZE-1] = dist.x.variance;
+		x_mean[LOW_PASS_ORDER-1] = dist.x.mean;
+		x_var[LOW_PASS_ORDER-1] = dist.x.variance;
 		
-		y_mean[ARRAY_SIZE-1] = dist.y.mean;
-		y_var[ARRAY_SIZE-1] = dist.y.variance;
+		y_mean[LOW_PASS_ORDER-1] = dist.y.mean;
+		y_var[LOW_PASS_ORDER-1] = dist.y.variance;
 		
-		z_mean[ARRAY_SIZE-1] = dist.z.mean;
-		z_var[ARRAY_SIZE-1] = dist.z.variance;
+		z_mean[LOW_PASS_ORDER-1] = dist.z.mean;
+		z_var[LOW_PASS_ORDER-1] = dist.z.variance;
 		
 		
 		// Filter current data array
-		low_pass_filter(x_mean, x_var, ARRAY_SIZE, &low_pass_x[1], &low_pass_var_x[1]);
-		low_pass_filter(y_mean, y_var, ARRAY_SIZE, &low_pass_y[1], &low_pass_var_y[1]);
-		low_pass_filter(z_mean, z_var, ARRAY_SIZE, &low_pass_z[1], &low_pass_var_z[1]);
+		low_pass_filter(x_mean, x_var, LOW_PASS_ORDER, &low_pass_x[1], &low_pass_var_x[1]);
+		low_pass_filter(y_mean, y_var, LOW_PASS_ORDER, &low_pass_y[1], &low_pass_var_y[1]);
+		low_pass_filter(z_mean, z_var, LOW_PASS_ORDER, &low_pass_z[1], &low_pass_var_z[1]);
+		
+		
+		if (low_pass_x[1] > new_stats.max[X]){
+			new_stats.max[X] = low_pass_x[1];
+			new_stats.max[X] = low_pass_var_x[1];
+			
+		} else if(low_pass_x[1] < new_stats.min[X]){
+			new_stats.min[X] = low_pass_x[1];
+			new_stats.min[X] = low_pass_var_x[1];
+		}
+		
+		
+		if (low_pass_y[1] > new_stats.max[Y]){
+			new_stats.max[Y] = low_pass_y[1];
+			new_stats.max[Y] = low_pass_var_y[1];
+			
+		} else if(low_pass_y[1] < new_stats.min[Y]){
+			new_stats.min[Y] = low_pass_y[1];
+			new_stats.min[Y] = low_pass_var_y[1];
+		}
+		
+		
+		if (low_pass_z[1] > new_stats.max[Z]){
+			new_stats.max[Z] = low_pass_z[1];
+			new_stats.max[Z] = low_pass_var_z[1];
+			
+		} else if(low_pass_z[1] < new_stats.min[Z]){
+			new_stats.min[Z] = low_pass_z[1];
+			new_stats.min[Z] = low_pass_var_z[1];
+		}
 		
 		
 		
-		print_array(x_mean, ARRAY_SIZE);
-		print_array(x_var, ARRAY_SIZE);
+		print_array(x_mean, LOW_PASS_ORDER);
+		print_array(x_var, LOW_PASS_ORDER);
 		SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_x[1], low_pass_var_x[1]);
 		OSA_TimeDelay(100);
 		
-		print_array(y_mean, ARRAY_SIZE);
-		print_array(y_var, ARRAY_SIZE);
+		print_array(y_mean, LOW_PASS_ORDER);
+		print_array(y_var, LOW_PASS_ORDER);
 		OSA_TimeDelay(100);
 		SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_y[1], low_pass_var_y[1]);
 		
-		print_array(z_mean, ARRAY_SIZE);
-		print_array(z_var, ARRAY_SIZE);
+		print_array(z_mean, LOW_PASS_ORDER);
+		print_array(z_var, LOW_PASS_ORDER);
 		SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_z[1], low_pass_var_z[1]);
 		OSA_TimeDelay(100);
+		
+		print_stats(new_stats);
 		
 		OSA_TimeDelay(700);
 	};
