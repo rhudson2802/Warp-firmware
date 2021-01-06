@@ -219,14 +219,15 @@ int8_t pedometer(){
 	SEGGER_RTT_WriteString(0, "Starting pedometer\n\n");
 	acc_distribution dist;
 	
-	int16_t low_pass_x;
-	int16_t low_pass_var_x;
+	int16_t low_pass_x[2];
+	int16_t low_pass_var_x[2];
 	
-	int16_t low_pass_y;
-	int16_t low_pass_var_y;
+	int16_t low_pass_y[2];
+	int16_t low_pass_var_y[2];
 	
-	int16_t low_pass_z;
-	int16_t low_pass_var_z;
+	int16_t low_pass_z[2];
+	int16_t low_pass_var_z[2];
+	
 	
 	int16_t x_mean[ARRAY_SIZE];
 	int16_t x_var[ARRAY_SIZE];
@@ -236,12 +237,10 @@ int8_t pedometer(){
 	
 	int16_t z_mean[ARRAY_SIZE];
 	int16_t z_var[ARRAY_SIZE];
-
-	int16_t test_1[8] = {10, 20, 30, 40, 50, 60, 70, 80};
-	int16_t test_2[8] = {2000, 3000, 2000, 6000, 4000, 1000, 4000, 6000};
 	
 	
 	for(int i=0; i<1000; i++){
+		// Rotate data arrays to save new datapoint at end
 		rotate_array_by_one(x_mean, ARRAY_SIZE);
 		rotate_array_by_one(x_var, ARRAY_SIZE);
 		
@@ -252,7 +251,18 @@ int8_t pedometer(){
 		rotate_array_by_one(z_var, ARRAY_SIZE);
 		
 		
+		// Rotate low pass arrays
+		low_pass_x[0] = low_pass_x[1];
+		low_pass_var_x[0] = low_pass_var_x[1];
 		
+		low_pass_y[0] = low_pass_y[1];
+		low_pass_var_y[0] = low_pass_var_y[1];
+		
+		low_pass_y[0] = low_pass_y[1];
+		low_pass_var_y[0] = low_pass_var_y[1];
+		
+		
+		// Save new datapoint
 		dist = read_acceleration_distribution(10);
 		print_acc_distribution(dist);
 		
@@ -266,18 +276,26 @@ int8_t pedometer(){
 		z_var[ARRAY_SIZE-1] = dist.z.variance;
 		
 		
+		// Filter current data array
+		low_pass_filter(x_mean, x_var, ARRAY_SIZE, *low_pass_x[1], *low_pass_var_x[1]);
+		low_pass_filter(y_mean, y_var, ARRAY_SIZE, *low_pass_y[1], *low_pass_var_y[1]);
+		low_pass_filter(z_mean, z_var, ARRAY_SIZE, *low_pass_z[1], *low_pass_var_z[1]);
+		
 		
 		
 		print_array(x_mean, ARRAY_SIZE);
 		print_array(x_var, ARRAY_SIZE);
+		SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_x, low_pass_var_x);
 		OSA_TimeDelay(100);
 		
 		print_array(y_mean, ARRAY_SIZE);
 		print_array(y_var, ARRAY_SIZE);
 		OSA_TimeDelay(100);
+		SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_y, low_pass_var_y);
 		
 		print_array(z_mean, ARRAY_SIZE);
 		print_array(z_var, ARRAY_SIZE);
+		SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_z, low_pass_var_z);
 		OSA_TimeDelay(100);
 		
 		OSA_TimeDelay(700);
