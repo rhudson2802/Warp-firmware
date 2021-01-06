@@ -17,7 +17,7 @@
 #include "pedometer.h"
 
 #define LOW_PASS_ORDER 5
-#define ARRAY_SIZE 30
+#define ARRAY_SIZE 5
 
 extern volatile WarpI2CDeviceState	deviceMMA8451QState;
 extern volatile uint32_t		gWarpI2cBaudRateKbps;
@@ -259,10 +259,10 @@ int8_t pedometer(){
 	
 	print_array(x_mean, ARRAY_SIZE);
 	print_array(x_var, ARRAY_SIZE);
-//	print_array(y_mean, ARRAY_SIZE);
-//	print_array(y_var, ARRAY_SIZE);
-//	print_array(z_mean, ARRAY_SIZE);
-//	print_array(z_var, ARRAY_SIZE);
+	print_array(y_mean, ARRAY_SIZE);
+	print_array(y_var, ARRAY_SIZE);
+	print_array(z_mean, ARRAY_SIZE);
+	print_array(z_var, ARRAY_SIZE);
 	
 	
 //	low_pass_filter(test_1, test_2, ARRAY_SIZE, &low_pass_x, &low_pass_var_x);
