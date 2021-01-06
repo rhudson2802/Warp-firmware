@@ -276,18 +276,12 @@ int8_t pedometer(){
 	low_pass_filter(y_mean, y_var, LOW_PASS_ORDER, &low_pass_y[MEAN], &low_pass_y[VAR]);
 	low_pass_filter(z_mean, z_var, LOW_PASS_ORDER, &low_pass_z[MEAN], &low_pass_z[VAR]);
 	
-	max_x[MEAN] = low_pass_x[MEAN];
-	max_x[VAR] = low_pass_x[VAR];
-	min_x[MEAN] = low_pass_x[MEAN];
-	min_x[VAR] = low_pass_x[VAR];
-	max_y[MEAN] = low_pass_y[MEAN];
-	max_y[VAR] = low_pass_y[VAR];
-	min_y[MEAN] = low_pass_y[MEAN];
-	min_y[VAR] = low_pass_y[VAR];
-	max_z[MEAN] = low_pass_z[MEAN];
-	max_z[VAR] = low_pass_z[VAR];
-	min_z[MEAN] = low_pass_z[MEAN];
-	min_z[VAR] = low_pass_z[VAR];
+	equate_arrays(low_pass_x, max_x, 2);
+	equate_arrays(low_pass_x, min_x, 2);
+	equate_arrays(low_pass_y, max_y, 2);
+	equate_arrays(low_pass_y, min_y, 2);
+	equate_arrays(low_pass_z, max_z, 2);
+	equate_arrays(low_pass_z, min_z, 2);
 
 
 
@@ -306,14 +300,11 @@ int8_t pedometer(){
 
 		// Rotate low pass arrays
 		if (max_axis == 0){
-			low_pass_old[MEAN] = low_pass_x[MEAN];
-			low_pass_old[VAR] = low_pass_x[VAR];
+			equate_arrays(low_pass_x, low_pass_old, 2);
 		} else if (max_axis == 1){
-			low_pass_old[MEAN] = low_pass_y[MEAN];
-			low_pass_old[VAR] = low_pass_y[VAR];
+			equate_arrays(low_pass_y, low_pass_old, 2);
 		} else{
-			low_pass_old[MEAN] = low_pass_z[MEAN];
-			low_pass_old[VAR] = low_pass_z[VAR];
+			equate_arrays(low_pass_z, low_pass_old, 2);
 		}
 
 
@@ -335,35 +326,30 @@ int8_t pedometer(){
 
 		// Check if we have a new maximum
 		if (low_pass_x[MEAN] > max_x[MEAN]){
-			max_x[MEAN] = low_pass_x[MEAN];
-			max_x[VAR] = low_pass_x[VAR];
+			equate_arrays(low_pass_x, max_x, 2);
 
 		} else if(low_pass_x[MEAN] < min_x[MEAN]){
-			min_x[MEAN] = low_pass_x[MEAN];
-			min_x[VAR] = low_pass_x[VAR];
+			equate_arrays(low_pass_x, min_x, 2);
 		}
 
 
 		if (low_pass_y[MEAN] > max_y[MEAN]){
-			max_y[MEAN] = low_pass_y[MEAN];
-			max_y[VAR] = low_pass_y[VAR];
+			equate_arrays(low_pass_y, max_y, 2);
 
 		} else if(low_pass_y[MEAN] < min_y[MEAN]){
-			min_y[MEAN] = low_pass_y[MEAN];
-			min_y[VAR] = low_pass_y[VAR];
+			equate_arrays(low_pass_x, min_y, 2);
 		}
 
 
 		if (low_pass_z[MEAN] > max_z[MEAN]){
-			max_z[MEAN] = low_pass_z[MEAN];
-			max_z[VAR] = low_pass_z[VAR];
+			equate_arrays(low_pass_z, max_z, 2);
 
 		} else if(low_pass_z[MEAN] < min_z[MEAN]){
-			min_z[MEAN] = low_pass_z[MEAN];
-			min_z[VAR] = low_pass_z[VAR];
+			equate_arrays(low_pass_z, min_z, 2);
 		}
 
 
+		// When we reach the end of one sampling period, reset the maximum axis
 		if (count == 0){
 			if (((max_x[MEAN] - min_x[MEAN]) > (max_y[MEAN] - min_y[MEAN])) && ((max_x[MEAN] - min_x[MEAN]) > (max_z[MEAN] - min_z[MEAN]))){
 				SEGGER_RTT_WriteString(0, "X is max axis\n");
