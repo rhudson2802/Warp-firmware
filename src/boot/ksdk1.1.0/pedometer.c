@@ -328,7 +328,7 @@ int8_t pedometer(){
 			min_z[0] = low_pass_var_z[1];
 		}
 
-/*
+
 		if (count == 0){
 			if (first_run_flag){
 
@@ -343,7 +343,7 @@ int8_t pedometer(){
 			} else{
 				first_run_flag = 1;
 			}
-			
+
 			equate_arrays(max_x, old_max_x, 2);
 			equate_arrays(min_x, old_min_x, 2);
 
@@ -353,7 +353,7 @@ int8_t pedometer(){
 			equate_arrays(max_z, old_max_z, 2);
 			equate_arrays(min_z, old_min_z, 2);
 
-		}*/
+		}
 
 
 
