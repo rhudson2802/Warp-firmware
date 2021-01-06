@@ -18,7 +18,7 @@
 
 #include "pedometer.h"
 
-#define LOW_PASS_ORDER 3
+#define LOW_PASS_ORDER 5
 #define SAMPLE_WINDOW 50
 
 extern volatile WarpI2CDeviceState	deviceMMA8451QState;
@@ -214,13 +214,6 @@ void print_acc_distribution(acc_distribution dist){
 	SEGGER_RTT_printf(0, "Z\tMEAN: %d\tVARIANCE: %d\n", dist.z.mean, dist.z.variance);
 }
 
-void print_stats(stats data){
-	SEGGER_RTT_WriteString(0, "\n\nAXIS\tMAX\tMIN\tTHR\n");
-	SEGGER_RTT_printf(0, "X\t%d\t%d\t%d\n", data.max[X], data.min[X], data.threshold[X]);
-	SEGGER_RTT_printf(0, "Y\t%d\t%d\t%d\n", data.max[Y], data.min[Y], data.threshold[Y]);
-	SEGGER_RTT_printf(0, "Z\t%d\t%d\t%d\n", data.max[Z], data.min[Z], data.threshold[Z]);
-}
-
 
 
 
@@ -249,6 +242,17 @@ int8_t pedometer(){
 	
 	int16_t low_pass_z[2];
 	int16_t low_pass_var_z[2];
+	
+	
+	int16_t max_x[2];
+	int16_t min_x[2];
+	
+	int16_t max_y[2];
+	int16_t min_y[2];
+	
+	int16_t max_y[2];
+	int16_t min_y[2];
+	
 	
 	
 	stats current_stats;
@@ -299,33 +303,33 @@ int8_t pedometer(){
 		low_pass_filter(z_mean, z_var, LOW_PASS_ORDER, &low_pass_z[1], &low_pass_var_z[1]);
 		
 		
-		if (low_pass_x[1] > new_stats.max[X]){
-			new_stats.max[X] = low_pass_x[1];
-			new_stats.max[X] = low_pass_var_x[1];
+		if (low_pass_x[1] > max_x[0]){
+			max_x[0] = low_pass_x[1];
+			max_x[1] = low_pass_var_x[1];
 			
-		} else if(low_pass_x[1] < new_stats.min[X]){
-			new_stats.min[X] = low_pass_x[1];
-			new_stats.min[X] = low_pass_var_x[1];
+		} else if(low_pass_x[1] < min_x[0]){
+			min_x[0] = low_pass_x[1];
+			min_x[1] = low_pass_var_x[1];
 		}
 		
 		
-		if (low_pass_y[1] > new_stats.max[Y]){
-			new_stats.max[Y] = low_pass_y[1];
-			new_stats.max[Y] = low_pass_var_y[1];
+		if (low_pass_y[1] > max_y[0]){
+			max_y[0] = low_pass_y[1];
+			max_y[1] = low_pass_var_y[1];
 			
-		} else if(low_pass_y[1] < new_stats.min[Y]){
-			new_stats.min[Y] = low_pass_y[1];
-			new_stats.min[Y] = low_pass_var_y[1];
+		} else if(low_pass_y[1] < min_y[0]){
+			min_y[0] = low_pass_y[1];
+			min_y[1] = low_pass_var_y[1];
 		}
 		
 		
-		if (low_pass_z[1] > new_stats.max[Z]){
-			new_stats.max[Z] = low_pass_z[1];
-			new_stats.max[Z] = low_pass_var_z[1];
+		if (low_pass_z[1] > max_z[0]){
+			max_z[0] = low_pass_z[1];
+			max_z[1] = low_pass_var_z[1];
 			
-		} else if(low_pass_z[1] < new_stats.min[Z]){
-			new_stats.min[Z] = low_pass_z[1];
-			new_stats.min[Z] = low_pass_var_z[1];
+		} else if(low_pass_z[1] < min_z[0]){
+			min_z[0] = low_pass_z[1];
+			min_z[0] = low_pass_var_z[1];
 		}
 		
 		
