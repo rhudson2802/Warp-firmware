@@ -17,7 +17,7 @@
 #include "pedometer.h"
 
 #define LOW_PASS_ORDER 5
-#define ARRAY_SIZE 20
+#define ARRAY_SIZE 100
 
 extern volatile WarpI2CDeviceState	deviceMMA8451QState;
 extern volatile uint32_t		gWarpI2cBaudRateKbps;
