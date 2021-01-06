@@ -208,7 +208,7 @@ void low_pass_filter(int16_t means[], int16_t vars[], uint8_t N, int16_t * outpu
 }
 
 
-void equate_arrays(int16_t input, int16_t output, uint8_t length){
+void equate_arrays(int16_t input[], int16_t output[], uint8_t length){
 	for (int i=0; i<length; i++){
 		output[i] = input[i];
 	}
@@ -361,9 +361,9 @@ int8_t pedometer(){
 				y_pp = max_y[0] - min_y[0];
 				z_pp = max_z[0] - min_z[0];
 				
-				if (x_pp > y_pp & x_pp > z_pp){
+				if ((x_pp > y_pp) && (x_pp > z_pp)){
 					SEGGER_RTT_WriteString(0, "X is max axis");
-				} else if (y_pp > x_pp & y_pp > z_pp) {
+				} else if ((y_pp > x_pp) && (y_pp > z_pp)) {
 					SEGGER_RTT_WriteString(0, "Y is max axis");
 				} else{
 					SEGGER_RTT_WriteString(0, "Z is max axis");
@@ -373,14 +373,14 @@ int8_t pedometer(){
 				first_run_flag = 1;
 			}
 			
-			equate_arrays(max_x, old_max_x);
-			equate_arrays(min_x, old_min_x);
+			equate_arrays(max_x, old_max_x, 2);
+			equate_arrays(min_x, old_min_x, 2);
 			
-			equate_arrays(max_y, old_max_y);
-			equate_arrays(min_y, old_min_y);
+			equate_arrays(max_y, old_max_y, 2);
+			equate_arrays(min_y, old_min_y, 2);
 			
-			equate_arrays(max_z, old_max_z);
-			equate_arrays(min_z, old_min_z);
+			equate_arrays(max_z, old_max_z, 2);
+			equate_arrays(min_z, old_min_z, 2);
 			
 		}
 		
