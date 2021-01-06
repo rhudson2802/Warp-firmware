@@ -308,59 +308,59 @@ int8_t pedometer(){
 		// Save new datapoint
 		dist = read_acceleration_distribution(10);
 		print_acc_distribution(dist);
-		
+
 		x_mean[LOW_PASS_ORDER-1] = dist.x.mean;
 		x_var[LOW_PASS_ORDER-1] = dist.x.variance;
-		
+
 		y_mean[LOW_PASS_ORDER-1] = dist.y.mean;
 		y_var[LOW_PASS_ORDER-1] = dist.y.variance;
-		
+
 		z_mean[LOW_PASS_ORDER-1] = dist.z.mean;
 		z_var[LOW_PASS_ORDER-1] = dist.z.variance;
-		
-		
+
+
 		// Filter current data array
 		low_pass_filter(x_mean, x_var, LOW_PASS_ORDER, &low_pass_x[1], &low_pass_var_x[1]);
 		low_pass_filter(y_mean, y_var, LOW_PASS_ORDER, &low_pass_y[1], &low_pass_var_y[1]);
 		low_pass_filter(z_mean, z_var, LOW_PASS_ORDER, &low_pass_z[1], &low_pass_var_z[1]);
-		
-		
+
+
 		if (low_pass_x[1] > max_x[0]){
 			max_x[0] = low_pass_x[1];
 			max_x[1] = low_pass_var_x[1];
-			
+
 		} else if(low_pass_x[1] < min_x[0]){
 			min_x[0] = low_pass_x[1];
 			min_x[1] = low_pass_var_x[1];
 		}
-		
-		
+
+
 		if (low_pass_y[1] > max_y[0]){
 			max_y[0] = low_pass_y[1];
 			max_y[1] = low_pass_var_y[1];
-			
+
 		} else if(low_pass_y[1] < min_y[0]){
 			min_y[0] = low_pass_y[1];
 			min_y[1] = low_pass_var_y[1];
 		}
-		
-		
+
+
 		if (low_pass_z[1] > max_z[0]){
 			max_z[0] = low_pass_z[1];
 			max_z[1] = low_pass_var_z[1];
-			
+
 		} else if(low_pass_z[1] < min_z[0]){
 			min_z[0] = low_pass_z[1];
 			min_z[0] = low_pass_var_z[1];
 		}
-		
-		
+
+
 		if (count == 0){
 			if (first_run_flag){
 				x_pp = max_x[0] - min_x[0];
 				y_pp = max_y[0] - min_y[0];
 				z_pp = max_z[0] - min_z[0];
-				
+
 				if ((x_pp > y_pp) && (x_pp > z_pp)){
 					SEGGER_RTT_WriteString(0, "X is max axis");
 				} else if ((y_pp > x_pp) && (y_pp > z_pp)) {
@@ -368,42 +368,42 @@ int8_t pedometer(){
 				} else{
 					SEGGER_RTT_WriteString(0, "Z is max axis");
 				}
-				
+
 			} else{
 				first_run_flag = 1;
 			}
-			
+/*
 			equate_arrays(max_x, old_max_x, 2);
 			equate_arrays(min_x, old_min_x, 2);
-			
+
 			equate_arrays(max_y, old_max_y, 2);
 			equate_arrays(min_y, old_min_y, 2);
-			
+
 			equate_arrays(max_z, old_max_z, 2);
 			equate_arrays(min_z, old_min_z, 2);
-			
+*/
 		}
-		
-		
-		
+
+
+
 		print_array(x_mean, LOW_PASS_ORDER);
 		print_array(x_var, LOW_PASS_ORDER);
 		SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_x[1], low_pass_var_x[1]);
 		OSA_TimeDelay(100);
-		
+
 		print_array(y_mean, LOW_PASS_ORDER);
 		print_array(y_var, LOW_PASS_ORDER);
 		OSA_TimeDelay(100);
 		SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_y[1], low_pass_var_y[1]);
-		
+
 		print_array(z_mean, LOW_PASS_ORDER);
 		print_array(z_var, LOW_PASS_ORDER);
 		SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_z[1], low_pass_var_z[1]);
 		OSA_TimeDelay(100);
-		
+
 		SEGGER_RTT_printf(0, "X\tMAX: %d\tMIN: %d\n", max_x[0], min_x[0]);
-		
-		
+
+
 		count = (count + 1) % SAMPLE_WINDOW;
 		OSA_TimeDelay(700);
 	};
