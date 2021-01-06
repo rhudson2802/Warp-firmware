@@ -266,8 +266,8 @@ int8_t pedometer(){
 	print_array(z_var, N);
 	
 	
-	low_pass_filter(test_1, test_2, N, &low_pass_x, &low_pass_var_x);
-	SEGGER_RTT_printf(0, "op: %ld, error: %ld\n", low_pass_x, low_pass_var_x);
+//	low_pass_filter(test_1, test_2, N, &low_pass_x, &low_pass_var_x);
+//	SEGGER_RTT_printf(0, "op: %ld, error: %ld\n", low_pass_x, low_pass_var_x);
 	
 //	low_pass_filter(test_2, test_1, N, &low_pass_y, &low_pass_var_y);
 //	SEGGER_RTT_printf(0, "op: %ld, error: %ld\n", low_pass_y, low_pass_var_y);
