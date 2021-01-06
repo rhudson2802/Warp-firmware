@@ -277,9 +277,9 @@ int8_t pedometer(){
 		
 		
 		// Filter current data array
-		low_pass_filter(x_mean, x_var, ARRAY_SIZE, *low_pass_x[1], *low_pass_var_x[1]);
-		low_pass_filter(y_mean, y_var, ARRAY_SIZE, *low_pass_y[1], *low_pass_var_y[1]);
-		low_pass_filter(z_mean, z_var, ARRAY_SIZE, *low_pass_z[1], *low_pass_var_z[1]);
+		low_pass_filter(x_mean, x_var, ARRAY_SIZE, &low_pass_x[1], &low_pass_var_x[1]);
+		low_pass_filter(y_mean, y_var, ARRAY_SIZE, &low_pass_y[1], &low_pass_var_y[1]);
+		low_pass_filter(z_mean, z_var, ARRAY_SIZE, &low_pass_z[1], &low_pass_var_z[1]);
 		
 		
 		
