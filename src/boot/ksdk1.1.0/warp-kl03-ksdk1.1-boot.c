@@ -2055,7 +2055,7 @@ main(void)
 					for (int i = 0; i < repetitions; i++)
 					{*/
 						//writeByteToI2cDeviceRegister(0xFF, true /* sedCommandByte */, outBuffer[0] /* commandByte */, false /* sendPayloadByte */, 0 /* payloadByte */);
-					}/*
+					/*}
 				}
 				else
 				{
