@@ -185,7 +185,7 @@ void print_array(int16_t data[], uint8_t N){
 }
 
 
-void low_pass_filter(int16_t means[], int16_t vars[], uint8_t N, int16_t * output, int16_t * uncertainty){
+void low_pass_filter(int16_t means[], int16_t vars[], uint8_t N, int16_t output[]){
 	int16_t sum_mean;
 	int16_t sum_vars;
 
@@ -197,8 +197,8 @@ void low_pass_filter(int16_t means[], int16_t vars[], uint8_t N, int16_t * outpu
 		sum_vars = sum_vars + vars[i];
 	}
 
-	*output = sum_mean / N;
-	*uncertainty = sum_vars / (N*N);
+	output[MEAN] = sum_mean / N;
+	uncertainty[VAR] = sum_vars / (N*N);
 }
 
 
@@ -272,9 +272,9 @@ int8_t pedometer(){
 
 
 	// Initialise max and min arrays
-	low_pass_filter(x_mean, x_var, LOW_PASS_ORDER, &low_pass_x[MEAN], &low_pass_x[VAR]);
-	low_pass_filter(y_mean, y_var, LOW_PASS_ORDER, &low_pass_y[MEAN], &low_pass_y[VAR]);
-	low_pass_filter(z_mean, z_var, LOW_PASS_ORDER, &low_pass_z[MEAN], &low_pass_z[VAR]);
+	low_pass_filter(x_mean, x_var, LOW_PASS_ORDER, low_pass_x);
+	low_pass_filter(y_mean, y_var, LOW_PASS_ORDER, low_pass_y);
+	low_pass_filter(z_mean, z_var, LOW_PASS_ORDER, low_pass_z);
 	
 	equate_arrays(low_pass_x, max_x, 2);
 	equate_arrays(low_pass_x, min_x, 2);
@@ -311,16 +311,17 @@ int8_t pedometer(){
 		// Save new datapoint
 		read_acceleration_distribution(10, &x_mean[LOW_PASS_ORDER-1], &x_var[LOW_PASS_ORDER-1], &y_mean[LOW_PASS_ORDER-1], &y_var[LOW_PASS_ORDER-1], &z_mean[LOW_PASS_ORDER-1], &z_var[LOW_PASS_ORDER-1]);
 
-		SEGGER_RTT_printf(0, "\nX\tMEAN: %d\tVARIANCE: %d\n", x_mean[LOW_PASS_ORDER-1], x_var[LOW_PASS_ORDER-1]);
-		SEGGER_RTT_printf(0, "Y\tMEAN: %d\tVARIANCE: %d\n", y_mean[LOW_PASS_ORDER-1], y_var[LOW_PASS_ORDER-1]);
-		SEGGER_RTT_printf(0, "Z\tMEAN: %d\tVARIANCE: %d\n", z_mean[LOW_PASS_ORDER-1], z_var[LOW_PASS_ORDER-1]);
-
 
 		// Filter current data array
-		low_pass_filter(x_mean, x_var, LOW_PASS_ORDER, &low_pass_x[MEAN], &low_pass_x[VAR]);
-		low_pass_filter(y_mean, y_var, LOW_PASS_ORDER, &low_pass_y[MEAN], &low_pass_y[VAR]);
-		low_pass_filter(z_mean, z_var, LOW_PASS_ORDER, &low_pass_z[MEAN], &low_pass_z[VAR]);
+		// TODO - change function signature to accept low_pass_n as an array not pointers to the elements
+		low_pass_filter(x_mean, x_var, LOW_PASS_ORDER, low_pass_x);
+		low_pass_filter(y_mean, y_var, LOW_PASS_ORDER, low_pass_y);
+		low_pass_filter(z_mean, z_var, LOW_PASS_ORDER, low_pass_z);
 		
+		
+		SEGGER_RTT_printf(0, "\nX\tMEAN: %d\tVARIANCE: %d\n", low_pass_x[MEAN], low_pass_x[VAR]);
+		SEGGER_RTT_printf(0, "Y\tMEAN: %d\tVARIANCE: %d\n", low_pass_y[MEAN], low_pass_y[VAR]);
+		SEGGER_RTT_printf(0, "Z\tMEAN: %d\tVARIANCE: %d\n", low_pass_z[MEAN], low_pass_z[VAR]);
 		
 		
 
