@@ -256,14 +256,14 @@ int8_t pedometer(){
 		dist = read_acceleration_distribution(10);
 		print_acc_distribution(dist);
 		
-		x_mean[ARRAY_SIZE] = dist.x.mean;
-		x_var[ARRAY_SIZE] = dist.x.variance;
+		x_mean[ARRAY_SIZE-1] = dist.x.mean;
+		x_var[ARRAY_SIZE-1] = dist.x.variance;
 		
-		y_mean[ARRAY_SIZE] = dist.y.mean;
-		y_var[ARRAY_SIZE] = dist.y.variance;
+		y_mean[ARRAY_SIZE-1] = dist.y.mean;
+		y_var[ARRAY_SIZE-1] = dist.y.variance;
 		
-		z_mean[ARRAY_SIZE] = dist.z.mean;
-		z_var[ARRAY_SIZE] = dist.z.variance;
+		z_mean[ARRAY_SIZE-1] = dist.z.mean;
+		z_var[ARRAY_SIZE-1] = dist.z.variance;
 		
 		
 		
