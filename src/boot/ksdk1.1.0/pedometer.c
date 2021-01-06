@@ -51,11 +51,9 @@ int16_t compute_variance(int16_t data[], int16_t mean, uint8_t N){
 }
 
 
-distribution generate_distribution(int16_t data[], uint8_t N){
-	distribution new_dist;
-	new_dist.mean = compute_mean(data, N);
-	new_dist.variance = compute_variance(data, new_dist.mean, N);
-	return new_dist;
+void generate_distribution(int16_t data[], uint8_t N, int16_t * mean, int16_t * variance){
+	*mean = compute_mean(data, N);
+	*variance = compute_variance(data, new_dist.mean, N);
 }
 
 
@@ -147,13 +145,10 @@ acc_measurement read_accelerometer(){
 }
 
 
-acc_distribution read_acceleration_distribution(uint8_t N){
+void read_acceleration_distribution(uint8_t N, int16_t * x_mean, int16_t * x_var, int16_t * y_mean, int16_t * y_var, int16_t * z_mean, int16_t * z_var){
 	int16_t x[N];
 	int16_t y[N];
 	int16_t z[N];
-
-	acc_measurement measurement;
-	acc_distribution distribution;
 
 	for (int i=0; i<N; i++){
 		measurement = read_accelerometer();
@@ -162,11 +157,9 @@ acc_distribution read_acceleration_distribution(uint8_t N){
 		z[i] = measurement.z;
 	};
 
-	distribution.x = generate_distribution(x, N);
-	distribution.y = generate_distribution(y, N);
-	distribution.z = generate_distribution(z, N);
-
-	return distribution;
+	generate_distribution(x, N, x_mean, x_var);
+	generate_distribution(y, N, y_mean, y_var);
+	generate_distribution(z, N, z_mean, z_var);
 }
 
 
@@ -212,18 +205,10 @@ void equate_arrays(int16_t input[], int16_t output[], uint8_t length){
 }
 
 
-void print_acc_distribution(acc_distribution dist){
-	SEGGER_RTT_printf(0, "\nX\tMEAN: %d\tVARIANCE: %d\n", dist.x.mean, dist.x.variance);
-	SEGGER_RTT_printf(0, "Y\tMEAN: %d\tVARIANCE: %d\n", dist.y.mean, dist.y.variance);
-	SEGGER_RTT_printf(0, "Z\tMEAN: %d\tVARIANCE: %d\n", dist.z.mean, dist.z.variance);
-}
-
-
 
 
 int8_t pedometer(){
 	SEGGER_RTT_WriteString(0, "Starting pedometer\n\n");
-	acc_distribution dist;
 
 	int8_t count = 1;
 	int8_t first_run_flag = 0;
@@ -273,10 +258,6 @@ int8_t pedometer(){
 	int16_t old_min_z[2] = {0, 0};
 
 
-	int16_t x_pp;
-	int16_t y_pp;
-	int16_t z_pp;
-
 
 
 	for(int i=0; i<1000; i++){
@@ -303,17 +284,11 @@ int8_t pedometer(){
 
 
 		// Save new datapoint
-		dist = read_acceleration_distribution(10);
-		print_acc_distribution(dist);
+		read_acceleration_distribution(10, &x_mean[LOW_PASS_ORDER-1], &x_var[LOW_PASS_ORDER-1], &y_mean[LOW_PASS_ORDER-1], &y_var[LOW_PASS_ORDER-1], &z_mean[LOW_PASS_ORDER-1], &z_var[LOW_PASS_ORDER-1]);
 
-		x_mean[LOW_PASS_ORDER-1] = dist.x.mean;
-		x_var[LOW_PASS_ORDER-1] = dist.x.variance;
-
-		y_mean[LOW_PASS_ORDER-1] = dist.y.mean;
-		y_var[LOW_PASS_ORDER-1] = dist.y.variance;
-
-		z_mean[LOW_PASS_ORDER-1] = dist.z.mean;
-		z_var[LOW_PASS_ORDER-1] = dist.z.variance;
+		SEGGER_RTT_printf(0, "\nX\tMEAN: %d\tVARIANCE: %d\n", x_mean[LOW_PASS_ORDER-1], x_var[LOW_PASS_ORDER-1]);
+		SEGGER_RTT_printf(0, "Y\tMEAN: %d\tVARIANCE: %d\n", y_mean[LOW_PASS_ORDER-1], y_var[LOW_PASS_ORDER-1]);
+		SEGGER_RTT_printf(0, "Z\tMEAN: %d\tVARIANCE: %d\n", z_mean[LOW_PASS_ORDER-1], z_var[LOW_PASS_ORDER-1]);
 
 
 		// Filter current data array
@@ -351,7 +326,7 @@ int8_t pedometer(){
 			min_z[0] = low_pass_var_z[1];
 		}
 
-
+/*
 		if (count == 0){
 			if (first_run_flag){
 
@@ -366,7 +341,7 @@ int8_t pedometer(){
 			} else{
 				first_run_flag = 1;
 			}
-/*
+			
 			equate_arrays(max_x, old_max_x, 2);
 			equate_arrays(min_x, old_min_x, 2);
 
@@ -375,8 +350,8 @@ int8_t pedometer(){
 
 			equate_arrays(max_z, old_max_z, 2);
 			equate_arrays(min_z, old_min_z, 2);
-*/
-		}
+
+		}*/
 
 
 
@@ -398,7 +373,7 @@ int8_t pedometer(){
 		SEGGER_RTT_printf(0, "X\tMAX: %d\tMIN: %d\n", max_x[0], min_x[0]);
 
 
-		count = (count + 1) % SAMPLE_WINDOW;
+		//count = (count + 1) % SAMPLE_WINDOW;
 		OSA_TimeDelay(700);
 	};
 
