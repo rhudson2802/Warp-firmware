@@ -20,6 +20,8 @@
 
 #define LOW_PASS_ORDER 5
 #define SAMPLE_WINDOW 10
+#define MEAN 0
+#define VAR 1
 
 extern volatile WarpI2CDeviceState	deviceMMA8451QState;
 extern volatile uint32_t		gWarpI2cBaudRateKbps;
@@ -270,22 +272,22 @@ int8_t pedometer(){
 
 
 	// Initialise max and min arrays
-	low_pass_filter(x_mean, x_var, LOW_PASS_ORDER, &low_pass_x[0], &low_pass_x[1]);
-	low_pass_filter(y_mean, y_var, LOW_PASS_ORDER, &low_pass_y[0], &low_pass_y[1]);
-	low_pass_filter(z_mean, z_var, LOW_PASS_ORDER, &low_pass_z[0], &low_pass_z[1]);
+	low_pass_filter(x_mean, x_var, LOW_PASS_ORDER, &low_pass_x[MEAN], &low_pass_x[VAR]);
+	low_pass_filter(y_mean, y_var, LOW_PASS_ORDER, &low_pass_y[MEAN], &low_pass_y[VAR]);
+	low_pass_filter(z_mean, z_var, LOW_PASS_ORDER, &low_pass_z[MEAN], &low_pass_z[VAR]);
 	
-	max_x[0] = low_pass_x[0];
-	max_x[1] = low_pass_x[1];
-	min_x[0] = low_pass_x[0];
-	min_x[1] = low_pass_x[1];
-	max_y[0] = low_pass_y[0];
-	max_y[1] = low_pass_y[1];
-	min_y[0] = low_pass_y[0];
-	min_y[1] = low_pass_y[1];
-	max_z[0] = low_pass_z[0];
-	max_z[1] = low_pass_z[1];
-	min_z[0] = low_pass_z[0];
-	min_z[0] = low_pass_z[1];
+	max_x[MEAN] = low_pass_x[MEAN];
+	max_x[VAR] = low_pass_x[VAR];
+	min_x[MEAN] = low_pass_x[MEAN];
+	min_x[VAR] = low_pass_x[VAR];
+	max_y[MEAN] = low_pass_y[MEAN];
+	max_y[VAR] = low_pass_y[VAR];
+	min_y[MEAN] = low_pass_y[MEAN];
+	min_y[VAR] = low_pass_y[VAR];
+	max_z[MEAN] = low_pass_z[MEAN];
+	max_z[VAR] = low_pass_z[VAR];
+	min_z[MEAN] = low_pass_z[MEAN];
+	min_z[VAR] = low_pass_z[VAR];
 
 
 
@@ -304,14 +306,14 @@ int8_t pedometer(){
 
 		// Rotate low pass arrays
 		if (max_axis == 0){
-			low_pass_old[0] = low_pass_x[0];
-			low_pass_old[1] = low_pass_x[1];
+			low_pass_old[MEAN] = low_pass_x[MEAN];
+			low_pass_old[VAR] = low_pass_x[VAR];
 		} else if (max_axis == 1){
-			low_pass_old[0] = low_pass_y[0];
-			low_pass_old[1] = low_pass_y[1];
+			low_pass_old[MEAN] = low_pass_y[MEAN];
+			low_pass_old[VAR] = low_pass_y[VAR];
 		} else{
-			low_pass_old[0] = low_pass_z[0];
-			low_pass_old[1] = low_pass_z[1];
+			low_pass_old[MEAN] = low_pass_z[MEAN];
+			low_pass_old[VAR] = low_pass_z[VAR];
 		}
 
 
@@ -324,65 +326,65 @@ int8_t pedometer(){
 
 
 		// Filter current data array
-		low_pass_filter(x_mean, x_var, LOW_PASS_ORDER, &low_pass_x[0], &low_pass_x[1]);
-		low_pass_filter(y_mean, y_var, LOW_PASS_ORDER, &low_pass_y[0], &low_pass_y[1]);
-		low_pass_filter(z_mean, z_var, LOW_PASS_ORDER, &low_pass_z[0], &low_pass_z[1]);
+		low_pass_filter(x_mean, x_var, LOW_PASS_ORDER, &low_pass_x[MEAN], &low_pass_x[VAR]);
+		low_pass_filter(y_mean, y_var, LOW_PASS_ORDER, &low_pass_y[MEAN], &low_pass_y[VAR]);
+		low_pass_filter(z_mean, z_var, LOW_PASS_ORDER, &low_pass_z[MEAN], &low_pass_z[VAR]);
 		
 		
 		
 
 		// Check if we have a new maximum
-		if (low_pass_x[0] > max_x[0]){
-			max_x[0] = low_pass_x[0];
-			max_x[1] = low_pass_x[1];
+		if (low_pass_x[MEAN] > max_x[MEAN]){
+			max_x[MEAN] = low_pass_x[MEAN];
+			max_x[VAR] = low_pass_x[VAR];
 
-		} else if(low_pass_x[0] < min_x[0]){
-			min_x[0] = low_pass_x[0];
-			min_x[1] = low_pass_x[1];
+		} else if(low_pass_x[MEAN] < min_x[MEAN]){
+			min_x[MEAN] = low_pass_x[MEAN];
+			min_x[VAR] = low_pass_x[VAR];
 		}
 
 
-		if (low_pass_y[0] > max_y[0]){
-			max_y[0] = low_pass_y[0];
-			max_y[1] = low_pass_y[1];
+		if (low_pass_y[MEAN] > max_y[MEAN]){
+			max_y[MEAN] = low_pass_y[MEAN];
+			max_y[VAR] = low_pass_y[VAR];
 
-		} else if(low_pass_y[0] < min_y[0]){
-			min_y[0] = low_pass_y[0];
-			min_y[1] = low_pass_y[1];
+		} else if(low_pass_y[MEAN] < min_y[MEAN]){
+			min_y[MEAN] = low_pass_y[MEAN];
+			min_y[VAR] = low_pass_y[VAR];
 		}
 
 
-		if (low_pass_z[0] > max_z[0]){
-			max_z[0] = low_pass_z[0];
-			max_z[1] = low_pass_z[1];
+		if (low_pass_z[MEAN] > max_z[MEAN]){
+			max_z[MEAN] = low_pass_z[MEAN];
+			max_z[VAR] = low_pass_z[VAR];
 
-		} else if(low_pass_z[0] < min_z[0]){
-			min_z[0] = low_pass_z[0];
-			min_z[0] = low_pass_z[1];
+		} else if(low_pass_z[MEAN] < min_z[MEAN]){
+			min_z[MEAN] = low_pass_z[MEAN];
+			min_z[VAR] = low_pass_z[VAR];
 		}
 
 
 		if (count == 0){
-			if ((max_x[0] - min_x[0] > max_y[0] - min_y[0]) && (max_x[0] - min_x[0] > max_z[0] - min_z[0])){
-				SEGGER_RTT_WriteString(0, "X is max axis");
+			if (((max_x[MEAN] - min_x[MEAN]) > (max_y[MEAN] - min_y[MEAN])) && ((max_x[MEAN] - min_x[MEAN]) > (max_z[MEAN] - min_z[MEAN]))){
+				SEGGER_RTT_WriteString(0, "X is max axis\n");
 				max_axis = 0;
-				threshold[0] = (max_x[0] - min_x[0]) / 2;
-				threshold[1] = (max_x[1] + min_x[0]) / 4;
+				threshold[MEAN] = (max_x[MEAN] + min_x[MEAN]) / 2;
+				threshold[VAR] = (max_x[VAR] + min_x[VAR]) / 4;
 
-			} else if ((max_y[0] - min_y[0] > max_x[0] - min_x[0]) && (max_y[0] - min_y[0] > max_z[0] - min_z[0])) {
-				SEGGER_RTT_WriteString(0, "Y is max axisl");
+			} else if (((max_y[MEAN] - min_y[MEAN]) > (max_x[MEAN] - min_x[MEAN])) && ((max_y[MEAN] - min_y[MEAN]) > (max_z[MEAN] - min_z[MEAN]))) {
+				SEGGER_RTT_WriteString(0, "Y is max axis\n");
 				max_axis = 1;
-				threshold[0] = (max_y[0] - min_y[0]) / 2;
-				threshold[1] = (max_y[1] + min_y[0]) / 4;
+				threshold[MEAN] = (max_y[MEAN] + min_y[MEAN]) / 2;
+				threshold[VAR] = (max_y[VAR] + min_y[VAR]) / 4;
 
 			} else{
-				SEGGER_RTT_WriteString(0, "Z is max axis");
+				SEGGER_RTT_WriteString(0, "Z is max axis\n");
 				max_axis = 2;
-				threshold[0] = (max_z[0] - min_z[0]) / 2;
-				threshold[1] = (max_z[1] + min_z[0]) / 4;
+				threshold[MEAN] = (max_z[MEAN] + min_z[MEAN]) / 2;
+				threshold[VAR] = (max_z[VAR] + min_z[VAR]) / 4;
 
 			}
-			SEGGER_RTT_printf(0, "MAX AXIS: %d\t THRESHOLD: %d\t UNCERTAINTY: %d\n\n", max_axis, threshold[0], threshold[1]);
+			SEGGER_RTT_printf(0, "MAX AXIS: %d\t THRESHOLD: %d\t UNCERTAINTY: %d\n\n", max_axis, threshold[MEAN], threshold[VAR]);
 			first_run_flag = 1;
 
 		}
@@ -391,22 +393,22 @@ int8_t pedometer(){
 
 		//print_array(x_mean, LOW_PASS_ORDER);
 		//print_array(x_var, LOW_PASS_ORDER);
-		//SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_x[0], low_pass_x[1]);
+		//SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_x[MEAN], low_pass_x[VAR]);
 		OSA_TimeDelay(100);
 
 		//print_array(y_mean, LOW_PASS_ORDER);
 		//print_array(y_var, LOW_PASS_ORDER);
-		//SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_y[0], low_pass_y[1]);
+		//SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_y[MEAN], low_pass_y[VAR]);
 		OSA_TimeDelay(100);
 
 		//print_array(z_mean, LOW_PASS_ORDER);
 		//print_array(z_var, LOW_PASS_ORDER);
-		//SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_z[0], low_pass_z[1]);
+		//SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_z[MEAN], low_pass_z[VAR]);
 		OSA_TimeDelay(100);
 
-		SEGGER_RTT_printf(0, "X\tMAX: %d\tMIN: %d\n", max_x[0], min_x[0]);
-		SEGGER_RTT_printf(0, "Y\tMAX: %d\tMIN: %d\n", max_y[0], min_y[0]);
-		SEGGER_RTT_printf(0, "Y\tMAX: %d\tMIN: %d\n", max_z[0], min_z[0]);
+		SEGGER_RTT_printf(0, "X\tMAX: %d\tMIN: %d\n", max_x[MEAN], min_x[MEAN]);
+		SEGGER_RTT_printf(0, "Y\tMAX: %d\tMIN: %d\n", max_y[MEAN], min_y[MEAN]);
+		SEGGER_RTT_printf(0, "Z\tMAX: %d\tMIN: %d\n", max_z[MEAN], min_z[MEAN]);
 
 
 		count = (count + 1) % SAMPLE_WINDOW;
