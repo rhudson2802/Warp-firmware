@@ -19,7 +19,7 @@
 #include "pedometer.h"
 
 #define LOW_PASS_ORDER 4
-#define SAMPLE_WINDOW 10
+#define SAMPLE_WINDOW 15
 #define MEAN 0
 #define VAR 1
 
@@ -269,16 +269,15 @@ int8_t pedometer(){
 
 	uint16_t step_count[2] = {0, 0};
 
-
+/*
 	threshold[0] = 900;
 	threshold[1] = 80;
-
 	low_pass_x[0] = 1000;
 	low_pass_x[1] = 100;
 
 	step_count[1] = if_variance(threshold, low_pass_x);
 	SEGGER_RTT_printf(0, "\n%d\n", step_count[1]);
-
+*/
 
 	// Fill arrays with initial data
 	for (int i=0; i<LOW_PASS_ORDER; i++) {
@@ -417,19 +416,19 @@ int8_t pedometer(){
 		// Check whether there has been a negative transition across the threshold between the current and old reading
 		if (first_run_flag){
 			if (max_axis == 0){
-//				step_count[VAR] = step_count[VAR] + if_variance(threshold, low_pass_x) + if_variance(threshold, low_pass_old);
+				step_count[VAR] = step_count[VAR] + if_variance(threshold, low_pass_x) + if_variance(threshold, low_pass_old);
 				if ((low_pass_x[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN])){
 					step_count[MEAN] = step_count[MEAN] + 1;
 					SEGGER_RTT_printf(0, "\n\n\nSTEP COUNT: %d\n\n\n", step_count[MEAN]);
 				}
 			} else if (max_axis == 1){
-//				step_count[VAR] = step_count[VAR] + if_variance(threshold, low_pass_y) + if_variance(threshold, low_pass_old);
+				step_count[VAR] = step_count[VAR] + if_variance(threshold, low_pass_y) + if_variance(threshold, low_pass_old);
 				if ((low_pass_z[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN])){
 					step_count[MEAN] = step_count[MEAN] + 1;
 					SEGGER_RTT_printf(0, "\n\n\nSTEP COUNT: %d\n\n\n", step_count[MEAN]);
 				}
 			} else{
-//				step_count[VAR] = step_count[VAR] + if_variance(threshold, low_pass_z) + if_variance(threshold, low_pass_old);
+				step_count[VAR] = step_count[VAR] + if_variance(threshold, low_pass_z) + if_variance(threshold, low_pass_old);
 				if ((low_pass_z[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN])){
 					step_count[MEAN] = step_count[MEAN] + 1;
 					SEGGER_RTT_printf(0, "\n\n\nSTEP COUNT: %d\n\n\n", step_count[MEAN]);
