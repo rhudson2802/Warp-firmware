@@ -36,7 +36,7 @@ int16_t compute_mean(int16_t data[], uint8_t N){
 	for (int i=0; i<N; i++){
 		sum += data[i];
 	}
-	return sum / N;
+	return sum * 100 / N;
 }
 
 
@@ -49,7 +49,7 @@ int16_t compute_variance(int16_t data[], int16_t mean, uint8_t N){
 		//SEGGER_RTT_printf(0, "Sum = %d\n", sum);
 	}
 	//SEGGER_RTT_printf(0, "Sum/N = %d\n\n", sum/N);
-	return sum / N;
+	return sum * 100 / N;
 }
 
 
