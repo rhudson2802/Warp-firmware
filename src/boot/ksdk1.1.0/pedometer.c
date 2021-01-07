@@ -211,6 +211,16 @@ void equate_arrays(int16_t input[], int16_t output[], uint8_t length){
 
 
 
+uint16_t if_variance(int16_t var1[], int16_t var2[]){
+	int16_t x = (var2[MEAN] - var1[MEAN] ) / var1[VAR];
+	int16_t sigma = var2[VAR] / var1[VAR];
+	
+	return (1 - (x*x) / (sigma*3/100 + 1)*(sigma*3/100 + 1)) / (4 * (sigma*3/100 + 1))
+}
+
+
+
+
 int8_t pedometer(){
 	SEGGER_RTT_WriteString(0, "Starting pedometer\n\n");
 
@@ -252,7 +262,7 @@ int8_t pedometer(){
 	int16_t threshold[2] = {0, 0}; 		//	 Form: threshold, uncertainty.
 	
 	
-	uint16_t step_count = 0;
+	uint16_t step_count[2] = {0, 0};
 
 
 
@@ -393,19 +403,22 @@ int8_t pedometer(){
 		// Check whether there has been a negative transition across the threshold between the current and old reading
 		if (first_run_flag){
 			if (max_axis == 0){
+				step_count[VAR] = step_count[VAR] + if_variance(threshold, low_pass_x) + if_variance(threshold, low_pass_old);
 				if ((low_pass_x[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN])){
-					step_count = step_count + 1;
-					SEGGER_RTT_printf(0, "\n\n\nSTEP COUNT: %d\n\n\n", step_count);
+					step_count[MEAN] = step_count[MEAN] + 1;
+					SEGGER_RTT_printf(0, "\n\n\nSTEP COUNT: %d\n\n\n", step_count[MEAN]);
 				}
 			} else if (max_axis == 1){
+				step_count[VAR] = step_count[VAR] + if_variance(threshold, low_pass_y[VAR]) + if_variance(threshold, low_pass_old[VAR]);
 				if ((low_pass_z[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN])){
-					step_count = step_count + 1;
-					SEGGER_RTT_printf(0, "\n\n\nSTEP COUNT: %d\n\n\n", step_count);
+					step_count[MEAN] = step_count[MEAN] + 1;
+					SEGGER_RTT_printf(0, "\n\n\nSTEP COUNT: %d\n\n\n", step_count[MEAN]);
 				}
 			} else{
+				step_count[VAR] = step_count[VAR] + if_variance(threshold, low_pass_z[VAR]) + if_variance(threshold, low_pass_old[VAR]);
 				if ((low_pass_z[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN])){
-					step_count = step_count + 1;
-					SEGGER_RTT_printf(0, "\n\n\nSTEP COUNT: %d\n\n\n", step_count);
+					step_count[MEAN] = step_count[MEAN] + 1;
+					SEGGER_RTT_printf(0, "\n\n\nSTEP COUNT: %d\n\n\n", step_count[MEAN]);
 				}
 			}
 		}
@@ -414,7 +427,7 @@ int8_t pedometer(){
 		SEGGER_RTT_printf(0, "\nX\tMAX: %d\tMIN: %d\n", max_x[MEAN], min_x[MEAN]);
 		SEGGER_RTT_printf(0, "Y\tMAX: %d\tMIN: %d\n", max_y[MEAN], min_y[MEAN]);
 		SEGGER_RTT_printf(0, "Z\tMAX: %d\tMIN: %d\n", max_z[MEAN], min_z[MEAN]);
-		SEGGER_RTT_printf(0, "\n\n\nSTEPS: %d\n\n\n", step_count);
+		SEGGER_RTT_printf(0, "\n\n\nSTEPS: %d\t\tVARIANCE: %d\n\n\n", step_count[MEAN], step_count[VAR]);
 
 		count = (count + 1) % SAMPLE_WINDOW;
 		OSA_TimeDelay(100);
