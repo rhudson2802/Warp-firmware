@@ -398,7 +398,7 @@ int8_t pedometer(){
 					SEGGER_RTT_printf(0, "\n\n\nSTEP COUNT: %d\n\n\n", step_count);
 				}
 			} else if (max_axis == 1){
-				if ((low_pass_z[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN])){
+				if ((low_pass_y[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN])){
 					step_count = step_count + 1;
 					SEGGER_RTT_printf(0, "\n\n\nSTEP COUNT: %d\n\n\n", step_count);
 				}
