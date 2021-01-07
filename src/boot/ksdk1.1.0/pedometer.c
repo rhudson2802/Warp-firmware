@@ -19,7 +19,7 @@
 #include "pedometer.h"
 
 #define LOW_PASS_ORDER 4
-#define SAMPLE_WINDOW 30
+#define SAMPLE_WINDOW 15
 #define SAMPLE_DELAY 100
 #define MEAN 0
 #define VAR 1
@@ -418,21 +418,21 @@ int8_t pedometer(){
 		if (first_run_flag){
 			if (max_axis == 0){
 				step_count[VAR] = step_count[VAR] + if_variance(threshold, low_pass_x) + if_variance(threshold, low_pass_old);
-				if ((low_pass_x[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN])){
+				if ((low_pass_x[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN]) && (low_pass_old[MEAN] - low_pass_x[MEAN] > 10)){
 					step_count[MEAN] = step_count[MEAN] + 1;
-//					SEGGER_RTT_printf(0, "\n\nSTEP COUNT: %d VARIANCE: %d\n\n", step_count[MEAN], step_count[VAR]);
+					SEGGER_RTT_printf(0, "\n\nSTEP COUNT: %d VARIANCE: %d\n\n", step_count[MEAN], step_count[VAR]);
 				}
 			} else if (max_axis == 1){
 				step_count[VAR] = step_count[VAR] + if_variance(threshold, low_pass_y) + if_variance(threshold, low_pass_old);
-				if ((low_pass_y[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN])){
+				if ((low_pass_y[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN] && (low_pass_old[MEAN] - low_pass_y[MEAN] > 10))){
 					step_count[MEAN] = step_count[MEAN] + 1;
-//					SEGGER_RTT_printf(0, "\n\nSTEP COUNT: %d VARIANCE: %d\n\n", step_count[MEAN], step_count[VAR]);
+					SEGGER_RTT_printf(0, "\n\nSTEP COUNT: %d VARIANCE: %d\n\n", step_count[MEAN], step_count[VAR]);
 				}
 			} else{
 				step_count[VAR] = step_count[VAR] + if_variance(threshold, low_pass_z) + if_variance(threshold, low_pass_old);
-				if ((low_pass_z[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN])){
+				if ((low_pass_z[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN]) && (low_pass_old[MEAN] - low_pass_y[MEAN] > 10)){
 					step_count[MEAN] = step_count[MEAN] + 1;
-//					SEGGER_RTT_printf(0, "\n\nSTEP COUNT: %d VARIANCE: %d\n\n", step_count[MEAN], step_count[VAR]);
+					SEGGER_RTT_printf(0, "\n\nSTEP COUNT: %d VARIANCE: %d\n\n", step_count[MEAN], step_count[VAR]);
 				}
 			}
 		}
