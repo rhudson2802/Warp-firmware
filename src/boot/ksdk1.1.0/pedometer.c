@@ -21,7 +21,7 @@
 #define LOW_PASS_ORDER 4
 #define SAMPLE_WINDOW 15
 #define SAMPLE_DELAY 100
-#define TOLERANCE 20
+#define TOLERANCE 10
 #define MEAN 0
 #define VAR 1
 
@@ -38,7 +38,7 @@ int16_t compute_mean(int16_t data[], uint8_t N){
 	for (int i=0; i<N; i++){
 		sum += data[i];
 	}
-	return sum * 100 / N;
+	return sum / N;
 }
 
 
@@ -51,7 +51,7 @@ int16_t compute_variance(int16_t data[], int16_t mean, uint8_t N){
 		//SEGGER_RTT_printf(0, "Sum = %d\n", sum);
 	}
 	//SEGGER_RTT_printf(0, "Sum/N = %d\n\n", sum/N);
-	return sum * 100 / N;
+	return sum / N;
 }
 
 
