@@ -424,7 +424,7 @@ int8_t pedometer(){
 				}
 			} else if (max_axis == 1){
 				step_count[VAR] = step_count[VAR] + if_variance(threshold, low_pass_y) + if_variance(threshold, low_pass_old);
-				if ((low_pass_z[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN])){
+				if ((low_pass_y[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN])){
 					step_count[MEAN] = step_count[MEAN] + 1;
 //					SEGGER_RTT_printf(0, "\n\nSTEP COUNT: %d VARIANCE: %d\n\n", step_count[MEAN], step_count[VAR]);
 				}
