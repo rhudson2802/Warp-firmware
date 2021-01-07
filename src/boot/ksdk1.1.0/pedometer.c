@@ -212,10 +212,15 @@ void equate_arrays(int16_t input[], int16_t output[], uint8_t length){
 
 
 uint16_t if_variance(int16_t var1[], int16_t var2[]){
+	int16_t uncertainty;
 	int16_t x = (var2[MEAN] - var1[MEAN] ) / var1[VAR];
 	int16_t sigma = var2[VAR] / var1[VAR];
 
-	return (1 - (x*x) / (sigma*3/100 + 1)*(sigma*3/100 + 1)) / (4 * (sigma*3/100 + 1));
+	uncertainty = (1 - (x*x) / ((sigma*3/100 + 1)*(sigma*3/100 + 1))) / (4 * (sigma*3/100 + 1));
+	if (uncertainty < 0){
+		uncertainty = 0;
+	}
+	return uncertainty;
 }
 
 
@@ -265,8 +270,8 @@ int8_t pedometer(){
 	uint16_t step_count[2] = {0, 0};
 
 
-	threshold[0] = 100;
-	threshold[1] = 50;
+	threshold[0] = 900;
+	threshold[1] = 80;
 
 	low_pass_x[0] = 1000;
 	low_pass_x[1] = 100;
