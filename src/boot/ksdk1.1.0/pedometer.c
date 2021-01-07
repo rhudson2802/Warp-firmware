@@ -250,6 +250,9 @@ int8_t pedometer(){
 
 	uint8_t max_axis = 0;
 	int16_t threshold[2] = {0, 0}; 		//	 Form: threshold, uncertainty.
+	
+	
+	uint16_t step_count = 0;
 
 
 
@@ -353,19 +356,19 @@ int8_t pedometer(){
 		// When we reach the end of one sampling period, reset the maximum axis
 		if (count == 0){
 			if (((max_x[MEAN] - min_x[MEAN]) > (max_y[MEAN] - min_y[MEAN])) && ((max_x[MEAN] - min_x[MEAN]) > (max_z[MEAN] - min_z[MEAN]))){
-				SEGGER_RTT_WriteString(0, "X is max axis\n");
+				//SEGGER_RTT_WriteString(0, "X is max axis\n");
 				max_axis = 0;
 				threshold[MEAN] = (max_x[MEAN] + min_x[MEAN]) / 2;
 				threshold[VAR] = (max_x[VAR] + min_x[VAR]) / 4;
 
 			} else if (((max_y[MEAN] - min_y[MEAN]) > (max_x[MEAN] - min_x[MEAN])) && ((max_y[MEAN] - min_y[MEAN]) > (max_z[MEAN] - min_z[MEAN]))) {
-				SEGGER_RTT_WriteString(0, "Y is max axis\n");
+				//SEGGER_RTT_WriteString(0, "Y is max axis\n");
 				max_axis = 1;
 				threshold[MEAN] = (max_y[MEAN] + min_y[MEAN]) / 2;
 				threshold[VAR] = (max_y[VAR] + min_y[VAR]) / 4;
 
 			} else{
-				SEGGER_RTT_WriteString(0, "Z is max axis\n");
+				//SEGGER_RTT_WriteString(0, "Z is max axis\n");
 				max_axis = 2;
 				threshold[MEAN] = (max_z[MEAN] + min_z[MEAN]) / 2;
 				threshold[VAR] = (max_z[VAR] + min_z[VAR]) / 4;
@@ -373,33 +376,40 @@ int8_t pedometer(){
 			}
 			SEGGER_RTT_printf(0, "MAX AXIS: %d\t THRESHOLD: %d\t UNCERTAINTY: %d\n\n", max_axis, threshold[MEAN], threshold[VAR]);
 			first_run_flag = 1;
+			
+			SEGGER_RTT_printf(0, "\n\n\nSTEP COUNT: %d\n\n\n", step_count);
 
+		}
+		
+		
+		
+		// Decide whether a step has been taken
+		// Check whether there has been a negative transition across the threshold between the current and old reading
+		if (first_run_flag){
+			if (max_axis == 0){
+				if ((low_pass_x[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN])){
+					step_count = step_count + 1;
+				}
+			}
+			} else if (max_axis == 1){
+				if ((low_pass_z[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN])){
+					step_count = step_count + 1;
+				}
+			} else{
+				if ((low_pass_z[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN])){
+					step_count = step_count + 1;
+				}
+			}
 		}
 
 
-
-		//print_array(x_mean, LOW_PASS_ORDER);
-		//print_array(x_var, LOW_PASS_ORDER);
-		//SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_x[MEAN], low_pass_x[VAR]);
-		OSA_TimeDelay(100);
-
-		//print_array(y_mean, LOW_PASS_ORDER);
-		//print_array(y_var, LOW_PASS_ORDER);
-		//SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_y[MEAN], low_pass_y[VAR]);
-		OSA_TimeDelay(100);
-
-		//print_array(z_mean, LOW_PASS_ORDER);
-		//print_array(z_var, LOW_PASS_ORDER);
-		//SEGGER_RTT_printf(0, "op: %d, error: %d\n\n\n", low_pass_z[MEAN], low_pass_z[VAR]);
-		OSA_TimeDelay(100);
-
-		SEGGER_RTT_printf(0, "X\tMAX: %d\tMIN: %d\n", max_x[MEAN], min_x[MEAN]);
+		SEGGER_RTT_printf(0, "\nX\tMAX: %d\tMIN: %d\n", max_x[MEAN], min_x[MEAN]);
 		SEGGER_RTT_printf(0, "Y\tMAX: %d\tMIN: %d\n", max_y[MEAN], min_y[MEAN]);
 		SEGGER_RTT_printf(0, "Z\tMAX: %d\tMIN: %d\n", max_z[MEAN], min_z[MEAN]);
-
+		SEGGER_RTT_printf(0, "\n\n\nSTEPS: %d\n\n\n", step_count);
 
 		count = (count + 1) % SAMPLE_WINDOW;
-		OSA_TimeDelay(700);
+		OSA_TimeDelay(10);
 	};
 
 
