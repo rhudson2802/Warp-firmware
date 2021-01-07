@@ -18,7 +18,7 @@
 
 #include "pedometer.h"
 
-#define LOW_PASS_ORDER 5
+#define LOW_PASS_ORDER 4
 #define SAMPLE_WINDOW 10
 #define MEAN 0
 #define VAR 1
