@@ -377,6 +377,14 @@ int8_t pedometer(){
 			SEGGER_RTT_printf(0, "MAX AXIS: %d\t THRESHOLD: %d\t UNCERTAINTY: %d\n\n", max_axis, threshold[MEAN], threshold[VAR]);
 			first_run_flag = 1;
 
+			// Reset max and min arrays for new window
+			equate_arrays(low_pass_x, max_x, 2);
+			equate_arrays(low_pass_x, min_x, 2);
+			equate_arrays(low_pass_y, max_y, 2);
+			equate_arrays(low_pass_y, min_y, 2);
+			equate_arrays(low_pass_z, max_z, 2);
+			equate_arrays(low_pass_z, min_z, 2);
+
 		}
 		
 		
@@ -409,7 +417,7 @@ int8_t pedometer(){
 		SEGGER_RTT_printf(0, "\n\n\nSTEPS: %d\n\n\n", step_count);
 */
 		count = (count + 1) % SAMPLE_WINDOW;
-		OSA_TimeDelay(100);
+		OSA_TimeDelay(10);
 	};
 
 
