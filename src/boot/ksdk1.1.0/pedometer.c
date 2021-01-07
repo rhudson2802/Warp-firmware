@@ -19,7 +19,7 @@
 #include "pedometer.h"
 
 #define LOW_PASS_ORDER 4
-#define SAMPLE_WINDOW 50
+#define SAMPLE_WINDOW 150
 #define MEAN 0
 #define VAR 1
 
