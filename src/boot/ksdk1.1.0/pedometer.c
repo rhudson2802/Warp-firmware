@@ -321,12 +321,12 @@ int8_t pedometer(){
 		low_pass_filter(y_mean, y_var, LOW_PASS_ORDER, low_pass_y);
 		low_pass_filter(z_mean, z_var, LOW_PASS_ORDER, low_pass_z);
 		
-		
+/*	
 		SEGGER_RTT_printf(0, "\nX\tMEAN: %d\tVARIANCE: %d\n", low_pass_x[MEAN], low_pass_x[VAR]);
 		SEGGER_RTT_printf(0, "Y\tMEAN: %d\tVARIANCE: %d\n", low_pass_y[MEAN], low_pass_y[VAR]);
 		SEGGER_RTT_printf(0, "Z\tMEAN: %d\tVARIANCE: %d\n", low_pass_z[MEAN], low_pass_z[VAR]);
-		
-		
+*/	
+	
 
 		// Check if we have a new maximum
 		if (low_pass_x[MEAN] > max_x[MEAN]){
@@ -376,8 +376,6 @@ int8_t pedometer(){
 			}
 			SEGGER_RTT_printf(0, "MAX AXIS: %d\t THRESHOLD: %d\t UNCERTAINTY: %d\n\n", max_axis, threshold[MEAN], threshold[VAR]);
 			first_run_flag = 1;
-			
-			SEGGER_RTT_printf(0, "\n\n\nSTEP COUNT: %d\n\n\n", step_count);
 
 		}
 		
@@ -389,24 +387,27 @@ int8_t pedometer(){
 			if (max_axis == 0){
 				if ((low_pass_x[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN])){
 					step_count = step_count + 1;
+					SEGGER_RTT_printf(0, "\n\n\nSTEP COUNT: %d\n\n\n", step_count);
 				}
 			} else if (max_axis == 1){
 				if ((low_pass_z[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN])){
 					step_count = step_count + 1;
+					SEGGER_RTT_printf(0, "\n\n\nSTEP COUNT: %d\n\n\n", step_count);
 				}
 			} else{
 				if ((low_pass_z[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN])){
 					step_count = step_count + 1;
+					SEGGER_RTT_printf(0, "\n\n\nSTEP COUNT: %d\n\n\n", step_count);
 				}
 			}
 		}
 
-
+/*
 		SEGGER_RTT_printf(0, "\nX\tMAX: %d\tMIN: %d\n", max_x[MEAN], min_x[MEAN]);
 		SEGGER_RTT_printf(0, "Y\tMAX: %d\tMIN: %d\n", max_y[MEAN], min_y[MEAN]);
 		SEGGER_RTT_printf(0, "Z\tMAX: %d\tMIN: %d\n", max_z[MEAN], min_z[MEAN]);
 		SEGGER_RTT_printf(0, "\n\n\nSTEPS: %d\n\n\n", step_count);
-
+*/
 		count = (count + 1) % SAMPLE_WINDOW;
 		OSA_TimeDelay(100);
 	};
