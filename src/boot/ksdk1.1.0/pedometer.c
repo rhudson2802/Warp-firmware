@@ -446,8 +446,9 @@ int8_t pedometer(){
 */
 		count = (count + 1) % SAMPLE_WINDOW;
 		OSA_TimeDelay(SAMPLE_DELAY);
+		SEGGER_RTT_printf(0, "%d\t%d\t%d\t%d\t%d\t%d\n", x_mean[LOW_PASS_ORDER-1], x_var[LOW_PASS_ORDER-1], y_mean[LOW_PASS_ORDER-1], y_var[LOW_PASS_ORDER-1], z_mean[LOW_PASS_ORDER-1], z_var[LOW_PASS_ORDER-1]);
 	};
 
-	SEGGER_RTT_printf(0, "%d\t%d\t%d\t%d\t%d\t%d\n", x_mean[LOW_PASS_ORDER-1], x_var[LOW_PASS_ORDER-1], y_mean[LOW_PASS_ORDER-1], y_var[LOW_PASS_ORDER-1], z_mean[LOW_PASS_ORDER-1], z_var[LOW_PASS_ORDER-1]);
+
 	return 0;
 }
