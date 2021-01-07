@@ -18,8 +18,8 @@
 
 #include "pedometer.h"
 
-#define LOW_PASS_ORDER 5
-#define SAMPLE_WINDOW 15
+#define LOW_PASS_ORDER 4
+#define SAMPLE_WINDOW 50
 #define MEAN 0
 #define VAR 1
 
@@ -443,7 +443,7 @@ int8_t pedometer(){
 		SEGGER_RTT_printf(0, "\n\n\nSTEPS: %d\t\tVARIANCE: %d\n\n\n", step_count[MEAN], step_count[VAR]);
 
 		count = (count + 1) % SAMPLE_WINDOW;
-		OSA_TimeDelay(100);
+		OSA_TimeDelay(10);
 	};
 
 
