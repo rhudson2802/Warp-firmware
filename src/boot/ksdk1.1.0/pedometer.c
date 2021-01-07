@@ -417,7 +417,7 @@ int8_t pedometer(){
 		SEGGER_RTT_printf(0, "\n\n\nSTEPS: %d\n\n\n", step_count);
 */
 		count = (count + 1) % SAMPLE_WINDOW;
-		OSA_TimeDelay(10);
+		OSA_TimeDelay(100);
 	};
 
 
