@@ -20,6 +20,7 @@
 
 #define LOW_PASS_ORDER 4
 #define SAMPLE_WINDOW 30
+#define SAMPLE_DELAY 100
 #define MEAN 0
 #define VAR 1
 
@@ -443,7 +444,7 @@ int8_t pedometer(){
 		SEGGER_RTT_printf(0, "\n\n\nSTEPS: %d\t\tVARIANCE: %d\n\n\n", step_count[MEAN], step_count[VAR]);
 */
 		count = (count + 1) % SAMPLE_WINDOW;
-		OSA_TimeDelay(50);
+		OSA_TimeDelay(SAMPLE_DELAY);
 	};
 
 
