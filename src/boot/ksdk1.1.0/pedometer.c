@@ -18,10 +18,11 @@
 
 #include "pedometer.h"
 
-#define LOW_PASS_ORDER 5
+#define LOW_PASS_ORDER 7
 #define SAMPLE_WINDOW 100
 #define SAMPLE_DELAY 10
 #define TOLERANCE 10
+#define SAMPLES_PER_DIST 10
 #define MEAN 0
 #define VAR 1
 
@@ -318,7 +319,7 @@ int8_t pedometer(){
 		rotate_array_by_one(z_var, LOW_PASS_ORDER);
 
 		// Save new datapoint
-		read_acceleration_distribution(10, &x_mean[LOW_PASS_ORDER-1], &x_var[LOW_PASS_ORDER-1], &y_mean[LOW_PASS_ORDER-1], &y_var[LOW_PASS_ORDER-1], &z_mean[LOW_PASS_ORDER-1], &z_var[LOW_PASS_ORDER-1]);
+		read_acceleration_distribution(SAMPLES_PER_DIST, &x_mean[LOW_PASS_ORDER-1], &x_var[LOW_PASS_ORDER-1], &y_mean[LOW_PASS_ORDER-1], &y_var[LOW_PASS_ORDER-1], &z_mean[LOW_PASS_ORDER-1], &z_var[LOW_PASS_ORDER-1]);
 	}
 
 
