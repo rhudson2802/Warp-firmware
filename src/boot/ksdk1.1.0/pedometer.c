@@ -18,7 +18,7 @@
 
 #include "pedometer.h"
 
-#define LOW_PASS_ORDER 7
+#define LOW_PASS_ORDER 5
 #define SAMPLE_WINDOW 100
 #define SAMPLE_DELAY 10
 #define TOLERANCE 10
@@ -163,13 +163,13 @@ void read_acceleration_distribution(uint8_t N, int16_t * x_mean, int16_t * x_var
 	for (int i=0; i<N; i++){
 		measurement = read_accelerometer();
 		sum[0] = sum[0] + measurement.x;
-		sq_sum[0] = sq_sum[0] * measurement.x * measurement.x;
+		sq_sum[0] = sq_sum[0] + measurement.x * measurement.x;
 		
 		sum[1] = sum[1] + measurement.y;
-		sq_sum[1] = sq_sum[1] * measurement.y * measurement.y;
+		sq_sum[1] = sq_sum[1] + measurement.y * measurement.y;
 		
 		sum[2] = sum[2] + measurement.z;
-		sq_sum[2] = sq_sum[2] * measurement.z * measurement.z;
+		sq_sum[2] = sq_sum[2] + measurement.z * measurement.z;
 		
 		//x[i] = measurement.x;
 		//y[i] = measurement.y;
