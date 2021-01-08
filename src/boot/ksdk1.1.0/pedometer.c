@@ -18,16 +18,13 @@
 
 #include "pedometer.h"
 
-#pragma pack(1)
-
-#define LOW_PASS_ORDER 5
+#define LOW_PASS_ORDER 7
 #define SAMPLE_WINDOW 100
-#define SAMPLE_DELAY 100
+#define SAMPLE_DELAY 10
 #define TOLERANCE 10
 #define SAMPLES_PER_DIST 10
 #define MEAN 0
 #define VAR 1
-#define INT_LIMIT 2147483647
 
 extern volatile WarpI2CDeviceState	deviceMMA8451QState;
 extern volatile uint32_t		gWarpI2cBaudRateKbps;
@@ -46,8 +43,8 @@ int16_t compute_mean(int16_t data[], uint8_t N){
 }
 
 
-int32_t compute_variance(int16_t data[], int16_t mean, uint8_t N){
-	int32_t sum = 0;
+int16_t compute_variance(int16_t data[], int16_t mean, uint8_t N){
+	int16_t sum = 0;
 	//SEGGER_RTT_printf(0, "\nMean = %d \t Mean^2 = %d\n", mean, mean*mean);
 	for (int i=0; i<N; i++){
 		sum = sum + (data[i] - mean)*(data[i] - mean);
@@ -59,7 +56,7 @@ int32_t compute_variance(int16_t data[], int16_t mean, uint8_t N){
 }
 
 
-void generate_distribution(int16_t data[], uint8_t N, int16_t * mean, int32_t * variance){
+void generate_distribution(int16_t data[], uint8_t N, int16_t * mean, int16_t * variance){
 	*mean = compute_mean(data, N);
 	*variance = compute_variance(data, *mean, N);
 }
@@ -153,58 +150,62 @@ acc_measurement read_accelerometer(){
 }
 
 
-void read_acceleration_distribution(uint8_t N, int16_t * x_mean, int32_t * x_var, int16_t * y_mean, int32_t * y_var, int16_t * z_mean, int32_t * z_var){
+void read_acceleration_distribution(uint8_t N, int16_t * x_mean, int16_t * x_var, int16_t * y_mean, int16_t * y_var, int16_t * z_mean, int16_t * z_var){
+	//int16_t x[N];
+	//int16_t y[N];
+	//int16_t z[N];
 
-	int32_t sum[3] = {0, 0, 0};
-	uint32_t sq_sum[3] = {0, 0, 0};
+	int16_t sum[3] = {0, 0, 0};
+	uint16_t sq_sum[3] = {0, 0, 0};
 
 	acc_measurement measurement;
 
 	for (int i=0; i<N; i++){
 		measurement = read_accelerometer();
 		sum[0] = sum[0] + measurement.x;
-		sq_sum[0] = sq_sum[0] + (measurement.x * measurement.x);
-
+		sq_sum[0] = sq_sum[0] * measurement.x * measurement.x;
+		
 		sum[1] = sum[1] + measurement.y;
-		sq_sum[1] = sq_sum[1] + (measurement.y * measurement.y);
-
+		sq_sum[1] = sq_sum[1] * measurement.y * measurement.y;
+		
 		sum[2] = sum[2] + measurement.z;
-		sq_sum[2] = sq_sum[2] + (measurement.z * measurement.z);
-
+		sq_sum[2] = sq_sum[2] * measurement.z * measurement.z;
+		
+		//x[i] = measurement.x;
+		//y[i] = measurement.y;
+		//z[i] = measurement.z;
 	};
-
+	
 	*x_mean = sum[0] / N;
-	*x_var = sq_sum[0] / N - (*x_mean * *x_mean);
-
+	*x_var = sq_sum[0] / N - *x_mean * *x_mean;
+	
 	*y_mean = sum[1] / N;
-	*y_var = sq_sum[1] / N - (*y_mean * *y_mean);
-
+	*y_var = sq_sum[1] / N - *y_mean * *y_mean;
+	
 	*z_mean = sum[2] / N;
-	*z_var = sq_sum[2] / N - (*z_mean * *z_mean);
-
-	SEGGER_RTT_printf(0, "%d\t%d\t%d\n", sq_sum[0], sq_sum[1], sq_sum[2]);
+	*z_var = sq_sum[2] / N - *z_mean * *z_mean;
+	
+	
 	if (*x_var < 0){
-		*x_var = INT_LIMIT;
+		*x_var = 32767;
 	}
 	if (*y_var < 0){
-		*y_var = INT_LIMIT;
+		*y_var = 32767;
 	}
 	if (*z_var < 0){
-		*z_var = INT_LIMIT;
+		*z_var = 32767;
 	}
+	
+
+/*
+	generate_distribution(x, N, x_mean, x_var);
+	generate_distribution(y, N, y_mean, y_var);
+	generate_distribution(z, N, z_mean, z_var);
+*/
 }
 
 
-void rotate_array_by_one_16bit(int16_t data[], uint8_t N){
-	// Takes input array and moves contents to left by 1 element. Last element is kept the same
-
-	for(int i=0; i<N-1 ; i++){
-		data[i] = data[i+1];
-	}
-}
-
-
-void rotate_array_by_one_32bit(int32_t data[], uint8_t N){
+void rotate_array_by_one(int16_t data[], uint8_t N){
 	// Takes input array and moves contents to left by 1 element. Last element is kept the same
 
 	for(int i=0; i<N-1 ; i++){
@@ -222,9 +223,9 @@ void print_array(int16_t data[], uint8_t N){
 }
 
 
-void low_pass_filter(int16_t means[], int32_t vars[], uint8_t N, int32_t output[]){
+void low_pass_filter(int16_t means[], int16_t vars[], uint8_t N, int16_t output[]){
 	int16_t sum_mean;
-	int32_t sum_vars;
+	int16_t sum_vars;
 
 	sum_mean = 0;
 	sum_vars = 0;
@@ -238,12 +239,12 @@ void low_pass_filter(int16_t means[], int32_t vars[], uint8_t N, int32_t output[
 	output[VAR] = sum_vars / (N*N);
 	
 	if (output[VAR] < 0) {
-		output[VAR] = INT_LIMIT;
+		output[VAR] = 32767;
 	}
 }
 
 
-void equate_arrays(int32_t input[], int32_t output[], uint8_t length){
+void equate_arrays(int16_t input[], int16_t output[], uint8_t length){
 	for (int i=0; i<length; i++){
 		output[i] = input[i];
 	}
@@ -252,16 +253,20 @@ void equate_arrays(int32_t input[], int32_t output[], uint8_t length){
 
 
 
-uint32_t if_variance(int32_t var1[], int32_t var2[]){
-	int32_t uncertainty;
-	int32_t x = (var2[MEAN] - var1[MEAN] ) / var1[VAR];
-	int32_t sigma = var2[VAR] / var1[VAR];
+uint16_t if_variance(int16_t var1[], int16_t var2[]){
+	int16_t uncertainty;
+	int16_t x = (var2[MEAN] - var1[MEAN] ) / var1[VAR];
+	int16_t sigma = var2[VAR] / var1[VAR];
 
 	uncertainty = (1 - (x*x) / ((sigma*3/100 + 1)*(sigma*3/100 + 1))) / (4 * (sigma*3/100 + 1));
 	if (uncertainty < 0){
 		uncertainty = 0;
 	}
-
+	
+	if (uncertainty < 0){
+		uncertainty = 32767;
+	}
+	
 	return uncertainty;
 }
 
@@ -278,38 +283,38 @@ int8_t pedometer(){
 
 
 	int16_t x_mean[LOW_PASS_ORDER];
-	int32_t x_var[LOW_PASS_ORDER];
+	int16_t x_var[LOW_PASS_ORDER];
 
 	int16_t y_mean[LOW_PASS_ORDER];
-	int32_t y_var[LOW_PASS_ORDER];
+	int16_t y_var[LOW_PASS_ORDER];
 
 	int16_t z_mean[LOW_PASS_ORDER];
-	int32_t z_var[LOW_PASS_ORDER];
+	int16_t z_var[LOW_PASS_ORDER];
 
 
 
-	int32_t low_pass_x[2];
-	int32_t low_pass_y[2];
-	int32_t low_pass_z[2];
-	int32_t low_pass_old[2];
+	int16_t low_pass_x[2];
+	int16_t low_pass_y[2];
+	int16_t low_pass_z[2];
+	int16_t low_pass_old[2];
 
 
 
-	int32_t max_x[2] = {0, 0};
-	int32_t min_x[2] = {0, 0};
+	int16_t max_x[2] = {0, 0};
+	int16_t min_x[2] = {0, 0};
 
-	int32_t max_y[2] = {0, 0};
-	int32_t min_y[2] = {0, 0};
+	int16_t max_y[2] = {0, 0};
+	int16_t min_y[2] = {0, 0};
 
-	int32_t max_z[2] = {0, 0};
-	int32_t min_z[2] = {0, 0};
+	int16_t max_z[2] = {0, 0};
+	int16_t min_z[2] = {0, 0};
 
 
 	uint8_t max_axis = 0;
-	int32_t threshold[2] = {0, 0}; 		//	 Form: threshold, uncertainty.
+	int16_t threshold[2] = {0, 0}; 		//	 Form: threshold, uncertainty.
 
 
-	uint32_t step_count[2] = {0, 0};
+	uint16_t step_count[2] = {0, 0};
 
 /*
 	threshold[0] = 900;
@@ -324,14 +329,14 @@ int8_t pedometer(){
 	// Fill arrays with initial data
 	for (int i=0; i<LOW_PASS_ORDER; i++) {
 		// Rotate data arrays to save new datapoint at end
-		rotate_array_by_one_16bit(x_mean, LOW_PASS_ORDER);
-		rotate_array_by_one_32bit(x_var, LOW_PASS_ORDER);
+		rotate_array_by_one(x_mean, LOW_PASS_ORDER);
+		rotate_array_by_one(x_var, LOW_PASS_ORDER);
 
-		rotate_array_by_one_16bit(y_mean, LOW_PASS_ORDER);
-		rotate_array_by_one_32bit(y_var, LOW_PASS_ORDER);
+		rotate_array_by_one(y_mean, LOW_PASS_ORDER);
+		rotate_array_by_one(y_var, LOW_PASS_ORDER);
 
-		rotate_array_by_one_16bit(z_mean, LOW_PASS_ORDER);
-		rotate_array_by_one_32bit(z_var, LOW_PASS_ORDER);
+		rotate_array_by_one(z_mean, LOW_PASS_ORDER);
+		rotate_array_by_one(z_var, LOW_PASS_ORDER);
 
 		// Save new datapoint
 		read_acceleration_distribution(SAMPLES_PER_DIST, &x_mean[LOW_PASS_ORDER-1], &x_var[LOW_PASS_ORDER-1], &y_mean[LOW_PASS_ORDER-1], &y_var[LOW_PASS_ORDER-1], &z_mean[LOW_PASS_ORDER-1], &z_var[LOW_PASS_ORDER-1]);
@@ -355,15 +360,16 @@ int8_t pedometer(){
 
 	// Main loop
 	while(1){
+//	for(int i=0; i<1000; i++){
 		// Rotate data arrays to save new datapoint at end
-		rotate_array_by_one_16bit(x_mean, LOW_PASS_ORDER);
-		rotate_array_by_one_32bit(x_var, LOW_PASS_ORDER);
+		rotate_array_by_one(x_mean, LOW_PASS_ORDER);
+		rotate_array_by_one(x_var, LOW_PASS_ORDER);
 
-		rotate_array_by_one_16bit(y_mean, LOW_PASS_ORDER);
-		rotate_array_by_one_32bit(y_var, LOW_PASS_ORDER);
+		rotate_array_by_one(y_mean, LOW_PASS_ORDER);
+		rotate_array_by_one(y_var, LOW_PASS_ORDER);
 
-		rotate_array_by_one_16bit(z_mean, LOW_PASS_ORDER);
-		rotate_array_by_one_32bit(z_var, LOW_PASS_ORDER);
+		rotate_array_by_one(z_mean, LOW_PASS_ORDER);
+		rotate_array_by_one(z_var, LOW_PASS_ORDER);
 
 
 		// Rotate low pass arrays
