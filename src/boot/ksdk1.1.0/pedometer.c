@@ -193,7 +193,7 @@ void read_acceleration_distribution(uint8_t N, int16_t * x_mean, int16_t * x_var
 		*y_var = 65535;
 	}
 	if (*z_var < 0){
-		*z_var = 65535)
+		*z_var = 65535;
 	}
 	
 
