@@ -18,6 +18,8 @@
 
 #include "pedometer.h"
 
+#pragma pack(1)
+
 #define LOW_PASS_ORDER 5
 #define SAMPLE_WINDOW 100
 #define SAMPLE_DELAY 100
