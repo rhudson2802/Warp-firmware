@@ -156,7 +156,7 @@ void read_acceleration_distribution(uint8_t N, int16_t * x_mean, int16_t * x_var
 	//int16_t z[N];
 
 	int16_t sum[3] = {0, 0, 0};
-	uint16_t sq_sum[3] = {0, 0, 0};
+	uint32_t sq_sum[3] = {0, 0, 0};
 
 	acc_measurement measurement;
 
@@ -175,6 +175,17 @@ void read_acceleration_distribution(uint8_t N, int16_t * x_mean, int16_t * x_var
 		//y[i] = measurement.y;
 		//z[i] = measurement.z;
 	};
+
+	if (sum[0] < 0){
+		sum[0] = 32767;
+	}
+	if (sum[1] < 0){
+		sum[1] = 32767;
+	}
+	if (sum[2] < 0){
+		sum[2] = 32767;
+	}
+
 	
 	*x_mean = sum[0] / N;
 	*x_var = sq_sum[0] / N - *x_mean * *x_mean;
@@ -186,15 +197,6 @@ void read_acceleration_distribution(uint8_t N, int16_t * x_mean, int16_t * x_var
 	*z_var = sq_sum[2] / N - *z_mean * *z_mean;
 	
 	
-	if (*x_var < 0){
-		*x_var = 32767;
-	}
-	if (*y_var < 0){
-		*y_var = 32767;
-	}
-	if (*z_var < 0){
-		*z_var = 32767;
-	}
 	
 
 /*
