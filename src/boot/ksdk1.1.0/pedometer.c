@@ -20,7 +20,7 @@
 
 #define LOW_PASS_ORDER 5
 #define SAMPLE_WINDOW 100
-#define SAMPLE_DELAY 10
+#define SAMPLE_DELAY 100
 #define TOLERANCE 10
 #define SAMPLES_PER_DIST 10
 #define MEAN 0
@@ -161,26 +161,26 @@ void read_acceleration_distribution(uint8_t N, int16_t * x_mean, int32_t * x_var
 	for (int i=0; i<N; i++){
 		measurement = read_accelerometer();
 		sum[0] = sum[0] + measurement.x;
-		sq_sum[0] = sq_sum[0] + measurement.x * measurement.x;
+		sq_sum[0] = sq_sum[0] + (measurement.x * measurement.x);
 
 		sum[1] = sum[1] + measurement.y;
-		sq_sum[1] = sq_sum[1] + measurement.y * measurement.y;
+		sq_sum[1] = sq_sum[1] + (measurement.y * measurement.y);
 
 		sum[2] = sum[2] + measurement.z;
-		sq_sum[2] = sq_sum[2] + measurement.z * measurement.z;
+		sq_sum[2] = sq_sum[2] + (measurement.z * measurement.z);
 
 	};
 
 	*x_mean = sum[0] / N;
-	*x_var = sq_sum[0] / N - *x_mean * *x_mean;
+	*x_var = sq_sum[0] / N - (*x_mean * *x_mean);
 
 	*y_mean = sum[1] / N;
-	*y_var = sq_sum[1] / N - *y_mean * *y_mean;
+	*y_var = sq_sum[1] / N - (*y_mean * *y_mean);
 
 	*z_mean = sum[2] / N;
-	*z_var = sq_sum[2] / N - *z_mean * *z_mean;
+	*z_var = sq_sum[2] / N - (*z_mean * *z_mean);
 
-//	SEGGER_RTT_printf(0, "%d\t%d\t%d\n", sq_sum[0], sq_sum[1], sq_sum[2])
+	SEGGER_RTT_printf(0, "%d\t%d\t%d\n", sq_sum[0], sq_sum[1], sq_sum[2]);
 	if (*x_var < 0){
 		*x_var = INT_LIMIT;
 	}
