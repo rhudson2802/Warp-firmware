@@ -338,7 +338,8 @@ int8_t pedometer(){
 
 
 	// Main loop
-	for(int i=0; i<1000; i++){
+	while(1){
+//	for(int i=0; i<1000; i++){
 		// Rotate data arrays to save new datapoint at end
 		rotate_array_by_one(x_mean, LOW_PASS_ORDER);
 		rotate_array_by_one(x_var, LOW_PASS_ORDER);
