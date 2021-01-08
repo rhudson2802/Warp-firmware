@@ -176,14 +176,14 @@ void read_acceleration_distribution(uint8_t N, int16_t * x_mean, int16_t * x_var
 		//z[i] = measurement.z;
 	};
 
-	if (sum[0] < 0){
-		sum[0] = 32767;
+	if (sq_sum[0] < 0){
+		sq_sum[0] = 32767;
 	}
-	if (sum[1] < 0){
-		sum[1] = 32767;
+	if (sq_sum[1] < 0){
+		sq_sum[1] = 32767;
 	}
-	if (sum[2] < 0){
-		sum[2] = 32767;
+	if (sq_sum[2] < 0){
+		sq_sum[2] = 32767;
 	}
 
 	
