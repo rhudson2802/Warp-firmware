@@ -156,7 +156,7 @@ void read_acceleration_distribution(uint8_t N, int16_t * x_mean, int16_t * x_var
 	//int16_t z[N];
 
 	int16_t sum[3] = {0, 0, 0};
-	int16_t sq_sum[3] = {0, 0, 0};
+	uint16_t sq_sum[3] = {0, 0, 0};
 
 	acc_measurement measurement;
 
@@ -184,6 +184,17 @@ void read_acceleration_distribution(uint8_t N, int16_t * x_mean, int16_t * x_var
 	
 	*z_mean = sum[2] / N;
 	*z_var = sq_sum[2] / N - *z_mean * *z_mean;
+	
+	
+	if (*x_var < 0){
+		*x_var = 65535;
+	}
+	if (*y_var < 0){
+		*y_var = 65535;
+	}
+	if (*z_var < 0){
+		*z_var = 65535)
+	}
 	
 
 /*
@@ -226,6 +237,10 @@ void low_pass_filter(int16_t means[], int16_t vars[], uint8_t N, int16_t output[
 
 	output[MEAN] = sum_mean / N;
 	output[VAR] = sum_vars / (N*N);
+	
+	if (output[VAR] < 0) {
+		output[VAR] = 65535;
+	}
 }
 
 
@@ -247,6 +262,11 @@ uint16_t if_variance(int16_t var1[], int16_t var2[]){
 	if (uncertainty < 0){
 		uncertainty = 0;
 	}
+	
+	if (uncertainty < 0){
+		uncertainty = 65535;
+	}
+	
 	return uncertainty;
 }
 
