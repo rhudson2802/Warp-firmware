@@ -150,22 +150,46 @@ acc_measurement read_accelerometer(){
 
 
 void read_acceleration_distribution(uint8_t N, int16_t * x_mean, int16_t * x_var, int16_t * y_mean, int16_t * y_var, int16_t * z_mean, int16_t * z_var){
-	int16_t x[N];
-	int16_t y[N];
-	int16_t z[N];
+	//int16_t x[N];
+	//int16_t y[N];
+	//int16_t z[N];
+
+	int16_t sum[3] = {0, 0, 0};
+	int16_t sq_sum[3] = {0, 0, 0};
 
 	acc_measurement measurement;
 
 	for (int i=0; i<N; i++){
 		measurement = read_accelerometer();
-		x[i] = measurement.x;
-		y[i] = measurement.y;
-		z[i] = measurement.z;
+		sum[0] = sum[0] + measurement.x;
+		sq_sum[0] = sq_sum[0] * measurement.x * measurement.x;
+		
+		sum[1] = sum[1] + measurement.y;
+		sq_sum[1] = sq_sum[1] * measurement.y * measurement.y;
+		
+		sum[2] = sum[2] + measurement.z;
+		sq_sum[2] = sq_sum[2] * measurement.z * measurement.z;
+		
+		//x[i] = measurement.x;
+		//y[i] = measurement.y;
+		//z[i] = measurement.z;
 	};
+	
+	*x_mean = sum[0] / N;
+	*x_var = sq_sum[0] / N - *x_mean * *x_mean;
+	
+	*y_mean = sum[1] / N;
+	*y_var = sq_sum[1] / N - *y_mean * *y_mean;
+	
+	*z_mean = sum[2] / N;
+	*z_var = sq_sum[2] / N - *z_mean * *z_mean;
+	
 
+/*
 	generate_distribution(x, N, x_mean, x_var);
 	generate_distribution(y, N, y_mean, y_var);
 	generate_distribution(z, N, z_mean, z_var);
+*/
 }
 
 
