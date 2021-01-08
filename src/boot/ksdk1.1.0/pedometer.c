@@ -19,8 +19,8 @@
 #include "pedometer.h"
 
 #define LOW_PASS_ORDER 5
-#define SAMPLE_WINDOW 15
-#define SAMPLE_DELAY 100
+#define SAMPLE_WINDOW 100
+#define SAMPLE_DELAY 10
 #define TOLERANCE 10
 #define MEAN 0
 #define VAR 1
