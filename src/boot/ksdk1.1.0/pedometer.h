@@ -1,6 +1,9 @@
 #include <stdlib.h>
 
 typedef struct acc_measurement{
+	/*
+	 * Struct to hold the output of the accelerometer, with a variable for each axis
+	 */	
 	int16_t x;
 	int16_t y;
 	int16_t z;
