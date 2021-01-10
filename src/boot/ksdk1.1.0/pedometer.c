@@ -223,8 +223,8 @@ void print_array(int16_t data[], uint8_t N){
 
 
 void low_pass_filter(int16_t means[], int16_t vars[], uint8_t N, int16_t output[]){
-	int16_t sum_mean;
-	int16_t sum_vars;
+	int32_t sum_mean;
+	int32_t sum_vars;
 
 	sum_mean = 0;
 	sum_vars = 0;
@@ -236,7 +236,7 @@ void low_pass_filter(int16_t means[], int16_t vars[], uint8_t N, int16_t output[
 
 	output[MEAN] = sum_mean / N;
 	output[VAR] = sum_vars / (N*N);
-	
+
 	if (output[VAR] < 0) {
 		output[VAR] = INT16_MAX;
 	}
