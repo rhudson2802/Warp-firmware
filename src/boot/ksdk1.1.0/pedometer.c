@@ -25,8 +25,8 @@
 #define SAMPLES_PER_DIST 10
 #define MEAN 0
 #define VAR 1
-#define 32_BIT_INT_MAX 2147483647
-#define 16_BIT_INT_MAX 32767
+//#define INT32_MAX 2147483647
+//#define INT16_MAX 32767
 
 extern volatile WarpI2CDeviceState	deviceMMA8451QState;
 extern volatile uint32_t		gWarpI2cBaudRateKbps;
@@ -176,7 +176,7 @@ void read_acceleration_distribution(uint8_t N, int16_t * x_mean, int16_t * x_var
 
 	for (int i=0; i<3; i++){
 		if (sq_sum[i] < 0){
-			sq_sum[i] = 32_BIT_INT_MAX;
+			sq_sum[i] = INT32_MAX;
 		}
 		sq_sum[i] = sq_sum[i] / N;
 	}
@@ -227,7 +227,7 @@ void low_pass_filter(int16_t means[], int16_t vars[], uint8_t N, int16_t output[
 	output[VAR] = sum_vars / (N*N);
 	
 	if (output[VAR] < 0) {
-		output[VAR] = 16_BIT_INT_MAX;
+		output[VAR] = INT16_MAX;
 	}
 }
 
@@ -252,7 +252,7 @@ uint16_t if_variance(int16_t var1[], int16_t var2[]){
 	}
 	
 	if (uncertainty < 0){
-		uncertainty = 16_BIT_INT_MAX;
+		uncertainty = INT16_MAX;
 	}
 	
 	return uncertainty;
