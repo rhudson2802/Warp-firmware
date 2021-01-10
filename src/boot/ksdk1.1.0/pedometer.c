@@ -295,7 +295,7 @@ uint16_t if_variance(int16_t var1[], int16_t var2[]){
 	/*
 	 * Compute the uncertainty propagated by an if(var1 < var2) statement, according to the derived model
 	 */
-	
+	/*
 	int16_t uncertainty;
 	
 	// Transform var1 to N(0, 1), apply the same transformation to var2, and compute the difference in mean and ratio of variances of the transformed variables
@@ -309,7 +309,9 @@ uint16_t if_variance(int16_t var1[], int16_t var2[]){
 	}
 	
 	// Transform back to original variables scale
-	return uncertainty * var1[VAR];
+	return uncertainty * var1[VAR];*/
+	
+	return ((3*var2[VAR] + 100*var1[VAR] - 100*(var2[MEAN] - var1[MEAN])*(var2[MEAN] - var1[MEAN])) * 25 * var1[VAR] ) / ((3*var2[VAR] + 100*var1[VAR])*(3*var2[VAR] + 100*var1[VAR]))
 }
 
 
