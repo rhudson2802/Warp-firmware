@@ -309,7 +309,7 @@ int16_t if_variance(int16_t var1[], int16_t var2[]){
 	//return uncertainty * var1[VAR];*/
 
 	// Compute uncertainty according to model
-	uncertainty = ((3*var2[VAR] + 100*var1[VAR] - 100*(var2[MEAN] - var1[MEAN])*(var2[MEAN] - var1[MEAN])) / ((3*var2[VAR] + 100*var1[VAR])*(3*var2[VAR] + 100*var1[VAR]))) * 25 * var1[VAR];
+	uncertainty = ((3*(int64_t)var2[VAR] + 100*(int64_t)var1[VAR] - 100*((int64_t)var2[MEAN] - (int64_t)var1[MEAN])*((int64_t)var2[MEAN] - (int64_t)var1[MEAN])) / ((3*(int64_t)var2[VAR] + 100*(int64_t)var1[VAR])*(3*(int64_t)var2[VAR] + 100*(int64_t)var1[VAR]))) * 25 * (int64_t)var1[VAR];
 
 	if (uncertainty < 0){
 		uncertainty = 0;
