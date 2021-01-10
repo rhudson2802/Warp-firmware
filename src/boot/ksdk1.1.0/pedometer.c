@@ -21,7 +21,7 @@
 #define LOW_PASS_ORDER 6
 #define SAMPLE_WINDOW 100
 #define SAMPLE_DELAY 10
-#define TOLERANCE 100
+#define TOLERANCE 150
 #define SAMPLES_PER_DIST 10
 #define MEAN 0
 #define VAR 1
@@ -490,7 +490,7 @@ int8_t pedometer(){
 */
 		count = (count + 1) % SAMPLE_WINDOW;
 		OSA_TimeDelay(SAMPLE_DELAY);
-SEGGER_RTT_printf(0, "%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", low_pass_x[MEAN], low_pass_x[VAR], low_pass_y[MEAN], low_pass_y[VAR], low_pass_z[MEAN], low_pass_z[VAR], max_axis, threshold[MEAN]);
+//SEGGER_RTT_printf(0, "%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", low_pass_x[MEAN], low_pass_x[VAR], low_pass_y[MEAN], low_pass_y[VAR], low_pass_z[MEAN], low_pass_z[VAR], max_axis, threshold[MEAN]);
 	};
 
 
