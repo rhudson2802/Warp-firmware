@@ -291,13 +291,13 @@ void equate_arrays(int16_t input[], int16_t output[], uint8_t length){
 
 
 
-uint16_t if_variance(int16_t var1[], int16_t var2[]){
+int16_t if_variance(int16_t var1[], int16_t var2[]){
 	/*
 	 * Compute the uncertainty propagated by an if(var1 < var2) statement, according to the derived model
 	 */
 
-	int32_t uncertainty;
-	/*
+	int64_t uncertainty;
+/*
 	// Transform var1 to N(0, 1), apply the same transformation to var2, and compute the difference in mean and ratio of variances of the transformed variables
 	int16_t x = (var2[MEAN] - var1[MEAN] ) / var1[VAR];
 	int16_t sigma = var2[VAR] / var1[VAR];
@@ -306,18 +306,20 @@ uint16_t if_variance(int16_t var1[], int16_t var2[]){
 	uncertainty = (1 - (x*x) / ((sigma*3/100 + 1)*(sigma*3/100 + 1))) / (4 * (sigma*3/100 + 1));
 
 	// Transform back to original variables scale
-	return uncertainty * var1[VAR];*/
+	//return uncertainty * var1[VAR];*/
 
 	// Compute uncertainty according to model
 	uncertainty = ((3*var2[VAR] + 100*var1[VAR] - 100*(var2[MEAN] - var1[MEAN])*(var2[MEAN] - var1[MEAN])) / ((3*var2[VAR] + 100*var1[VAR])*(3*var2[VAR] + 100*var1[VAR]))) * 25 * var1[VAR];
-	
+
 	if (uncertainty < 0){
 		uncertainty = 0;
+	} else if (uncertainty > INT16_MAX){
+		uncertainty = INT16_MAX;
 	}
 
 	SEGGER_RTT_printf(0, "MEAN1: %d, VAR1: %d, MEAN2: %d, VAR2: %d, UNC: %d\n", var1[MEAN], var1[VAR], var2[MEAN], var2[VAR], uncertainty);
 
-	return (uint16_t)uncertainty;
+	return (int16_t)uncertainty;
 }
 
 
@@ -372,7 +374,7 @@ int8_t pedometer(){
 	int16_t threshold[2] = {0, 0};
 
 	// Initialise variable to store the number of steps counted. Has the form {MEAN, UNCERTAINTY}
-	uint16_t step_count[2] = {0, 0};
+	int16_t step_count[2] = {0, 0};
 
 
 	// Fill arrays with initial data. This is so we have real data when we perform the first low pass filtering, so the system doesn't take a long time to settle to steady state.
