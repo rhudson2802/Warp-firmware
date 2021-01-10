@@ -308,7 +308,8 @@ uint16_t if_variance(int16_t var1[], int16_t var2[]){
 		uncertainty = 0;
 	}
 	
-	return uncertainty;
+	// Transform back to original variables scale
+	return uncertainty * var1[VAR];
 }
 
 
@@ -464,7 +465,7 @@ int8_t pedometer(){
 			if (max_axis == 0){
 				// Compute uncertainty of the following if statement.
 				// TODO - check order of 2nd if_variance arguments
-				step_count[VAR] = step_count[VAR] + if_variance(threshold, low_pass_x) + if_variance(threshold, low_pass_old);
+				step_count[VAR] = step_count[VAR] + if_variance(threshold, low_pass_x) + if_variance(low_pass_old, threshold);
 				
 				// Check whether there has been a negative transition across the threshold between the current and old reading on the maximum activity axis
 				// Also make sure this is greater than the set tolerance, so we do not count noise as steps
@@ -475,7 +476,7 @@ int8_t pedometer(){
 				
 				
 			} else if (max_axis == 1){
-				step_count[VAR] = step_count[VAR] + if_variance(threshold, low_pass_y) + if_variance(threshold, low_pass_old);
+				step_count[VAR] = step_count[VAR] + if_variance(threshold, low_pass_y) + if_variance(low_pass_old, threshold);
 				
 				if ((low_pass_y[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN] && (low_pass_old[MEAN] - low_pass_y[MEAN] > TOLERANCE))){
 					step_count[MEAN] = step_count[MEAN] + 1;
@@ -484,7 +485,7 @@ int8_t pedometer(){
 				
 				
 			} else{
-				step_count[VAR] = step_count[VAR] + if_variance(threshold, low_pass_z) + if_variance(threshold, low_pass_old);
+				step_count[VAR] = step_count[VAR] + if_variance(threshold, low_pass_z) + if_variance(low_pass_old, threshold);
 				
 				if ((low_pass_z[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN]) && (low_pass_old[MEAN] - low_pass_z[MEAN] > TOLERANCE)){
 					step_count[MEAN] = step_count[MEAN] + 1;
