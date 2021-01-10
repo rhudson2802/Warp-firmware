@@ -154,7 +154,7 @@ acc_measurement read_accelerometer(){
 
 void read_acceleration_distribution(uint8_t N, int16_t * x_mean, int16_t * x_var, int16_t * y_mean, int16_t * y_var, int16_t * z_mean, int16_t * z_var){
 
-	int16_t sum[3] = {0, 0, 0};
+	int32_t sum[3] = {0, 0, 0};
 	int32_t sq_sum[3] = {0, 0, 0};
 
 	acc_measurement measurement;
