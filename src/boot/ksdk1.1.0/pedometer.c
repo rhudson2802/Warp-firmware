@@ -190,6 +190,17 @@ void read_acceleration_distribution(uint8_t N, int16_t * x_mean, int16_t * x_var
 	
 	*z_mean = sum[2] / N;
 	*z_var = sq_sum[2] - (*z_mean * *z_mean);
+	
+	
+	if (*x_var < 0){
+		*x_var = INT16_MAX;
+	}
+	if (*y_var < 0){
+		*y_var = INT16_MAX;
+	}
+	if (*z_var < 0){
+		*z_var = INT16_MAX;
+	}
 }
 
 
