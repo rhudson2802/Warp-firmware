@@ -57,7 +57,7 @@ int16_t compute_variance(int16_t data[], int16_t mean, uint8_t N){
 		sq_sum = sq_sum + (data[i] - mean)*(data[i] - mean);
 	}
 	
-	return sum / N;
+	return sq_sum / N;
 }
 
 
