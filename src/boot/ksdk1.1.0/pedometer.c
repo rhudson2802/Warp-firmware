@@ -20,11 +20,13 @@
 
 #define LOW_PASS_ORDER 5
 #define SAMPLE_WINDOW 100
-#define SAMPLE_DELAY 10
+#define SAMPLE_DELAY 100
 #define TOLERANCE 10
 #define SAMPLES_PER_DIST 10
 #define MEAN 0
 #define VAR 1
+#define 32_BIT_INT_MAX 2147483647
+#define 16_BIT_INT_MAX 32767
 
 extern volatile WarpI2CDeviceState	deviceMMA8451QState;
 extern volatile uint32_t		gWarpI2cBaudRateKbps;
@@ -151,12 +153,9 @@ acc_measurement read_accelerometer(){
 
 
 void read_acceleration_distribution(uint8_t N, int16_t * x_mean, int16_t * x_var, int16_t * y_mean, int16_t * y_var, int16_t * z_mean, int16_t * z_var){
-	//int16_t x[N];
-	//int16_t y[N];
-	//int16_t z[N];
 
 	int16_t sum[3] = {0, 0, 0};
-	int16_t sq_sum[3] = {0, 0, 0};
+	int32_t sq_sum[3] = {0, 0, 0};
 
 	acc_measurement measurement;
 
@@ -170,40 +169,27 @@ void read_acceleration_distribution(uint8_t N, int16_t * x_mean, int16_t * x_var
 		
 		sum[2] = sum[2] + measurement.z;
 		sq_sum[2] = sq_sum[2] + measurement.z * measurement.z;
-		
-		//x[i] = measurement.x;
-		//y[i] = measurement.y;
-		//z[i] = measurement.z;
+		SEGGER_RTT_printf(0, "%d, ", measurement.z);
 	};
+	
+	SEGGER_RTT_printf(0, "\nSUM: %d, SQ_SUM: %ld\n\n", sum[2], sq_sum[2]);
 
-	if (sq_sum[0] < 0){
-		sq_sum[0] = 32767;
-	}
-	if (sq_sum[1] < 0){
-		sq_sum[1] = 32767;
-	}
-	if (sq_sum[2] < 0){
-		sq_sum[2] = 32767;
+	for (int i=0; i<3; i++){
+		if (sq_sum[i] < 0){
+			sq_sum[i] = 32_BIT_INT_MAX;
+		}
+		sq_sum[i] = sq_sum[i] / N;
 	}
 
 	
 	*x_mean = sum[0] / N;
-	*x_var = sq_sum[0] / N - *x_mean * *x_mean;
+	*x_var = sq_sum[0] - (*x_mean * *x_mean);
 	
 	*y_mean = sum[1] / N;
-	*y_var = sq_sum[1] / N - *y_mean * *y_mean;
+	*y_var = sq_sum[1] - (*y_mean * *y_mean);
 	
 	*z_mean = sum[2] / N;
-	*z_var = sq_sum[2] / N - *z_mean * *z_mean;
-	
-	
-	
-
-/*
-	generate_distribution(x, N, x_mean, x_var);
-	generate_distribution(y, N, y_mean, y_var);
-	generate_distribution(z, N, z_mean, z_var);
-*/
+	*z_var = sq_sum[2] - (*z_mean * *z_mean);
 }
 
 
@@ -241,7 +227,7 @@ void low_pass_filter(int16_t means[], int16_t vars[], uint8_t N, int16_t output[
 	output[VAR] = sum_vars / (N*N);
 	
 	if (output[VAR] < 0) {
-		output[VAR] = 32767;
+		output[VAR] = 16_BIT_INT_MAX;
 	}
 }
 
@@ -266,7 +252,7 @@ uint16_t if_variance(int16_t var1[], int16_t var2[]){
 	}
 	
 	if (uncertainty < 0){
-		uncertainty = 32767;
+		uncertainty = 16_BIT_INT_MAX;
 	}
 	
 	return uncertainty;
