@@ -1422,9 +1422,8 @@ LOAD /usr/lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/crtn.o
                 0x0000000000002fd8       0x14 CMakeFiles/Warp.dir/students/rh689/Warp-firmware/build/ksdk1.1/work/demos/Warp/src/pedometer.c.obj
                 0x0000000000002fd8                equate_arrays
  .text.if_variance
-                0x0000000000002fec       0x56 CMakeFiles/Warp.dir/students/rh689/Warp-firmware/build/ksdk1.1/work/demos/Warp/src/pedometer.c.obj
+                0x0000000000002fec       0x58 CMakeFiles/Warp.dir/students/rh689/Warp-firmware/build/ksdk1.1/work/demos/Warp/src/pedometer.c.obj
                 0x0000000000002fec                if_variance
- *fill*         0x0000000000003042        0x2 
  .text.pedometer
                 0x0000000000003044      0x3b8 CMakeFiles/Warp.dir/students/rh689/Warp-firmware/build/ksdk1.1/work/demos/Warp/src/pedometer.c.obj
                 0x0000000000003044                pedometer
