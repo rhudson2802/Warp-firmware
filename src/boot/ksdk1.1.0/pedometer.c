@@ -296,7 +296,7 @@ uint16_t if_variance(int16_t var1[], int16_t var2[]){
 	 * Compute the uncertainty propagated by an if(var1 < var2) statement, according to the derived model
 	 */
 
-	int16_t uncertainty;
+	int32_t uncertainty;
 	/*
 	// Transform var1 to N(0, 1), apply the same transformation to var2, and compute the difference in mean and ratio of variances of the transformed variables
 	int16_t x = (var2[MEAN] - var1[MEAN] ) / var1[VAR];
@@ -309,7 +309,7 @@ uint16_t if_variance(int16_t var1[], int16_t var2[]){
 	return uncertainty * var1[VAR];*/
 
 	// Compute uncertainty according to model
-	uncertainty = ((3*var2[VAR] + 100*var1[VAR] - 100*(var2[MEAN] - var1[MEAN])*(var2[MEAN] - var1[MEAN])) * 25 * var1[VAR] ) / ((3*var2[VAR] + 100*var1[VAR])*(3*var2[VAR] + 100*var1[VAR]));
+	uncertainty = ((3*var2[VAR] + 100*var1[VAR] - 100*(var2[MEAN] - var1[MEAN])*(var2[MEAN] - var1[MEAN])) / ((3*var2[VAR] + 100*var1[VAR])*(3*var2[VAR] + 100*var1[VAR]))) * 25 * var1[VAR];
 	
 	if (uncertainty < 0){
 		uncertainty = 0;
@@ -317,7 +317,7 @@ uint16_t if_variance(int16_t var1[], int16_t var2[]){
 
 	SEGGER_RTT_printf(0, "MEAN1: %d, VAR1: %d, MEAN2: %d, VAR2: %d, UNC: %d\n", var1[MEAN], var1[VAR], var2[MEAN], var2[VAR], uncertainty);
 
-	return uncertainty;
+	return (uint16_t)uncertainty;
 }
 
 
