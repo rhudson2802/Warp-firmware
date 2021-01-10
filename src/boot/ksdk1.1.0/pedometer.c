@@ -423,6 +423,31 @@ int8_t pedometer(){
 		}
 
 
+		// Decide whether a step has been taken
+		// Check whether there has been a negative transition across the threshold between the current and old reading
+		if (first_run_flag){
+			if (max_axis == 0){
+				step_count[VAR] = step_count[VAR] + if_variance(threshold, low_pass_x) + if_variance(threshold, low_pass_old);
+				if ((low_pass_x[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN]) && (low_pass_old[MEAN] - low_pass_x[MEAN] > TOLERANCE)){
+					step_count[MEAN] = step_count[MEAN] + 1;
+					SEGGER_RTT_printf(0, "\n\nSTEP COUNT: %d VARIANCE: %d\n\n", step_count[MEAN], step_count[VAR]);
+				}
+			} else if (max_axis == 1){
+				step_count[VAR] = step_count[VAR] + if_variance(threshold, low_pass_y) + if_variance(threshold, low_pass_old);
+				if ((low_pass_y[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN] && (low_pass_old[MEAN] - low_pass_y[MEAN] > TOLERANCE))){
+					step_count[MEAN] = step_count[MEAN] + 1;
+					SEGGER_RTT_printf(0, "\n\nSTEP COUNT: %d VARIANCE: %d\n\n", step_count[MEAN], step_count[VAR]);
+				}
+			} else{
+				step_count[VAR] = step_count[VAR] + if_variance(threshold, low_pass_z) + if_variance(threshold, low_pass_old);
+				if ((low_pass_z[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN]) && (low_pass_old[MEAN] - low_pass_z[MEAN] > TOLERANCE)){
+					step_count[MEAN] = step_count[MEAN] + 1;
+					SEGGER_RTT_printf(0, "\n\nSTEP COUNT: %d VARIANCE: %d\n\n", step_count[MEAN], step_count[VAR]);
+				}
+			}
+		}
+
+
 		// When we reach the end of one sampling period, reset the maximum axis
 		if (count == 0){
 			if (((max_x[MEAN] - min_x[MEAN]) > (max_y[MEAN] - min_y[MEAN])) && ((max_x[MEAN] - min_x[MEAN]) > (max_z[MEAN] - min_z[MEAN]))){
@@ -455,32 +480,6 @@ int8_t pedometer(){
 			equate_arrays(low_pass_z, max_z, 2);
 			equate_arrays(low_pass_z, min_z, 2);
 
-		}
-
-
-
-		// Decide whether a step has been taken
-		// Check whether there has been a negative transition across the threshold between the current and old reading
-		if (first_run_flag){
-			if (max_axis == 0){
-				step_count[VAR] = step_count[VAR] + if_variance(threshold, low_pass_x) + if_variance(threshold, low_pass_old);
-				if ((low_pass_x[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN]) && (low_pass_old[MEAN] - low_pass_x[MEAN] > TOLERANCE)){
-					step_count[MEAN] = step_count[MEAN] + 1;
-					SEGGER_RTT_printf(0, "\n\nSTEP COUNT: %d VARIANCE: %d\n\n", step_count[MEAN], step_count[VAR]);
-				}
-			} else if (max_axis == 1){
-				step_count[VAR] = step_count[VAR] + if_variance(threshold, low_pass_y) + if_variance(threshold, low_pass_old);
-				if ((low_pass_y[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN] && (low_pass_old[MEAN] - low_pass_y[MEAN] > TOLERANCE))){
-					step_count[MEAN] = step_count[MEAN] + 1;
-					SEGGER_RTT_printf(0, "\n\nSTEP COUNT: %d VARIANCE: %d\n\n", step_count[MEAN], step_count[VAR]);
-				}
-			} else{
-				step_count[VAR] = step_count[VAR] + if_variance(threshold, low_pass_z) + if_variance(threshold, low_pass_old);
-				if ((low_pass_z[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN]) && (low_pass_old[MEAN] - low_pass_z[MEAN] > TOLERANCE)){
-					step_count[MEAN] = step_count[MEAN] + 1;
-					SEGGER_RTT_printf(0, "\n\nSTEP COUNT: %d VARIANCE: %d\n\n", step_count[MEAN], step_count[VAR]);
-				}
-			}
 		}
 
 /*
