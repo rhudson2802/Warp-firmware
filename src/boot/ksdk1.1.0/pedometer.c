@@ -169,7 +169,7 @@ void read_acceleration_distribution(uint8_t N, int16_t * x_mean, int16_t * x_var
 
 		sum[2] = sum[2] + measurement.z;
 		sq_sum[2] = sq_sum[2] + measurement.z * measurement.z;
-		SEGGER_RTT_printf(0, "%d, ", measurement.z);
+//		SEGGER_RTT_printf(0, "%d, ", measurement.z);
 	};
 
 //	SEGGER_RTT_printf(0, "\nSUM: %d, SQ_SUM: %ld\n\n", sum[2], sq_sum[2]);
