@@ -315,7 +315,7 @@ uint16_t if_variance(int16_t var1[], int16_t var2[]){
 		uncertainty = 0;
 	}
 
-	SEGGER_RTT_printf(0, "MEAN1: %d, VAR1: %d, MEAN2: %d, VAR2: %d, UNC: %d", var1[MEAN], var1[VAR], var2[MEAN], var2[VAR], uncertainty);
+	SEGGER_RTT_printf(0, "MEAN1: %d, VAR1: %d, MEAN2: %d, VAR2: %d, UNC: %d\n", var1[MEAN], var1[VAR], var2[MEAN], var2[VAR], uncertainty);
 
 	return uncertainty;
 }
