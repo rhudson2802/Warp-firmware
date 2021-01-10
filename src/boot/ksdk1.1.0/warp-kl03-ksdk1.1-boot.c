@@ -1430,7 +1430,7 @@ main(void)
 
 		SEGGER_RTT_WriteString(0, "\r- 'k': sleep until reset.\n");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-		SEGGER_RTT_WriteString(0, "\r- 'l': send repeated byte on I2C.\n");
+		SEGGER_RTT_WriteString(0, "\r- 'l': Launch Pedometer.\n");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 		SEGGER_RTT_WriteString(0, "\r- 'm': send repeated byte on SPI.\n");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
@@ -2025,12 +2025,24 @@ main(void)
 			 */
 			case 'l':
 			{
-				SEGGER_RTT_WriteString(0, "\r\n Case l");
+				// Switch to RUN mode
+				warpSetLowPowerMode(kWarpPowerModeRUN, 0 /* sleep seconds : irrelevant here */);
+				
+				// Set default SSSUPPLY to 3000mV
+				menuSupplyVoltage = 3000;
+				
+				// Enable SSSUPPLY
+				enableSssupply(menuSupplyVoltage);				
+				
+				// Enable I2C pins
 				enableI2Cpins(menuI2cPullupValue);
 				#ifdef WARP_BUILD_ENABLE_DEVMMA8451Q
 					configureSensorMMA8451Q(0x00, 0x01, menuI2cPullupValue);
 				#endif
+				
+				// Run pedometer algorithm
 				pedometer();
+				
 				disableI2Cpins();
 				break;
 			}

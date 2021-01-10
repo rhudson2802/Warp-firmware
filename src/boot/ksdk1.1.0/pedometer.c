@@ -297,18 +297,9 @@ int16_t if_variance(int16_t var1[], int16_t var2[]){
 	 */
 
 	int64_t uncertainty;
-/*
-	// Transform var1 to N(0, 1), apply the same transformation to var2, and compute the difference in mean and ratio of variances of the transformed variables
-	int16_t x = (var2[MEAN] - var1[MEAN] ) / var1[VAR];
-	int16_t sigma = var2[VAR] / var1[VAR];
-
-
-	uncertainty = (1 - (x*x) / ((sigma*3/100 + 1)*(sigma*3/100 + 1))) / (4 * (sigma*3/100 + 1));
-
-	// Transform back to original variables scale
-	//return uncertainty * var1[VAR];*/
 
 	// Compute uncertainty according to model
+	// In order to avoid rounding errors, the order of multiplication has been chosen carefully and all variables are cast to 64 bit integers to ensure no overflow errors
 	uncertainty = ((3*(int64_t)var2[VAR] + 100*(int64_t)var1[VAR] - 100*((int64_t)var2[MEAN] - (int64_t)var1[MEAN])*((int64_t)var2[MEAN] - (int64_t)var1[MEAN])) * 25 * (int64_t)var1[VAR]) / ((3*(int64_t)var2[VAR] + 100*(int64_t)var1[VAR])*(3*(int64_t)var2[VAR] + 100*(int64_t)var1[VAR]));
 
 	if (uncertainty < 0){
@@ -316,8 +307,6 @@ int16_t if_variance(int16_t var1[], int16_t var2[]){
 	} else if (uncertainty > INT16_MAX){
 		uncertainty = INT16_MAX;
 	}
-
-	SEGGER_RTT_printf(0, "MEAN1: %d, VAR1: %d, MEAN2: %d, VAR2: %d, UNC: %d\n", var1[MEAN], var1[VAR], var2[MEAN], var2[VAR], uncertainty);
 
 	return (int16_t)uncertainty;
 }
