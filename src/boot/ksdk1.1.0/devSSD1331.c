@@ -324,7 +324,7 @@ void draw_value(int16_t number){
 
 	SEGGER_RTT_printf(0, " %d%d ", tens, units);
 
-	enableSPIpins();
+//	enableSPIpins();
 	clear_screen();
 	OSA_TimeDelay(100);
 	draw_number(tens, (uint8_t)(X_BORDER+5), (uint8_t)Y_BORDER, (uint8_t)15);
