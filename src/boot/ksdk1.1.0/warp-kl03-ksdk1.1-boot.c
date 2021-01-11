@@ -2057,7 +2057,7 @@ main(void)
 				
 				for (int16_t i=0; i<10; i++){
 					clear_screen();
-					draw_number(i);
+					draw_number(i, 13, 7, 15);
 					OSA_TimeDelay(1000);
 				}
 				
