@@ -86,6 +86,7 @@
 //#include "devISL23415.h"
 #else
 #	include "devMMA8451Q.h"
+#	include "devSSD1331.h"
 #endif
 
 #include "pedometer.h"

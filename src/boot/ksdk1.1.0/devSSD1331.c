@@ -301,9 +301,7 @@ void draw_value(int16_t number){
 	
 	uint8_t tens = (number / 10) % 100;			// Compute 10s digit
 	uint8_t units = number %10;					// Compute units digit
-	
-	uint8_t scale = 15;
-	
+
 	enableSPIpins();
 	clear_screen();
 	draw_number(tens, X_BORDER+5, Y_BORDER, 15);
