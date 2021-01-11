@@ -326,7 +326,10 @@ void draw_value(int16_t number){
 
 	enableSPIpins();
 	clear_screen();
+	OSA_TimeDelay(100);
 	draw_number(tens, X_BORDER+5, Y_BORDER, 15);
+	OSA_TimeDelay(100);
 	draw_number(units, X_BORDER+45, Y_BORDER, 15);
 //	disableSPIpins();
+	OSA_TimeDelay(100);
 }

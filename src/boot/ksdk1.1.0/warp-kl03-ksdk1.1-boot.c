@@ -2061,6 +2061,7 @@ main(void)
 
 				clear_screen();
 				draw_value(24);
+				OSA_TimeDelay(1000);
 				
 				for (int16_t i=0; i<200; i++){
 					draw_value(i);
