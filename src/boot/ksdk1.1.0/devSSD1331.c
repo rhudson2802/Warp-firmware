@@ -12,8 +12,8 @@
 #define Y_BORDER 7
 
 #define COLOUR_A 0		// Blue
-#define COLOUR_B 0		// Green
-#define COLOUR_C 40		// Red
+#define COLOUR_B 0x3F	// Green
+#define COLOUR_C 0		// Red
 
 volatile uint8_t	inBuffer[1];
 volatile uint8_t	payloadBytes[1];
@@ -156,6 +156,19 @@ devSSD1331init(void)
 	writeCommand(0x00);
 	writeCommand(0x5F);
 	writeCommand(0x3F);
+	
+	
+	writeCommand(kSSD1331CommandDRAWRECT);	//Enter draw rectangle mode
+	writeCommand(0x00);			//Enter start column
+	writeCommand(0x00);			//Enter start row
+	writeCommand(0x5F);			//Enter end column
+	writeCommand(0x3F);			//Enter end row
+	writeCommand(0x00);			//Set outline to green (colour C red)
+	writeCommand(0x3F);			// Colour B (green)
+	writeCommand(0x00);			// Colour A (blue)
+	writeCommand(0x00);			//Set fill to green (colour C red)
+	writeCommand(0x3F);			// Colour B (green)
+	writeCommand(0x00);			// Colour A (blue)
 
 
 	return 0;

@@ -2044,6 +2044,20 @@ main(void)
 				// Initialise display
 				devSSD1331init();
 				
+				OSA_TimeDelay(1000);
+				
+				clear_screen();
+				
+				OSA_TimeDelay(1000);
+				
+				draw_line(1, 1, 50, 50);
+				
+				OSA_TimeDelay(1000);
+				
+				draw_number(0, X_BORDER, Y_BORDER, 15);
+				
+				OSA_TimeDelay(1000);
+				
 				for (int16_t i=0; i<200; i++){
 					draw_value(i);
 					OSA_TimeDelay(500);
