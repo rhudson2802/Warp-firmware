@@ -2054,7 +2054,7 @@ main(void)
 				
 				OSA_TimeDelay(1000);
 				
-				draw_number(0, X_BORDER, Y_BORDER, 15);
+				draw_number(0, 13, 7, 15);
 				
 				OSA_TimeDelay(1000);
 				
