@@ -327,9 +327,9 @@ void draw_value(int16_t number){
 //	enableSPIpins();
 	clear_screen();
 	OSA_TimeDelay(100);
-	draw_number(tens, (uint8_t)(X_BORDER+5), (uint8_t)Y_BORDER, (uint8_t)15);
+	draw_number(tens, (uint8_t)(18), (uint8_t)7, (uint8_t)15);
 	OSA_TimeDelay(100);
-	draw_number(units, (uint8_t)(X_BORDER+5), (uint8_t)Y_BORDER, (uint8_t)15);
+	draw_number(units, (uint8_t)(58), (uint8_t)7, (uint8_t)15);
 //	disableSPIpins();
 	OSA_TimeDelay(100);
 }
