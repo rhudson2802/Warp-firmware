@@ -2040,6 +2040,14 @@ main(void)
 					configureSensorMMA8451Q(0x00, 0x01, menuI2cPullupValue);
 				#endif
 				
+				// Initialise display
+				devSSD1331init();
+				
+				for (int16_t i=0; i<200; i++){
+					draw_value(i);
+					OSA_TimeDelay(500);
+				}
+				
 				// Run pedometer algorithm
 				pedometer();
 				

@@ -43,3 +43,6 @@ typedef enum
 } SSD1331Commands;
 
 int	devSSD1331init(void);
+void clear_screen(void);
+void draw_number(uint8_t number, uint8_t x, uint8_t y, uint8_t scale);
+void draw_value(int16_t number);
