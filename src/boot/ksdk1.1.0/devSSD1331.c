@@ -184,8 +184,8 @@ void draw_line(uint8_t start_x, uint8_t end_x, uint8_t start_y, uint8_t end_y){
 	
 	// Set start and end coordinates
 	writeCommand(start_x);
-	writeCommand(end_x);
 	writeCommand(start_y);
+	writeCommand(end_x);
 	writeCommand(end_y);
 	
 	// Set colour
@@ -277,37 +277,37 @@ void draw_number(uint8_t number, uint8_t x, uint8_t y, uint8_t scale){
 	
 	
 	if ( seven_segment_section & (1<<0) ){
-		draw_line(y, y, x, x+scale);
+		draw_line(x, x+scale, y, y);
 		SEGGER_RTT_WriteString(0, " 0 ");
 	}
 	
 	if ( seven_segment_section & (1<<1) ){
-		draw_line(y, y+scale, x+scale, x+scale);
+		draw_line(x+scale, x+scale, y, y+scale);
 		SEGGER_RTT_WriteString(0, " 1 ");
 	}
 	
 	if ( seven_segment_section & (1<<2) ){
-		draw_line(y+scale, y+2*scale, x+scale, x+scale);
+		draw_line(x+scale, x+scale, y+scale, y+2*scale);
 		SEGGER_RTT_WriteString(0, " 2 ");
 	}
 	
 	if ( seven_segment_section & (1<<3) ){
-		draw_line(y+2*scale, y+2*scale, x, x+scale);
+		draw_line(x, x+scale, y+2*scale, y+2*scale);
 		SEGGER_RTT_WriteString(0, " 3 ");
 	}
 	
 	if ( seven_segment_section & (1<<4) ){
-		draw_line(y+scale, y+2*scale, x, x);
+		draw_line(x, x, y+scale, y+2*scale);
 		SEGGER_RTT_WriteString(0, " 4 ");
 	}
 	
 	if ( seven_segment_section & (1<<5) ){
-		draw_line(y, y+scale, x, x);
+		draw_line(x, x, y, y+scale);
 		SEGGER_RTT_WriteString(0, " 5 ");
 	}
 	
 	if ( seven_segment_section & (1<<6) ){
-		draw_line(y+scale, y+scale, x, x+scale);
+		draw_line(x, x+scale, y+scale, y+scale);
 		SEGGER_RTT_WriteString(0, " 6 ");
 	}
 	SEGGER_RTT_WriteString(0, "\n");
