@@ -2058,11 +2058,9 @@ main(void)
 				draw_number(0, 13, 7, 15);
 				
 				OSA_TimeDelay(1000);
-				
-				for (int i=0; i<7; i++){
-					SEGGER_RTT_printf(0, " %d ", (1<<i));
-				}
-				SEGGER_RTT_WriteString(0, "\n");
+
+				clear_screen();
+				draw_value(24);
 				
 				for (int16_t i=0; i<200; i++){
 					draw_value(i);
