@@ -2053,19 +2053,12 @@ main(void)
 				draw_line(1, 1, 50, 50);
 				
 				OSA_TimeDelay(1000);
-				
-				clear_screen();
-				draw_number(0, 13, 7, 15);
-				
-				OSA_TimeDelay(1000);
 
-				clear_screen();
-				draw_value(24);
-				OSA_TimeDelay(1000);
 				
-				for (int16_t i=0; i<200; i++){
-					draw_value(i);
-					OSA_TimeDelay(500);
+				for (int16_t i=0; i<10; i++){
+					clear_screen();
+					draw_number(i);
+					OSA_TimeDelay(1000);
 				}
 				
 				// Run pedometer algorithm
