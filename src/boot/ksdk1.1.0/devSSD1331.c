@@ -328,5 +328,5 @@ void draw_value(int16_t number){
 	clear_screen();
 	draw_number(tens, X_BORDER+5, Y_BORDER, 15);
 	draw_number(units, X_BORDER+45, Y_BORDER, 15);
-	disableSPIpins();
+//	disableSPIpins();
 }
