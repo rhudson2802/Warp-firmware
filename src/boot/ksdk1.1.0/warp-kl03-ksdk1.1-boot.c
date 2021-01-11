@@ -2064,7 +2064,7 @@ main(void)
 				}
 				
 				// Run pedometer algorithm
-				pedometer();
+//				pedometer();
 				
 				disableI2Cpins();
 				break;
