@@ -171,6 +171,7 @@ devSSD1331init(void)
 	writeCommand(0x3F);			// Colour B (green)
 	writeCommand(0x00);			// Colour A (blue)
 
+	disableSPIpins();
 
 	return 0;
 }
@@ -306,7 +307,7 @@ void draw_number(uint8_t number, uint8_t x, uint8_t y, uint8_t scale){
 		draw_line(x, x, y, y+scale);
 		SEGGER_RTT_WriteString(0, " 5 ");
 	}
-	
+
 	if ( seven_segment_section & (1<<6) ){
 		draw_line(x, x+scale, y+scale, y+scale);
 		SEGGER_RTT_WriteString(0, " 6 ");
@@ -319,8 +320,8 @@ void draw_value(int16_t number){
 	/*
 	 * Draws the input number to fill the screen
 	 */
-	
-	uint8_t tens = (number / 10) % 100;			// Compute 10s digit
+
+	uint8_t tens = (number / 10) % 10;			// Compute 10s digit
 	uint8_t units = number %10;					// Compute units digit]
 
 	SEGGER_RTT_printf(0, " %d%d ", tens, units);

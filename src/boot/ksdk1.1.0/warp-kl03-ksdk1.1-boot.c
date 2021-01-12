@@ -2035,8 +2035,11 @@ main(void)
 				// Enable SSSUPPLY
 				enableSssupply(menuSupplyVoltage);				
 				
-				// Enable I2C pins
+				// Enable I2C and SPI pins
 				enableI2Cpins(menuI2cPullupValue);
+				enableSPIpins();
+
+				// Initialise accelerometer
 				#ifdef WARP_BUILD_ENABLE_DEVMMA8451Q
 					configureSensorMMA8451Q(0x00, 0x01, menuI2cPullupValue);
 				#endif
@@ -2047,13 +2050,14 @@ main(void)
 				for (int16_t i=0; i<200; i++){
 					//clear_screen();
 					draw_value(i);
-					OSA_TimeDelay(1000);
+					OSA_TimeDelay(50);
 				}
 				
 				// Run pedometer algorithm
-//				pedometer();
+				pedometer();
 				
 				disableI2Cpins();
+				disableSPIpins();
 				break;
 			}
 			case 'm':
