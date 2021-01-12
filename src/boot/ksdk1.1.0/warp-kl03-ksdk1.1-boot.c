@@ -2046,12 +2046,6 @@ main(void)
 				
 				// Initialise display
 				devSSD1331init();
-
-				for (int16_t i=0; i<200; i++){
-					//clear_screen();
-					draw_value(i);
-					OSA_TimeDelay(50);
-				}
 				
 				// Run pedometer algorithm
 				pedometer();

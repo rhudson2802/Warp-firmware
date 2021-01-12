@@ -15,6 +15,7 @@
 #include "warp.h"
 
 #include "devMMA8451Q.h"
+#include "devSSD1331.h"
 
 #include "pedometer.h"
 
@@ -471,6 +472,7 @@ int8_t pedometer(){
 				if ((low_pass_x[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN]) && (low_pass_old[MEAN] - low_pass_x[MEAN] > TOLERANCE)){
 					step_count[MEAN] = step_count[MEAN] + 1;
 					SEGGER_RTT_printf(0, "\n\nSTEP COUNT: %d VARIANCE: %d\n\n", step_count[MEAN], step_count[VAR]);
+					draw_value(step_count[MEAN]);
 				}
 				
 				
@@ -480,6 +482,7 @@ int8_t pedometer(){
 				if ((low_pass_y[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN] && (low_pass_old[MEAN] - low_pass_y[MEAN] > TOLERANCE))){
 					step_count[MEAN] = step_count[MEAN] + 1;
 					SEGGER_RTT_printf(0, "\n\nSTEP COUNT: %d VARIANCE: %d\n\n", step_count[MEAN], step_count[VAR]);
+					draw_value(step_count[MEAN]);
 				}
 				
 				
@@ -489,6 +492,7 @@ int8_t pedometer(){
 				if ((low_pass_z[MEAN] < threshold[MEAN]) && (low_pass_old[MEAN] > threshold[MEAN]) && (low_pass_old[MEAN] - low_pass_z[MEAN] > TOLERANCE)){
 					step_count[MEAN] = step_count[MEAN] + 1;
 					SEGGER_RTT_printf(0, "\n\nSTEP COUNT: %d VARIANCE: %d\n\n", step_count[MEAN], step_count[VAR]);
+					draw_value(step_count[MEAN]);
 				}
 			}
 		}
