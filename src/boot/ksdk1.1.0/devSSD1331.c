@@ -13,8 +13,8 @@
 #define DIGIT_SIZE 25
 
 #define COLOUR_A 0		// Blue
-#define COLOUR_B 0x3F	// Green
-#define COLOUR_C 0		// Red
+#define COLOUR_B 0		// Green
+#define COLOUR_C 0b00111110	// Red
 
 volatile uint8_t	inBuffer[1];
 volatile uint8_t	payloadBytes[1];
@@ -327,10 +327,7 @@ void draw_value(int16_t number){
 
 //	enableSPIpins();
 	clear_screen();
-	OSA_TimeDelay(100);
 	draw_number(tens, (uint8_t)(X_BORDER + 5), (uint8_t)Y_BORDER, (uint8_t)DIGIT_SIZE);
-	OSA_TimeDelay(100);
 	draw_number(units, (uint8_t)(X_BORDER + 45), (uint8_t)Y_BORDER, (uint8_t)DIGIT_SIZE);
 //	disableSPIpins();
-	OSA_TimeDelay(100);
 }
