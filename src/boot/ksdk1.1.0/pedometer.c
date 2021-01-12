@@ -22,7 +22,7 @@
 #define LOW_PASS_ORDER 6		// Number of variables which are input to the low pass filter
 #define SAMPLE_WINDOW 100		// Number of samples which are taken before the threshold is reset
 #define SAMPLE_DELAY 10			// Time delay between samples
-#define TOLERANCE 125			// Threshold the change in acceleration before a step will be registered to make the algorithm resistant to noise
+#define TOLERANCE 100			// Threshold the change in acceleration before a step will be registered to make the algorithm resistant to noise
 #define SAMPLES_PER_DIST 10		// Number of samples included in one acceleration measurement distribution
 #define MEAN 0					// Index of the mean for arrays of the form {MEAN, VARIANCE} (improves code readability)
 #define VAR 1					// Index of the variance for arrays of the form {MEAN, VARIANCE} (improves code readability)
