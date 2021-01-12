@@ -170,8 +170,7 @@ devSSD1331init(void)
 	writeCommand(0x00);			//Set fill to green (colour C red)
 	writeCommand(0x3F);			// Colour B (green)
 	writeCommand(0x00);			// Colour A (blue)
-
-//	disableSPIpins();
+	writeCommand(0x00);			// Colour A (blue)
 
 	return 0;
 }
@@ -317,10 +316,7 @@ void draw_value(int16_t number){
 	uint8_t tens = (number / 10) % 10;			// Compute 10s digit
 	uint8_t units = number %10;					// Compute units digit]
 
-
-//	enableSPIpins();
 	clear_screen();
 	draw_number(tens, (uint8_t)(X_BORDER + 5), (uint8_t)Y_BORDER, (uint8_t)DIGIT_SIZE);
 	draw_number(units, (uint8_t)(X_BORDER + 45), (uint8_t)Y_BORDER, (uint8_t)DIGIT_SIZE);
-//	disableSPIpins();
 }
