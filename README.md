@@ -10,12 +10,13 @@ To run the pedometer, simply boot the Warp Firmware, and choose option 'l'. This
 - `rh689-git-diff.txt` - A git diff run against the original Warp Firmware repository
 - `/src/boot/ksdk1.1.0/pedometer.h` and `/src/boot/ksdk1.1.0/pedometer.c` - Source code for the pedometer implementation
 - `/src/boot/ksdk1.1.0/devSSD1331.h` and `/src/boot/ksdk1.1.0/devSSD1331.c` - Source code for the display driver
+- `build/ksdk1.1/work/demos/Warp/armgcc/Warp/release/Warp.srec` - SREC file with pedometer implementation, ready to be loaded to hardware
 - `rh689-schematic.pdf` - A circuit schematic for the pedometer hardware, which can be used to build a circuit not requiring the FRDM-KL03 evaluation board
 - `rh689-layout-top/bottom.png` - An example PCB layout generated in KiCAD
-- `pedometer.pro` - KiCAD project file for circuit
-- `pedometer.sch` - KiCAD circuit schematic
-- `pedometer.kicad_pcb` - KiCAD PCB layout
-- `pedometer.lib` - KiCAD symbol library used in circuit schematic
+- `schematics/pedometer.pro` - KiCAD project file for circuit
+- `schematics/pedometer.sch` - KiCAD circuit schematic
+- `schematics/pedometer.kicad_pcb` - KiCAD PCB layout
+- `schematics/pedometer.lib` - KiCAD symbol library used in circuit schematic
 - `pedometer.py` - Python script used to simulate the pedometer algorithm and perform Monte Carlo simulations on collected data
 - `max_fn_uncertainty.py` - Python script used to compute the uncertainty propagated through the max function and if statement, which generated data to create the uncertainty models
 
