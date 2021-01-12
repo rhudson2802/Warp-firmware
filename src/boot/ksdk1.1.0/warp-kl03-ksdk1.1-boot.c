@@ -2037,7 +2037,7 @@ main(void)
 				
 				// Enable I2C and SPI pins
 				enableI2Cpins(menuI2cPullupValue);
-				enableSPIpins();
+//				enableSPIpins();
 
 				// Initialise accelerometer
 				#ifdef WARP_BUILD_ENABLE_DEVMMA8451Q
@@ -2057,7 +2057,7 @@ main(void)
 				pedometer();
 				
 				disableI2Cpins();
-				disableSPIpins();
+//				disableSPIpins();
 				break;
 			}
 			case 'm':

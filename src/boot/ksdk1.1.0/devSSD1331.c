@@ -171,7 +171,7 @@ devSSD1331init(void)
 	writeCommand(0x3F);			// Colour B (green)
 	writeCommand(0x00);			// Colour A (blue)
 
-	disableSPIpins();
+//	disableSPIpins();
 
 	return 0;
 }
