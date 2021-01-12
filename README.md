@@ -11,8 +11,13 @@ To run the pedometer, simply boot the Warp Firmware, and choose option 'l'. This
 - `/src/boot/ksdk1.1.0/pedometer.h` and `/src/boot/ksdk1.1.0/pedometer.c` - Source code for the pedometer implementation
 - `/src/boot/ksdk1.1.0/devSSD1331.h` and `/src/boot/ksdk1.1.0/devSSD1331.c` - Source code for the display driver
 - `rh689-schematic.pdf` - A circuit schematic for the pedometer hardware, which can be used to build a circuit not requiring the FRDM-KL03 evaluation board
+- `rh689-layout-top/bottom.png` - An example PCB layout generated in KiCAD
+- `pedometer.pro` - KiCAD project file for circuit
+- `pedometer.sch` - KiCAD circuit schematic
+- `pedometer.kicad_pcb` - KiCAD PCB layout
+- `pedometer.lib` - KiCAD symbol library used in circuit schematic
 - `pedometer.py` - Python script used to simulate the pedometer algorithm and perform Monte Carlo simulations on collected data
-- `max_fn_uncertainty` - Python script used to compute the uncertainty propagated through the max function and if statement, which generated data to create the uncertainty models
+- `max_fn_uncertainty.py` - Python script used to compute the uncertainty propagated through the max function and if statement, which generated data to create the uncertainty models
 
 ### Hardware Setup
 In order to use the display, the Adafruit SSD1331 OLED breakout board should be connected to the FRDM-KL03 using the following connections:
@@ -27,7 +32,7 @@ In order to use the display, the Adafruit SSD1331 OLED breakout board should be 
 | SCK         | CK       | PTA9          | J4                      | 1                    |
 | MOSI        | SI       | PTA8          | J4                      | 2                    |
 
-A schematic has also been included (`rh689-schematic.pdf`) which details the relevant circuits which are required to implement the pedometer without using the FRDM-KL03.
+A schematic has also been included (`rh689-schematic.pdf`) which details the relevant circuits which are required to implement the pedometer without using the FRDM-KL03. An example PCB layout has also been included (`pedometer.kicad_pcb`), which is powered by two CR2032 batteries.
 
 ### Software
 There are several parameters which control the performance of the algorithm, set using the macros on lines 21-25 of `pedometer.c`. These are:
