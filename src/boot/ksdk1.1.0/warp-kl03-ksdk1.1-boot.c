@@ -2022,7 +2022,7 @@ main(void)
 			}
 
 			/*
-			 *	Send repeated byte on I2C or SPI
+			 *	Launch pedometer program
 			 */
 			case 'l':
 			{
@@ -2035,9 +2035,8 @@ main(void)
 				// Enable SSSUPPLY
 				enableSssupply(menuSupplyVoltage);				
 				
-				// Enable I2C and SPI pins
+				// Enable I2C pins
 				enableI2Cpins(menuI2cPullupValue);
-//				enableSPIpins();
 
 				// Initialise accelerometer
 				#ifdef WARP_BUILD_ENABLE_DEVMMA8451Q
@@ -2051,7 +2050,6 @@ main(void)
 				pedometer();
 				
 				disableI2Cpins();
-//				disableSPIpins();
 				break;
 			}
 			case 'm':

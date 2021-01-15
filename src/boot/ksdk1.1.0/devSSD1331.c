@@ -229,6 +229,7 @@ void draw_number(uint8_t number, uint8_t x, uint8_t y, uint8_t scale){
 	
 	uint8_t seven_segment_section = 0;
 	
+	// Set the correct bits depending on the number we want to display
 	switch(number){
 		case 0:{
 			seven_segment_section = 0b00111111;
@@ -277,6 +278,7 @@ void draw_number(uint8_t number, uint8_t x, uint8_t y, uint8_t scale){
 	}
 	
 	
+	// Test each bit in turn, and if it is set then draw that segment
 	if ( seven_segment_section & (1<<0) ){
 		draw_line(x, x+scale, y, y);
 	}
@@ -314,7 +316,7 @@ void draw_value(int16_t number){
 	 */
 
 	uint8_t tens = (number / 10) % 10;			// Compute 10s digit
-	uint8_t units = number %10;					// Compute units digit]
+	uint8_t units = number %10;					// Compute units digit
 
 	clear_screen();
 	draw_number(tens, (uint8_t)(X_BORDER + 5), (uint8_t)Y_BORDER, (uint8_t)DIGIT_SIZE);
