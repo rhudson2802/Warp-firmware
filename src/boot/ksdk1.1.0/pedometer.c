@@ -301,6 +301,7 @@ int16_t if_variance(int16_t var1[], int16_t var2[]){
 
 	// Compute uncertainty according to model
 	// In order to avoid rounding errors, the order of multiplication has been chosen carefully and all variables are cast to 64 bit integers to ensure no overflow errors
+	// The formula was rearranged to ensure no nested fractions
 	uncertainty = ((3*(int64_t)var2[VAR] + 100*(int64_t)var1[VAR] - 100*((int64_t)var2[MEAN] - (int64_t)var1[MEAN])*((int64_t)var2[MEAN] - (int64_t)var1[MEAN])) * 25 * (int64_t)var1[VAR]) / ((3*(int64_t)var2[VAR] + 100*(int64_t)var1[VAR])*(3*(int64_t)var2[VAR] + 100*(int64_t)var1[VAR]));
 
 	if (uncertainty < 0){
