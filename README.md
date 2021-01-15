@@ -3,14 +3,14 @@
 
 This project concerns the design of a pedometer which can propagate measurement uncertainty, and is based on the Warp Firmware. The main implementation of the pedometer is within `/src/boot/ksdk1.1.0/pedometer.h` and `/src/boot/ksdk1.1.0/pedometer.c`. The display drivers are written in `/src/boot/ksdk1.1.0/devSSD1331.h` and `/src/boot/ksdk1.1.0/devSSD1331.c`. The git repository can be found at [https://github.com/rhudson2802/Warp-firmware](https://github.com/rhudson2802/Warp-firmware)
 
-To run the pedometer, simply boot the Warp Firmware, and choose option 'l'. This will setup the firmware to the required parameters (enable RUN mode, and set SSSUPPLY to 3000mV). The pedometer algorithm will then run indefinitely, and print to the screen whenever it detects a step has been taken.
+To run the pedometer, simply boot the Warp Firmware, and choose option 'L'. This will setup the firmware to the required parameters (enable RUN mode, and set SSSUPPLY to 3000mV). The pedometer algorithm will then run indefinitely, and print to the screen whenever it detects a step has been taken.
 
 ### Included Files
 - `rh689-coursework-5.pdf` - A report detailing the motivation behind the project and the results collected
 - `rh689-git-diff.txt` - A git diff run against the original Warp Firmware repository
-- `/src/boot/ksdk1.1.0/pedometer.h` and `/src/boot/ksdk1.1.0/pedometer.c` - Source code for the pedometer implementation
-- `/src/boot/ksdk1.1.0/devSSD1331.h` and `/src/boot/ksdk1.1.0/devSSD1331.c` - Source code for the display driver
-- `build/ksdk1.1/work/demos/Warp/armgcc/Warp/release/Warp.srec` - SREC file with pedometer implementation, ready to be loaded to hardware
+- `pedometer.h` and `pedometer.c` - Source code for the pedometer implementation
+- `devSSD1331.h` and `devSSD1331.c` - Source code for the display driver
+- `Warp.srec` - SREC file with pedometer implementation, ready to be loaded to hardware
 - `rh689-schematic.pdf` - A circuit schematic for the pedometer hardware, which can be used to build a circuit not requiring the FRDM-KL03 evaluation board
 - `rh689-layout-top/bottom.png` - An example PCB layout generated in KiCAD
 - `schematics/pedometer.pro` - KiCAD project file for circuit
